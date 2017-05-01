@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{e237fa22-c18f-4c25-a870-0f974c6ff592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\对象基类">
+      <UniqueIdentifier>{5c5a50b4-5ac4-4c3e-8824-44e2fbc4e2d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\工具类">
+      <UniqueIdentifier>{b1ca0b3c-b465-4ccd-a02a-1100dd790b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\技能对象">
+      <UniqueIdentifier>{a17ad68c-d122-45d0-8253-16c946780e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\CALL">
+      <UniqueIdentifier>{e4b441ca-4e85-4d59-810e-21ee0c9bfccb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\游戏基地址">
+      <UniqueIdentifier>{794dbd85-edcf-42b4-803e-296ae684e01c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>Game\对象基类</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Game\工具类</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>Game\技能对象</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCall.h">
+      <Filter>Game\CALL</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseAddr.h">
+      <Filter>Game\游戏基地址</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillServices.h">
+      <Filter>Game\技能对象</Filter>
+    </ClInclude>
+    <ClInclude Include="dllmain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameDll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="base.cpp">
+      <Filter>Game\对象基类</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Game\工具类</Filter>
+    </ClCompile>
+    <ClCompile Include="skill.cpp">
+      <Filter>Game\技能对象</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCall.cpp">
+      <Filter>Game\CALL</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillServices.cpp">
+      <Filter>Game\技能对象</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
