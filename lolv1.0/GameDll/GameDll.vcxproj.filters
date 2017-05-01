@@ -34,6 +34,9 @@
     <Filter Include="Game\BUFF">
       <UniqueIdentifier>{bb8b8f79-7ef6-406e-b220-5f0f7cc61eba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\装备对象">
+      <UniqueIdentifier>{12efdc6a-fae1-407a-9f3b-3054c211dc1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -72,6 +75,12 @@
     <ClInclude Include="BufferServices.h">
       <Filter>Game\BUFF</Filter>
     </ClInclude>
+    <ClInclude Include="equipment.h">
+      <Filter>Game\装备对象</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipmentServices.h">
+      <Filter>Game\装备对象</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -103,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="BufferServices.cpp">
       <Filter>Game\BUFF</Filter>
+    </ClCompile>
+    <ClCompile Include="equipment.cpp">
+      <Filter>Game\装备对象</Filter>
+    </ClCompile>
+    <ClCompile Include="EquipmentServices.cpp">
+      <Filter>Game\装备对象</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

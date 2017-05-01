@@ -152,6 +152,8 @@
     <ClInclude Include="buffer.h" />
     <ClInclude Include="BufferServices.h" />
     <ClInclude Include="dllmain.h" />
+    <ClInclude Include="equipment.h" />
+    <ClInclude Include="EquipmentServices.h" />
     <ClInclude Include="GameCall.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="SkillServices.h" />
@@ -177,6 +179,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="equipment.cpp" />
+    <ClCompile Include="EquipmentServices.cpp" />
     <ClCompile Include="GameCall.cpp" />
     <ClCompile Include="GameDll.cpp" />
     <ClCompile Include="skill.cpp" />
