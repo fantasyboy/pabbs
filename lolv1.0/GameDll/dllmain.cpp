@@ -33,9 +33,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 	CBufferServices bf;
 	while (true)
 	{
-		//cs.travse();
+		cs.travse();
 		bf.travse();
-		Sleep(30);
+		Sleep(3);
 	}
 }
 

@@ -32,7 +32,6 @@ void CBufferServices::travse()
 			continue;
 		}
 		m_bufferList.push_back(buffer(temp));
-		
 	}
 	utils::GetInstance()->log("TIPS: buffÊıÁ¿Îª£º%d\n", m_bufferList.size());
 	for (auto temp: m_bufferList)

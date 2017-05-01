@@ -50,7 +50,8 @@ void utils::log(char* _format, ...)
 	{
 		temp.reserve(num_of_chars + 1);
 	}
-	vsprintf_s(const_cast<char*>(temp.c_str()), num_of_chars+1, _format, marker);
+	//vsprintf_s(const_cast<char*>(temp.c_str()), num_of_chars+1, _format, marker);
+	vsprintf(const_cast<char*>(temp.c_str()), _format, marker);
 	OutputDebugString(temp.c_str());
 #endif // _debug
 }
