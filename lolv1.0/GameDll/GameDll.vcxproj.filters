@@ -31,6 +31,9 @@
     <Filter Include="Game\游戏基地址">
       <UniqueIdentifier>{794dbd85-edcf-42b4-803e-296ae684e01c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\BUFF">
+      <UniqueIdentifier>{bb8b8f79-7ef6-406e-b220-5f0f7cc61eba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -63,6 +66,12 @@
     <ClInclude Include="dllmain.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="buffer.h">
+      <Filter>Game\BUFF</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferServices.h">
+      <Filter>Game\BUFF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -88,6 +97,12 @@
     </ClCompile>
     <ClCompile Include="SkillServices.cpp">
       <Filter>Game\技能对象</Filter>
+    </ClCompile>
+    <ClCompile Include="buffer.cpp">
+      <Filter>Game\BUFF</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferServices.cpp">
+      <Filter>Game\BUFF</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

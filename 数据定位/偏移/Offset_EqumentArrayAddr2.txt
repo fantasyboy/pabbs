@@ -1,0 +1,68 @@
+006F25B0  /$  56                    PUSH ESI
+006F25B1  |.  8B7424 08             MOV ESI,DWORD PTR SS:[ESP+8]
+006F25B5  |.  57                    PUSH EDI
+006F25B6  |.  8BF9                  MOV EDI,ECX
+006F25B8  |.  85F6                  TEST ESI,ESI
+006F25BA  |.  78 05                 JS SHORT League_o.006F25C1
+006F25BC  |.  83FE 27               CMP ESI,27
+006F25BF  |.  72 1E                 JB SHORT League_o.006F25DF
+006F25C1  |>  68 9D6D4B01           PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006F25C6  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006F25CB  |.  6A 00                 PUSH 0                                   ; |Arg3 = 00000000
+006F25CD  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006F25D2  |.  68 1CEF4401           PUSH League_o.0144EF1C                   ; |Arg1 = 0144EF1C ASCII "ALE-D18C85F9"
+006F25D7  |.  E8 D4C70800           CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006F25DC  |.  83C4 14               ADD ESP,14
+006F25DF  |>  8B84B7 88020000       MOV EAX,DWORD PTR DS:[EDI+ESI*4+288]     ;  装备数组偏移2
+006F25E6  |.  8338 00               CMP DWORD PTR DS:[EAX],0
+006F25E9  |.  75 1E                 JNZ SHORT League_o.006F2609
+006F25EB  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006F25F0  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006F25F5  |.  6A 00                 PUSH 0                                   ; |Arg3 = 00000000
+006F25F7  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006F25FC  |.  68 AC064D01           PUSH League_o.014D06AC                   ; |Arg1 = 014D06AC ASCII "ALE-3532710D"
+006F2601  |.  E8 AAC70800           CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006F2606  |.  83C4 14               ADD ESP,14
+006F2609  |>  85F6                  TEST ESI,ESI
+006F260B  |.  78 05                 JS SHORT League_o.006F2612
+006F260D  |.  83FE 27               CMP ESI,27
+006F2610  |.  72 1E                 JB SHORT League_o.006F2630
+006F2612  |>  68 9D6D4B01           PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006F2617  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006F261C  |.  6A 00                 PUSH 0                                   ; |Arg3 = 00000000
+006F261E  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006F2623  |.  68 1CEF4401           PUSH League_o.0144EF1C                   ; |Arg1 = 0144EF1C ASCII "ALE-D18C85F9"
+006F2628  |.  E8 83C70800           CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006F262D  |.  83C4 14               ADD ESP,14
+006F2630  |>  8B84B7 88020000       MOV EAX,DWORD PTR DS:[EDI+ESI*4+288]
+006F2637  |.  8338 00               CMP DWORD PTR DS:[EAX],0
+006F263A  |.  74 49                 JE SHORT League_o.006F2685
+006F263C  |.  85F6                  TEST ESI,ESI
+006F263E  |.  78 05                 JS SHORT League_o.006F2645
+006F2640  |.  83FE 27               CMP ESI,27
+006F2643  |.  72 1E                 JB SHORT League_o.006F2663
+006F2645  |>  68 9D6D4B01           PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006F264A  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006F264F  |.  6A 00                 PUSH 0                                   ; |Arg3 = 00000000
+006F2651  |.  68 9D6D4B01           PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006F2656  |.  68 1CEF4401           PUSH League_o.0144EF1C                   ; |Arg1 = 0144EF1C ASCII "ALE-D18C85F9"
+006F265B  |.  E8 50C70800           CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006F2660  |.  83C4 14               ADD ESP,14
+006F2663  |>  8B84B7 88020000       MOV EAX,DWORD PTR DS:[EDI+ESI*4+288]
+006F266A  |.  8B08                  MOV ECX,DWORD PTR DS:[EAX]
+006F266C  |.  85C9                  TEST ECX,ECX
+006F266E  |.  74 15                 JE SHORT League_o.006F2685
+006F2670  |.  8B49 0C               MOV ECX,DWORD PTR DS:[ECX+C]
+006F2673  |.  85C9                  TEST ECX,ECX
+006F2675  |.  74 0E                 JE SHORT League_o.006F2685
+006F2677  |.  33C0                  XOR EAX,EAX
+006F2679  |.  8379 74 01            CMP DWORD PTR DS:[ECX+74],1
+006F267D  |.  0F9FC0                SETG AL
+006F2680  |.  5F                    POP EDI
+006F2681  |.  5E                    POP ESI
+006F2682  |.  C2 0400               RETN 4
+006F2685  |>  5F                    POP EDI
+006F2686  |.  32C0                  XOR AL,AL
+006F2688  |.  5E                    POP ESI
+006F2689  \.  C2 0400               RETN 4
+

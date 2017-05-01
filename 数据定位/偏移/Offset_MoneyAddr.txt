@@ -1,0 +1,65 @@
+00962130  /$  A1 7889A301                    MOV EAX,DWORD PTR DS:[1A38978]
+00962135  |.  56                             PUSH ESI
+00962136  |.  8BF1                           MOV ESI,ECX
+00962138  |.  85C0                           TEST EAX,EAX
+0096213A  |.  0F84 C8000000                  JE League_o.00962208
+00962140  |.  F30F1098 B8140000              MOVSS XMM3, [EAX+14B8]
+00962148  |.  F30F1025 C8576A01              MOVSS XMM4, [16A57C8]
+00962150  |.  0F28C3                         MOVAPS XMM0, XMM3
+00962153  |.  F30F1015 90576A01              MOVSS XMM2, [16A5790]
+0096215B  |.  0F54E3                         ANDPS XMM4, XMM3
+0096215E  |.  0F57C4                         XORPS XMM0, XMM4
+00962161  |.  F30F102D 14546A01              MOVSS XMM5, [16A5414]
+00962169  |.  F30FC2C201                     CMPLTSS XMM0, XMM2
+0096216E  |.  0F28CB                         MOVAPS XMM1, XMM3
+00962171  |.  0F54D0                         ANDPS XMM2, XMM0
+00962174  |.  0F56D4                         ORPS XMM2, XMM4
+00962177  |.  F30F58CA                       ADDSS XMM1, XMM2
+0096217B  |.  F30F5CCA                       SUBSS XMM1, XMM2
+0096217F  |.  0F28C1                         MOVAPS XMM0, XMM1
+00962182  |.  F30F5CC3                       SUBSS XMM0, XMM3
+00962186  |.  F30FC2C406                     CMPNLESS XMM0, XMM4
+0096218B  |.  0F54C5                         ANDPS XMM0, XMM5
+0096218E  |.  F30F5CC8                       SUBSS XMM1, XMM0
+00962192  |.  F30F2CC1                       CVTTSS2SI EAX, XMM1
+00962196  |.  3B46 44                        CMP EAX,DWORD PTR DS:[ESI+44]
+00962199  |.  74 1A                          JE SHORT League_o.009621B5
+0096219B  |.  50                             PUSH EAX
+0096219C  |.  68 081D3F01                    PUSH League_o.013F1D08                   ;  ASCII "%d"
+009621A1  |.  FF76 08                        PUSH DWORD PTR DS:[ESI+8]
+009621A4  |.  8946 44                        MOV DWORD PTR DS:[ESI+44],EAX
+009621A7  |.  FF35 748DA301                  PUSH DWORD PTR DS:[1A38D74]
+009621AD  |.  E8 6E050B00                    CALL League_o.00A12720
+009621B2  |.  83C4 10                        ADD ESP,10
+009621B5  |>  A1 104FA301                    MOV EAX,DWORD PTR DS:[1A34F10]
+009621BA  |.  85C0                           TEST EAX,EAX
+009621BC  |.  74 29                          JE SHORT League_o.009621E7
+009621BE  |.  83B8 B0000000 00               CMP DWORD PTR DS:[EAX+B0],0
+009621C5  |.  74 20                          JE SHORT League_o.009621E7
+009621C7  |.  E8 344F4900                    CALL League_o.00DF7100
+009621CC  |.  84C0                           TEST AL,AL
+009621CE  |.  74 17                          JE SHORT League_o.009621E7
+009621D0  |.  8B0D 7889A301                  MOV ECX,DWORD PTR DS:[1A38978]
+009621D6  |.  85C9                           TEST ECX,ECX
+009621D8  |.  74 0D                          JE SHORT League_o.009621E7
+009621DA  |.  E8 A1501B00                    CALL League_o.00B17280
+009621DF  |.  84C0                           TEST AL,AL
+009621E1  |.  74 04                          JE SHORT League_o.009621E7
+009621E3  |.  B0 01                          MOV AL,1
+009621E5  |.  EB 02                          JMP SHORT League_o.009621E9
+009621E7  |>  32C0                           XOR AL,AL
+009621E9  |>  3A46 48                        CMP AL,BYTE PTR DS:[ESI+48]
+009621EC  |.  74 1A                          JE SHORT League_o.00962208
+009621EE  |.  8B56 04                        MOV EDX,DWORD PTR DS:[ESI+4]
+009621F1  |.  84C0                           TEST AL,AL
+009621F3  |.  8846 48                        MOV BYTE PTR DS:[ESI+48],AL
+009621F6  |.  0F94C0                         SETZ AL
+009621F9  |.  0FB6C0                         MOVZX EAX, AL
+009621FC  |.  8B4A 40                        MOV ECX,DWORD PTR DS:[EDX+40]
+009621FF  |.  50                             PUSH EAX
+00962200  |.  FF72 44                        PUSH DWORD PTR DS:[EDX+44]
+00962203  |.  8B31                           MOV ESI,DWORD PTR DS:[ECX]
+00962205  |.  FF56 28                        CALL DWORD PTR DS:[ESI+28]
+00962208  |>  5E                             POP ESI
+00962209  \.  C3                             RETN
+

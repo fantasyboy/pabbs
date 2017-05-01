@@ -1,0 +1,294 @@
+00B82270  /$  55                             PUSH EBP
+00B82271  |.  8BEC                           MOV EBP,ESP
+00B82273  |.  6A FF                          PUSH -1
+00B82275  |.  68 38EB3201                    PUSH League_o.0132EB38
+00B8227A  |.  64:A1 00000000                 MOV EAX,DWORD PTR FS:[0]
+00B82280  |.  50                             PUSH EAX
+00B82281  |.  83EC 20                        SUB ESP,20
+00B82284  |.  53                             PUSH EBX
+00B82285  |.  56                             PUSH ESI
+00B82286  |.  57                             PUSH EDI
+00B82287  |.  A1 9CC98401                    MOV EAX,DWORD PTR DS:[184C99C]
+00B8228C  |.  33C5                           XOR EAX,EBP
+00B8228E  |.  50                             PUSH EAX
+00B8228F  |.  8D45 F4                        LEA EAX,DWORD PTR SS:[EBP-C]
+00B82292  |.  64:A3 00000000                 MOV DWORD PTR FS:[0],EAX
+00B82298  |.  8BC1                           MOV EAX,ECX
+00B8229A  |.  8945 EC                        MOV DWORD PTR SS:[EBP-14],EAX
+00B8229D  |.  8078 20 00                     CMP BYTE PTR DS:[EAX+20],0
+00B822A1  |.  0F84 7F030000                  JE League_o.00B82626
+00B822A7  |.  8B7D 08                        MOV EDI,DWORD PTR SS:[EBP+8]
+00B822AA  |.  8B87 D8050000                  MOV EAX,DWORD PTR DS:[EDI+5D8]
+00B822B0  |.  8DB7 D8050000                  LEA ESI,DWORD PTR DS:[EDI+5D8]
+00B822B6  |.  8B00                           MOV EAX,DWORD PTR DS:[EAX]
+00B822B8  |.  3D 70EDC100                    CMP EAX,League_o.00C1ED70
+00B822BD  |.  75 08                          JNZ SHORT League_o.00B822C7
+00B822BF  |.  8B86 94310000                  MOV EAX,DWORD PTR DS:[ESI+3194]
+00B822C5  |.  EB 04                          JMP SHORT League_o.00B822CB
+00B822C7  |>  8BCE                           MOV ECX,ESI
+00B822C9  |.  FFD0                           CALL EAX
+00B822CB  |>  85C0                           TEST EAX,EAX
+00B822CD  |.  0F84 53030000                  JE League_o.00B82626
+00B822D3  |.  8B5D 0C                        MOV EBX,DWORD PTR SS:[EBP+C]
+00B822D6  |.  81C3 D8050000                  ADD EBX,5D8
+00B822DC  |.  8B03                           MOV EAX,DWORD PTR DS:[EBX]
+00B822DE  |.  8B00                           MOV EAX,DWORD PTR DS:[EAX]
+00B822E0  |.  3D 70EDC100                    CMP EAX,League_o.00C1ED70
+00B822E5  |.  75 08                          JNZ SHORT League_o.00B822EF
+00B822E7  |.  8B83 94310000                  MOV EAX,DWORD PTR DS:[EBX+3194]
+00B822ED  |.  EB 04                          JMP SHORT League_o.00B822F3
+00B822EF  |>  8BCB                           MOV ECX,EBX
+00B822F1  |.  FFD0                           CALL EAX
+00B822F3  |>  85C0                           TEST EAX,EAX
+00B822F5  |.  0F84 2B030000                  JE League_o.00B82626
+00B822FB  |.  8B06                           MOV EAX,DWORD PTR DS:[ESI]
+00B822FD  |.  8B00                           MOV EAX,DWORD PTR DS:[EAX]
+00B822FF  |.  3D 70EDC100                    CMP EAX,League_o.00C1ED70
+00B82304  |.  75 08                          JNZ SHORT League_o.00B8230E
+00B82306  |.  8B86 94310000                  MOV EAX,DWORD PTR DS:[ESI+3194]
+00B8230C  |.  EB 04                          JMP SHORT League_o.00B82312
+00B8230E  |>  8BCE                           MOV ECX,ESI
+00B82310  |.  FFD0                           CALL EAX
+00B82312  |>  8B80 100B0000                  MOV EAX,DWORD PTR DS:[EAX+B10]
+00B82318  |.  83B8 98020000 00               CMP DWORD PTR DS:[EAX+298],0
+00B8231F  |.  0F84 01030000                  JE League_o.00B82626
+00B82325  |.  8B03                           MOV EAX,DWORD PTR DS:[EBX]
+00B82327  |.  8B00                           MOV EAX,DWORD PTR DS:[EAX]
+00B82329  |.  3D 70EDC100                    CMP EAX,League_o.00C1ED70
+00B8232E  |.  75 08                          JNZ SHORT League_o.00B82338
+00B82330  |.  8B83 94310000                  MOV EAX,DWORD PTR DS:[EBX+3194]
+00B82336  |.  EB 04                          JMP SHORT League_o.00B8233C
+00B82338  |>  8BCB                           MOV ECX,EBX
+00B8233A  |.  FFD0                           CALL EAX
+00B8233C  |>  8B80 100B0000                  MOV EAX,DWORD PTR DS:[EAX+B10]
+00B82342  |.  83B8 98020000 00               CMP DWORD PTR DS:[EAX+298],0
+00B82349  |.  0F84 D7020000                  JE League_o.00B82626
+00B8234F  |.  33DB                           XOR EBX,EBX
+00B82351  |.  83CA FF                        OR EDX,FFFFFFFF
+00B82354  |.  8955 F0                        MOV DWORD PTR SS:[EBP-10],EDX
+00B82357  |.  895D D8                        MOV DWORD PTR SS:[EBP-28],EBX
+00B8235A  |.  895D DC                        MOV DWORD PTR SS:[EBP-24],EBX
+00B8235D  |.  895D E0                        MOV DWORD PTR SS:[EBP-20],EBX
+00B82360  |.  895D FC                        MOV DWORD PTR SS:[EBP-4],EBX
+00B82363  |.  8B45 10                        MOV EAX,DWORD PTR SS:[EBP+10]
+00B82366  |.  895D 10                        MOV DWORD PTR SS:[EBP+10],EBX
+00B82369  |.  8B30                           MOV ESI,DWORD PTR DS:[EAX]
+00B8236B  |.  8B40 04                        MOV EAX,DWORD PTR DS:[EAX+4]
+00B8236E  |.  8BC8                           MOV ECX,EAX
+00B82370  |.  2BCE                           SUB ECX,ESI
+00B82372  |.  83C1 03                        ADD ECX,3
+00B82375  |.  C1E9 02                        SHR ECX,2
+00B82378  |.  3BF0                           CMP ESI,EAX
+00B8237A  |.  0F47CB                         CMOVA ECX, EBX
+00B8237D  |.  894D E8                        MOV DWORD PTR SS:[EBP-18],ECX
+00B82380  |.  85C9                           TEST ECX,ECX
+00B82382  |.  0F84 C3000000                  JE League_o.00B8244B
+00B82388  |>  FF36                           /PUSH DWORD PTR DS:[ESI]                 ; /Arg1
+00B8238A  |.  E8 71550000                    |CALL League_o.00B87900                  ; \League_o.00B87900
+00B8238F  |.  83C4 04                        |ADD ESP,4
+00B82392  |.  8945 E4                        |MOV DWORD PTR SS:[EBP-1C],EAX
+00B82395  |.  85C0                           |TEST EAX,EAX
+00B82397  |.  0F84 9B000000                  |JE League_o.00B82438
+00B8239D  |.  8B88 D8050000                  |MOV ECX,DWORD PTR DS:[EAX+5D8]
+00B823A3  |.  8DB8 D8050000                  |LEA EDI,DWORD PTR DS:[EAX+5D8]
+00B823A9  |.  8B11                           |MOV EDX,DWORD PTR DS:[ECX]
+00B823AB  |.  81FA 70EDC100                  |CMP EDX,League_o.00C1ED70
+00B823B1  |.  75 08                          |JNZ SHORT League_o.00B823BB
+00B823B3  |.  8B87 94310000                  |MOV EAX,DWORD PTR DS:[EDI+3194]
+00B823B9  |.  EB 04                          |JMP SHORT League_o.00B823BF
+00B823BB  |>  8BCF                           |MOV ECX,EDI
+00B823BD  |.  FFD2                           |CALL EDX
+00B823BF  |>  85C0                           |TEST EAX,EAX
+00B823C1  |.  74 75                          |JE SHORT League_o.00B82438
+00B823C3  |.  8B07                           |MOV EAX,DWORD PTR DS:[EDI]
+00B823C5  |.  8B00                           |MOV EAX,DWORD PTR DS:[EAX]
+00B823C7  |.  3D 70EDC100                    |CMP EAX,League_o.00C1ED70
+00B823CC  |.  75 08                          |JNZ SHORT League_o.00B823D6
+00B823CE  |.  8B87 94310000                  |MOV EAX,DWORD PTR DS:[EDI+3194]
+00B823D4  |.  EB 04                          |JMP SHORT League_o.00B823DA
+00B823D6  |>  8BCF                           |MOV ECX,EDI
+00B823D8  |.  FFD0                           |CALL EAX
+00B823DA  |>  8B80 100B0000                  |MOV EAX,DWORD PTR DS:[EAX+B10]
+00B823E0  |.  83B8 98020000 00               |CMP DWORD PTR DS:[EAX+298],0
+00B823E7  |.  74 4F                          |JE SHORT League_o.00B82438
+00B823E9  |.  8B07                           |MOV EAX,DWORD PTR DS:[EDI]
+00B823EB  |.  8B00                           |MOV EAX,DWORD PTR DS:[EAX]
+00B823ED  |.  3D 70EDC100                    |CMP EAX,League_o.00C1ED70
+00B823F2  |.  75 08                          |JNZ SHORT League_o.00B823FC
+00B823F4  |.  8B87 94310000                  |MOV EAX,DWORD PTR DS:[EDI+3194]
+00B823FA  |.  EB 04                          |JMP SHORT League_o.00B82400
+00B823FC  |>  8BCF                           |MOV ECX,EDI
+00B823FE  |.  FFD0                           |CALL EAX
+00B82400  |>  8B80 100B0000                  |MOV EAX,DWORD PTR DS:[EAX+B10]
+00B82406  |.  8D4D D8                        |LEA ECX,DWORD PTR SS:[EBP-28]
+00B82409  |.  8B80 98020000                  |MOV EAX,DWORD PTR DS:[EAX+298]
+00B8240F  |.  8945 10                        |MOV DWORD PTR SS:[EBP+10],EAX
+00B82412  |.  8D45 10                        |LEA EAX,DWORD PTR SS:[EBP+10]
+00B82415  |.  50                             |PUSH EAX
+00B82416  |.  E8 85BB0600                    |CALL League_o.00BEDFA0
+00B8241B  |.  8B0D 7889A301                  |MOV ECX,DWORD PTR DS:[1A38978]
+00B82421  |.  85C9                           |TEST ECX,ECX
+00B82423  |.  74 13                          |JE SHORT League_o.00B82438
+00B82425  |.  8B45 E4                        |MOV EAX,DWORD PTR SS:[EBP-1C]
+00B82428  |.  8B40 08                        |MOV EAX,DWORD PTR DS:[EAX+8]
+00B8242B  |.  3B41 08                        |CMP EAX,DWORD PTR DS:[ECX+8]
+00B8242E  |.  75 08                          |JNZ SHORT League_o.00B82438
+00B82430  |.  8D53 02                        |LEA EDX,DWORD PTR DS:[EBX+2]
+00B82433  |.  8955 F0                        |MOV DWORD PTR SS:[EBP-10],EDX
+00B82436  |.  EB 03                          |JMP SHORT League_o.00B8243B
+00B82438  |>  8B55 F0                        |MOV EDX,DWORD PTR SS:[EBP-10]
+00B8243B  |>  43                             |INC EBX
+00B8243C  |.  83C6 04                        |ADD ESI,4
+00B8243F  |.  3B5D E8                        |CMP EBX,DWORD PTR SS:[EBP-18]
+00B82442  |.^ 0F85 40FFFFFF                  \JNZ League_o.00B82388
+00B82448  |.  8B7D 08                        MOV EDI,DWORD PTR SS:[EBP+8]
+00B8244B  |>  8B0D 7889A301                  MOV ECX,DWORD PTR DS:[1A38978]
+00B82451  |.  85C9                           TEST ECX,ECX
+00B82453  |.  74 27                          JE SHORT League_o.00B8247C
+00B82455  |.  83FA FF                        CMP EDX,-1
+00B82458  |.  75 22                          JNZ SHORT League_o.00B8247C
+00B8245A  |.  8B41 08                        MOV EAX,DWORD PTR DS:[ECX+8]
+00B8245D  |.  8B4D 0C                        MOV ECX,DWORD PTR SS:[EBP+C]
+00B82460  |.  3B41 08                        CMP EAX,DWORD PTR DS:[ECX+8]
+00B82463  |.  75 09                          JNZ SHORT League_o.00B8246E
+00B82465  |.  C745 F0 00000000               MOV DWORD PTR SS:[EBP-10],0
+00B8246C  |.  EB 0E                          JMP SHORT League_o.00B8247C
+00B8246E  |>  3B47 08                        CMP EAX,DWORD PTR DS:[EDI+8]
+00B82471  |.  B9 01000000                    MOV ECX,1
+00B82476  |.  0F44D1                         CMOVZ EDX, ECX
+00B82479  |.  8955 F0                        MOV DWORD PTR SS:[EBP-10],EDX
+00B8247C  |>  8B55 0C                        MOV EDX,DWORD PTR SS:[EBP+C]
+00B8247F  |.  8B42 18                        MOV EAX,DWORD PTR DS:[EDX+18]
+00B82482  |.  C1E8 0C                        SHR EAX,0C
+00B82485  |.  A8 01                          TEST AL,1
+00B82487  |.  74 12                          JE SHORT League_o.00B8249B
+00B82489  |.  8B07                           MOV EAX,DWORD PTR DS:[EDI]
+00B8248B  |.  8BCF                           MOV ECX,EDI
+00B8248D  |.  FF90 C8030000                  CALL DWORD PTR DS:[EAX+3C8]              ;  ³¬Éñ8Á¬É±Æ«ÒÆ
+00B82493  |.  8B55 0C                        MOV EDX,DWORD PTR SS:[EBP+C]
+00B82496  |.  8945 E8                        MOV DWORD PTR SS:[EBP-18],EAX
+00B82499  |.  EB 07                          JMP SHORT League_o.00B824A2
+00B8249B  |>  C745 E8 00000000               MOV DWORD PTR SS:[EBP-18],0
+00B824A2  |>  8B47 18                        MOV EAX,DWORD PTR DS:[EDI+18]
+00B824A5  |.  C1E8 0C                        SHR EAX,0C
+00B824A8  |.  A8 01                          TEST AL,1
+00B824AA  |.  74 11                          JE SHORT League_o.00B824BD
+00B824AC  |.  8B02                           MOV EAX,DWORD PTR DS:[EDX]
+00B824AE  |.  8BCA                           MOV ECX,EDX
+00B824B0  |.  FF90 C8030000                  CALL DWORD PTR DS:[EAX+3C8]
+00B824B6  |.  8BF8                           MOV EDI,EAX
+00B824B8  |.  8945 E4                        MOV DWORD PTR SS:[EBP-1C],EAX
+00B824BB  |.  EB 05                          JMP SHORT League_o.00B824C2
+00B824BD  |>  33FF                           XOR EDI,EDI
+00B824BF  |.  897D E4                        MOV DWORD PTR SS:[EBP-1C],EDI
+00B824C2  |>  8B45 EC                        MOV EAX,DWORD PTR SS:[EBP-14]
+00B824C5  |.  8B35 5CB8A301                  MOV ESI,DWORD PTR DS:[1A3B85C]
+00B824CB  |.  8B58 10                        MOV EBX,DWORD PTR DS:[EAX+10]
+00B824CE  |.  803E 00                        CMP BYTE PTR DS:[ESI],0
+00B824D1  |.  895D 10                        MOV DWORD PTR SS:[EBP+10],EBX
+00B824D4  |.  75 21                          JNZ SHORT League_o.00B824F7
+00B824D6  |.  68 9D6D4B01                    PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+00B824DB  |.  68 9D6D4B01                    PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+00B824E0  |.  6A 00                          PUSH 0                                   ; |Arg3 = 00000000
+00B824E2  |.  68 9D6D4B01                    PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+00B824E7  |.  68 08D74401                    PUSH League_o.0144D708                   ; |Arg1 = 0144D708 ASCII "ALE-B58C4DA3"
+00B824EC  |.  E8 BFC8BFFF                    CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+00B824F1  |.  8B45 EC                        MOV EAX,DWORD PTR SS:[EBP-14]
+00B824F4  |.  83C4 14                        ADD ESP,14
+00B824F7  |>  3B7E 0C                        CMP EDI,DWORD PTR DS:[ESI+C]
+00B824FA  |.  7C 05                          JL SHORT League_o.00B82501
+00B824FC  |.  8B40 18                        MOV EAX,DWORD PTR DS:[EAX+18]
+00B824FF  |.  EB 14                          JMP SHORT League_o.00B82515
+00B82501  |>  FF75 E8                        PUSH DWORD PTR SS:[EBP-18]
+00B82504  |.  8BCE                           MOV ECX,ESI
+00B82506  |.  E8 35CAA9FF                    CALL League_o.0061EF40
+00B8250B  |.  84C0                           TEST AL,AL
+00B8250D  |.  74 09                          JE SHORT League_o.00B82518
+00B8250F  |.  8B45 EC                        MOV EAX,DWORD PTR SS:[EBP-14]
+00B82512  |.  8B40 14                        MOV EAX,DWORD PTR DS:[EAX+14]
+00B82515  |>  8945 10                        MOV DWORD PTR SS:[EBP+10],EAX
+00B82518  |>  8B0D 7889A301                  MOV ECX,DWORD PTR DS:[1A38978]
+00B8251E  |.  8B5D 08                        MOV EBX,DWORD PTR SS:[EBP+8]
+00B82521  |.  85C9                           TEST ECX,ECX
+00B82523  |.  74 21                          JE SHORT League_o.00B82546
+00B82525  |.  8B43 08                        MOV EAX,DWORD PTR DS:[EBX+8]
+00B82528  |.  3B41 08                        CMP EAX,DWORD PTR DS:[ECX+8]
+00B8252B  |.  75 07                          JNZ SHORT League_o.00B82534
+00B8252D  |.  B9 2F000000                    MOV ECX,2F
+00B82532  |.  EB 17                          JMP SHORT League_o.00B8254B
+00B82534  |>  A1 7889A301                    MOV EAX,DWORD PTR DS:[1A38978]
+00B82539  |.  8B4B 14                        MOV ECX,DWORD PTR DS:[EBX+14]
+00B8253C  |.  3B48 14                        CMP ECX,DWORD PTR DS:[EAX+14]
+00B8253F  |.  B9 2D000000                    MOV ECX,2D
+00B82544  |.  74 05                          JE SHORT League_o.00B8254B
+00B82546  |>  B9 2E000000                    MOV ECX,2E
+00B8254B  |>  E8 003FC2FF                    CALL League_o.007A6450
+00B82550  |.  8B75 0C                        MOV ESI,DWORD PTR SS:[EBP+C]
+00B82553  |.  8B86 18010000                  MOV EAX,DWORD PTR DS:[ESI+118]
+00B82559  |.  8D8E 18010000                  LEA ECX,DWORD PTR DS:[ESI+118]
+00B8255F  |.  8B40 0C                        MOV EAX,DWORD PTR DS:[EAX+C]
+00B82562  |.  3D 309D5500                    CMP EAX,League_o.00559D30
+00B82567  |.  75 08                          JNZ SHORT League_o.00B82571
+00B82569  |.  8B81 FCFEFFFF                  MOV EAX,DWORD PTR DS:[ECX-104]
+00B8256F  |.  EB 02                          JMP SHORT League_o.00B82573
+00B82571  |>  FFD0                           CALL EAX
+00B82573  |>  8B8E D8050000                  MOV ECX,DWORD PTR DS:[ESI+5D8]
+00B82579  |.  8945 0C                        MOV DWORD PTR SS:[EBP+C],EAX
+00B8257C  |.  8B11                           MOV EDX,DWORD PTR DS:[ECX]
+00B8257E  |.  81FA 70EDC100                  CMP EDX,League_o.00C1ED70
+00B82584  |.  75 08                          JNZ SHORT League_o.00B8258E
+00B82586  |.  8BBE 6C370000                  MOV EDI,DWORD PTR DS:[ESI+376C]
+00B8258C  |.  EB 0A                          JMP SHORT League_o.00B82598
+00B8258E  |>  8D8E D8050000                  LEA ECX,DWORD PTR DS:[ESI+5D8]
+00B82594  |.  FFD2                           CALL EDX
+00B82596  |.  8BF8                           MOV EDI,EAX
+00B82598  |>  8B8B 18010000                  MOV ECX,DWORD PTR DS:[EBX+118]
+00B8259E  |.  8B71 0C                        MOV ESI,DWORD PTR DS:[ECX+C]
+00B825A1  |.  81FE 309D5500                  CMP ESI,League_o.00559D30
+00B825A7  |.  75 05                          JNZ SHORT League_o.00B825AE
+00B825A9  |.  8B5B 14                        MOV EBX,DWORD PTR DS:[EBX+14]
+00B825AC  |.  EB 0A                          JMP SHORT League_o.00B825B8
+00B825AE  |>  8D8B 18010000                  LEA ECX,DWORD PTR DS:[EBX+118]
+00B825B4  |.  FFD6                           CALL ESI
+00B825B6  |.  8BD8                           MOV EBX,EAX
+00B825B8  |>  8B45 08                        MOV EAX,DWORD PTR SS:[EBP+8]
+00B825BB  |.  8B88 D8050000                  MOV ECX,DWORD PTR DS:[EAX+5D8]
+00B825C1  |.  8B11                           MOV EDX,DWORD PTR DS:[ECX]
+00B825C3  |.  81FA 70EDC100                  CMP EDX,League_o.00C1ED70
+00B825C9  |.  75 08                          JNZ SHORT League_o.00B825D3
+00B825CB  |.  8B80 6C370000                  MOV EAX,DWORD PTR DS:[EAX+376C]
+00B825D1  |.  EB 08                          JMP SHORT League_o.00B825DB
+00B825D3  |>  8D88 D8050000                  LEA ECX,DWORD PTR DS:[EAX+5D8]
+00B825D9  |.  FFD2                           CALL EDX
+00B825DB  |>  8B80 100B0000                  MOV EAX,DWORD PTR DS:[EAX+B10]
+00B825E1  |.  8B8F 100B0000                  MOV ECX,DWORD PTR DS:[EDI+B10]
+00B825E7  |.  8BB8 98020000                  MOV EDI,DWORD PTR DS:[EAX+298]
+00B825ED  |.  8D45 D8                        LEA EAX,DWORD PTR SS:[EBP-28]
+00B825F0  |.  8BB1 98020000                  MOV ESI,DWORD PTR DS:[ECX+298]
+00B825F6  |.  8B4D 0C                        MOV ECX,DWORD PTR SS:[EBP+C]
+00B825F9  |.  50                             PUSH EAX
+00B825FA  |.  FF75 10                        PUSH DWORD PTR SS:[EBP+10]
+00B825FD  |.  FF75 F0                        PUSH DWORD PTR SS:[EBP-10]
+00B82600  |.  FF75 E4                        PUSH DWORD PTR SS:[EBP-1C]
+00B82603  |.  E8 C8DEB8FF                    CALL League_o.007104D0
+00B82608  |.  50                             PUSH EAX
+00B82609  |.  56                             PUSH ESI
+00B8260A  |.  FF75 E8                        PUSH DWORD PTR SS:[EBP-18]
+00B8260D  |.  8BCB                           MOV ECX,EBX
+00B8260F  |.  E8 BCDEB8FF                    CALL League_o.007104D0
+00B82614  |.  8B4D EC                        MOV ECX,DWORD PTR SS:[EBP-14]            ; |
+00B82617  |.  50                             PUSH EAX                                 ; |Arg2
+00B82618  |.  57                             PUSH EDI                                 ; |Arg1
+00B82619  |.  E8 525EB1FF                    CALL League_o.00698470                   ; \League_o.00698470
+00B8261E  |.  8D4D D8                        LEA ECX,DWORD PTR SS:[EBP-28]
+00B82621  |.  E8 6A880600                    CALL League_o.00BEAE90
+00B82626  |>  8B4D F4                        MOV ECX,DWORD PTR SS:[EBP-C]
+00B82629  |.  64:890D 00000000               MOV DWORD PTR FS:[0],ECX
+00B82630  |.  59                             POP ECX
+00B82631  |.  5F                             POP EDI
+00B82632  |.  5E                             POP ESI
+00B82633  |.  5B                             POP EBX
+00B82634  |.  8BE5                           MOV ESP,EBP
+00B82636  |.  5D                             POP EBP
+00B82637  \.  C2 0C00                        RETN 0C
+

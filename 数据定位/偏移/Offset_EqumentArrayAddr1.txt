@@ -1,0 +1,71 @@
+005B5960   $  83EC 24               SUB ESP,24
+005B5963   .  53                    PUSH EBX
+005B5964   .  55                    PUSH EBP
+005B5965   .  56                    PUSH ESI
+005B5966   .  57                    PUSH EDI
+005B5967   .  8BF9                  MOV EDI,ECX
+005B5969   .  807F 61 00            CMP BYTE PTR DS:[EDI+61],0
+005B596D   .  0F84 F7030000         JE League_o.005B5D6A
+005B5973   .  8B4F 58               MOV ECX,DWORD PTR DS:[EDI+58]
+005B5976   .  85C9                  TEST ECX,ECX
+005B5978   .  0F84 EC030000         JE League_o.005B5D6A
+005B597E   .  8B47 40               MOV EAX,DWORD PTR DS:[EDI+40]
+005B5981   .  85C0                  TEST EAX,EAX
+005B5983   .  0F88 E1030000         JS 5B5D6A
+005B5989   .  83F8 09               CMP EAX,9
+005B598C   .  0F8D D8030000         JGE League_o.005B5D6A
+005B5992   .  8B15 748DA301         MOV EDX,DWORD PTR DS:[1A38D74]
+005B5998   .  81C1 E8140000         ADD ECX,14E8                             ;  装备数组偏移1
+005B599E   .  50                    PUSH EAX
+005B599F   .  895424 1C             MOV DWORD PTR SS:[ESP+1C],EDX
+005B59A3   .  E8 78954C00           CALL League_o.00A7EF20
+005B59A8   .  84C0                  TEST AL,AL
+005B59AA   .  0F85 BA030000         JNZ League_o.005B5D6A
+005B59B0   .  837F 48 00            CMP DWORD PTR DS:[EDI+48],0
+005B59B4   .  0F84 B0030000         JE League_o.005B5D6A
+005B59BA   .  3847 60               CMP BYTE PTR DS:[EDI+60],AL
+005B59BD   .  74 1E                 JE SHORT League_o.005B59DD
+005B59BF   .  8BCF                  MOV ECX,EDI
+005B59C1   .  E8 FA662E00           CALL League_o.0089C0C0
+005B59C6   .  8B07                  MOV EAX,DWORD PTR DS:[EDI]
+005B59C8   .  6A 01                 PUSH 1
+005B59CA   .  8B48 40               MOV ECX,DWORD PTR DS:[EAX+40]
+005B59CD   .  FF70 44               PUSH DWORD PTR DS:[EAX+44]
+005B59D0   .  8B11                  MOV EDX,DWORD PTR DS:[ECX]
+005B59D2   .  FF52 28               CALL DWORD PTR DS:[EDX+28]
+005B59D5   .  5F                    POP EDI
+005B59D6   .  5E                    POP ESI
+005B59D7   .  5D                    POP EBP
+005B59D8   .  5B                    POP EBX
+005B59D9   .  83C4 24               ADD ESP,24
+005B59DC   .  C3                    RETN
+005B59DD   >  8B47 40               MOV EAX,DWORD PTR DS:[EDI+40]
+005B59E0   .  8B4F 58               MOV ECX,DWORD PTR DS:[EDI+58]
+005B59E3   .  83C0 06               ADD EAX,6
+005B59E6   .  50                    PUSH EAX
+005B59E7   .  81C1 58280000         ADD ECX,2858
+005B59ED   .  E8 6EAA3300           CALL League_o.008F0460
+005B59F2   .  8B4F 58               MOV ECX,DWORD PTR DS:[EDI+58]
+005B59F5   .  8BD8                  MOV EBX,EAX
+005B59F7   .  FF77 40               PUSH DWORD PTR DS:[EDI+40]
+005B59FA   .  81C1 E8140000         ADD ECX,14E8
+005B5A00   .  E8 ABCB1300           CALL League_o.006F25B0
+005B5A05   .  8B4F 58               MOV ECX,DWORD PTR DS:[EDI+58]
+005B5A08   .  FF77 40               PUSH DWORD PTR DS:[EDI+40]
+005B5A0B   .  81C1 E8140000         ADD ECX,14E8
+005B5A11   .  84C0                  TEST AL,AL
+005B5A13   .  74 09                 JE SHORT League_o.005B5A1E
+005B5A15   .  E8 06630F00           CALL League_o.006ABD20
+005B5A1A   .  8BE8                  MOV EBP,EAX
+005B5A1C   .  EB 49                 JMP SHORT League_o.005B5A67
+005B5A1E   >  E8 ADE00800           CALL League_o.00643AD0
+005B5A23   .  8BE8                  MOV EBP,EAX
+005B5A25   .  85ED                  TEST EBP,EBP
+005B5A27   .  75 3E                 JNZ SHORT League_o.005B5A67
+005B5A29   .  3983 EC000000         CMP DWORD PTR DS:[EBX+EC],EAX
+005B5A2F   .  74 36                 JE SHORT League_o.005B5A67
+005B5A31   .  8BCB                  MOV ECX,EBX
+005B5A33   .  E8 182A1F00           CALL League_o.007A8450
+005B5A38   .  85C0                  TEST EAX,EAX
+005B5A3A   .  78 2B                 JS SHORT League_o.005B5A67
+

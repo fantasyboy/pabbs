@@ -14,7 +14,8 @@ CSkillServices::~CSkillServices()
 void CSkillServices::travse()
 {
 	m_skillList.clear();
-	auto dwBase = utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr + Base_SkillTravseOffset1 + Base_SkillTravseOffset2);
+
+	auto dwBase = utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr) + Base_SkillTravseOffset1 + Base_SkillTravseOffset2;
 	for (auto i = 0 ; i != 0x3f; i++)
 	{
 		auto skillBase = utils::GetInstance()->read<DWORD>(dwBase + i * 4);
@@ -29,9 +30,11 @@ void CSkillServices::travse()
 	utils::GetInstance()->log("TIPS: 技能数量为：%d\n", m_skillList.size());
 	for (auto temp : m_skillList)
 	{
-		utils::GetInstance()->log("TIPS: %s %d %d %d %f %f %f", temp.GetName(), 
-			temp.GetLevel(),
+		utils::GetInstance()->log("TIPS: %x %s %d %d %d %f %f %f\n",
+			temp.GetNodeBase(),
+			temp.GetName(),
 			temp.GetIndex(),
+			temp.GetLevel(),
 			temp.bCoolDown(),
 			temp.GetExpendMP(),
 			temp.GetMaxCoolTime(),

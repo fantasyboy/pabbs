@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="base.h" />
     <ClInclude Include="BaseAddr.h" />
+    <ClInclude Include="buffer.h" />
+    <ClInclude Include="BufferServices.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="GameCall.h" />
     <ClInclude Include="skill.h" />
@@ -159,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base.cpp" />
+    <ClCompile Include="buffer.cpp" />
+    <ClCompile Include="BufferServices.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

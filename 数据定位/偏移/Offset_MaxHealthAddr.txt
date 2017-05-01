@@ -1,0 +1,78 @@
+006EE0FC      CC            INT3
+006EE0FD      CC            INT3
+006EE0FE      CC            INT3
+006EE0FF      CC            INT3
+006EE100   .  51            PUSH ECX
+006EE101   .  F30F1089 0803>MOVSS XMM1, [ECX+308]                    ;  ×î´óÑªÁ¿Æ«ÒÆ
+006EE109   .  8B81 6C370000 MOV EAX,DWORD PTR DS:[ECX+376C]
+006EE10F   .  F30F110C24    MOVSS [ESP], XMM1
+006EE114   .  85C0          TEST EAX,EAX
+006EE116   .  74 05         JE SHORT League_o.006EE11D
+006EE118   .  8B40 1C       MOV EAX,DWORD PTR DS:[EAX+1C]
+006EE11B   .  EB 02         JMP SHORT League_o.006EE11F
+006EE11D   >  33C0          XOR EAX,EAX
+006EE11F   >  85C0          TEST EAX,EAX
+006EE121   .  74 27         JE SHORT League_o.006EE14A
+006EE123   .  81C1 28020000 ADD ECX,228
+006EE129   .  BA 02000000   MOV EDX,2
+006EE12E   .  83C0 7E       ADD EAX,7E
+006EE131   >  8038 00       CMP BYTE PTR DS:[EAX],0
+006EE134   .  74 04         JE SHORT League_o.006EE13A
+006EE136   .  F30F5809      ADDSS XMM1, [ECX]
+006EE13A   >  83C0 24       ADD EAX,24
+006EE13D   .  83C1 44       ADD ECX,44
+006EE140   .  83EA 01       SUB EDX,1
+006EE143   .^ 75 EC         JNZ SHORT League_o.006EE131
+006EE145   .  F30F110C24    MOVSS [ESP], XMM1
+006EE14A   >  D90424        FLD DWORD PTR SS:[ESP]
+006EE14D   .  59            POP ECX
+006EE14E   .  C3            RETN
+006EE14F      CC            INT3
+006EE150  /$  56            PUSH ESI
+006EE151  |.  8B7424 08     MOV ESI,DWORD PTR SS:[ESP+8]
+006EE155  |.  57            PUSH EDI
+006EE156  |.  8BF9          MOV EDI,ECX
+006EE158  |.  85F6          TEST ESI,ESI
+006EE15A  |.  78 05         JS SHORT League_o.006EE161
+006EE15C  |.  83FE 40       CMP ESI,40
+006EE15F  |.  7C 1E         JL SHORT League_o.006EE17F
+006EE161  |>  68 9D6D4B01   PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006EE166  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006EE16B  |.  6A 00         PUSH 0                                   ; |Arg3 = 00000000
+006EE16D  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006EE172  |.  68 58733C01   PUSH League_o.013C7358                   ; |Arg1 = 013C7358 ASCII "ALE-3158EA48"
+006EE177  |.  E8 340C0900   CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006EE17C  |.  83C4 14       ADD ESP,14
+006EE17F  |>  C1E6 04       SHL ESI,4
+006EE182  |.  03F7          ADD ESI,EDI
+006EE184  |.  F30F1046 28   MOVSS XMM0, [ESI+28]
+006EE189  |.  0F2F05 DC516A>COMISS XMM0, [16A51DC]
+006EE190  |.  73 1E         JNB SHORT League_o.006EE1B0
+006EE192  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006EE197  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006EE19C  |.  6A 00         PUSH 0                                   ; |Arg3 = 00000000
+006EE19E  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006EE1A3  |.  68 54BC3E01   PUSH League_o.013EBC54                   ; |Arg1 = 013EBC54 ASCII "ALE-F37C767F"
+006EE1A8  |.  E8 030C0900   CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006EE1AD  |.  83C4 14       ADD ESP,14
+006EE1B0  |>  F30F1005 4C57>MOVSS XMM0, [16A574C]
+006EE1B8  |.  0F2F46 28     COMISS XMM0, [ESI+28]
+006EE1BC  |.  73 1E         JNB SHORT League_o.006EE1DC
+006EE1BE  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+006EE1C3  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+006EE1C8  |.  6A 00         PUSH 0                                   ; |Arg3 = 00000000
+006EE1CA  |.  68 9D6D4B01   PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+006EE1CF  |.  68 78434801   PUSH League_o.01484378                   ; |Arg1 = 01484378 ASCII "ALE-B89C15A8"
+006EE1D4  |.  E8 D70B0900   CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+006EE1D9  |.  83C4 14       ADD ESP,14
+006EE1DC  |>  5F            POP EDI
+006EE1DD  |.  8D46 28       LEA EAX,DWORD PTR DS:[ESI+28]
+006EE1E0  |.  5E            POP ESI
+006EE1E1  \.  C2 0400       RETN 4
+006EE1E4      CC            INT3
+006EE1E5      CC            INT3
+006EE1E6      CC            INT3
+006EE1E7      CC            INT3
+006EE1E8      CC            INT3
+006EE1E9      CC            INT3
+

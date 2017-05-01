@@ -19,7 +19,7 @@ GameCall::GameCall(const GameCall& _call)
 
 GameCall GameCall::operator=(const GameCall& _call)
 {
-
+	return *this;
 }
 
 GameCall::~GameCall()
@@ -42,5 +42,12 @@ GameCall* GameCall::GetInstance()
 
 float GameCall::GetClientTickTime() const
 {
-	return utils::GetInstance()->read<float>(Base_GameStartTime + 0x30);
+	__try {
+		return utils::GetInstance()->read<float>(Base_GameStartTime + 0x30);
+	}
+	__except(1)
+	{
+		utils::GetInstance()->log("ERROR: GameCall::GetClientTickTime()³öÏÖÒì³££¡\n");
+		return 0;
+	}
 }

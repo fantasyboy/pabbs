@@ -1,0 +1,35 @@
+const DWORD Base_RoleAddr = 0x01A38978;    //玩家基地址     偏移:2    //OD地址:0x00562D4E
+const DWORD Base_MonsterAddr = 0x0; //怪物基地址
+const DWORD Base_SkillEcxAddr = 0x01E0D64C;    //技能CALL ECX     偏移:2    //OD地址:0x00DFC238
+const DWORD Base_HookSkillAddr = 0x00840F6D;    //HOOK 技能释放位置     偏移:0    //OD地址:0x00840F6D
+const DWORD Base_MingWenBao = 0x007EF8D0;    //明文包位置     偏移:0    //OD地址:0x007EF8D0
+const DWORD Offset_CurHealthAddr = 0x000002F8;    //当前血量偏移     偏移:4    //OD地址:0x00BD85F1
+const DWORD Offset_MaxHealthAddr = 0x00000308;    //最大血量偏移     偏移:4    //OD地址:0x006EE101
+const DWORD Offset_CurMagicAddr = 0x00000218;    //当前蓝量偏移     偏移:5    //OD地址:0x0086449F
+const DWORD Offset_MaxMagicAddr = 0x00000228;    //最大蓝量偏移     偏移:5    //OD地址:0x00864491
+const DWORD Offset_LevelAddr = 0x00003A44;    //等级偏移      偏移:2    //OD地址:0x00B09DBD
+const DWORD Offset_BDeadAddr = 0x0000010C;    //死亡标志位偏移     偏移:2    //OD地址:0x006A76F4
+const DWORD Offset_MoneyAddr = 0x000014B8;    //金钱偏移     偏移:4    //OD地址:0x00962140
+const DWORD Offset_More8KilledAddr = 0x000003C8;    //超神偏移     偏移:2    //OD地址:0x00B8248D
+const DWORD Offset_RestSkillPointAddr = 0x0;//剩余技能点偏移
+const DWORD Offset_CurExpAddr = 0x0; //当前经验值偏移
+const DWORD Offset_MaxExpAddr = 0x0; //最大经验值偏移
+const DWORD Offset_KilledNumAddr = 0x0; //杀人数偏移
+const DWORD Offset_DeadedNumAddr = 0x0; //死亡数偏移
+const DWORD Offset_HelpedNumAddr = 0x0; //助攻数偏移
+const DWORD Offset_SkillArrayAddr1 = 0x00002858;    //技能数组偏移1     偏移:1    //OD地址:0x009E03CD
+const DWORD Offset_SkillArrayAddr2 = 0x00000538;    //技能数组偏移2     偏移:3    //OD地址:0x0059F85C
+const DWORD Offset_EqumentArrayAddr1 = 0x000014E8;    //装备数组偏移1     偏移:2    //OD地址:0x005B5998
+const DWORD Offset_EqumentArrayAddr2 = 0x00000288;    //装备数组偏移2     偏移:3    //OD地址:0x006F25DF
+const DWORD Offset_HeroNameAddr = 0x00000038;    //玩家英雄名字偏移     偏移:2    //OD地址:0x008F060B
+const DWORD Offset_XAddr = 0x00000050;    //X坐标偏移     偏移:2    //OD地址:0x0093D0EE
+const DWORD Offset_YAddr = 0x00000058;    //Y坐标偏移     偏移:2    //OD地址:0x0093D0FD
+const DWORD Offset_ZAddr = 0x00000054;    //Z坐标偏移     偏移:2    //OD地址:0x0093D0F7
+const DWORD Offset_CampAddr = 0x00000014;    //阵营偏移     偏移:2    //OD地址:0x006C12B9
+const DWORD Offset_TypeAddr = 0x00000018;    //类型偏移     偏移:2    //OD地址:0x00B38FC6
+const DWORD Offset_BVisiableAddr = 0x0;
+
+const DWORD Call_SkillAddr = 0x007131B0;    //技能CALL     偏移:1    //OD地址:0x00DFC25F
+const DWORD Call_AttackAddr = 0x00825980;    //普通攻击CALL     偏移:1    //OD地址:0x00963ABE
+const DWORD Call_Message = 0x0; //喊话CALL 
+

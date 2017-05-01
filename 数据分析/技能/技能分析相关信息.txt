@@ -1,0 +1,229 @@
+一般情况下，我们需要下面的一些信息
+1.技能对象
+2.技能等级
+3.技能是否可用
+4.技能释放范围
+5.技能朝向
+
+
+以技能等级作为突破口，很快就可以找到技能对象数组。
+
+008C091D    CC              INT3
+008C091E    CC              INT3
+008C091F    CC              INT3
+008C0920    56              PUSH ESI
+008C0921    8BF1            MOV ESI,ECX
+008C0923    8B06            MOV EAX,DWORD PTR DS:[ESI]
+008C0925    3D CC773D01     CMP EAX,League_o.013D77CC                ; 这是对技能等级下硬断断下的地方
+008C092A    75 33           JNZ SHORT League_o.008C095F
+008C092C    83BE F4000000 0>CMP DWORD PTR DS:[ESI+F4],0
+008C0933    0F95C0          SETNZ AL
+008C0936    84C0            TEST AL,AL
+008C0938    74 21           JE SHORT League_o.008C095B
+008C093A    8B06            MOV EAX,DWORD PTR DS:[ESI]
+008C093C    3D CC773D01     CMP EAX,League_o.013D77CC
+008C0941    75 23           JNZ SHORT League_o.008C0966
+008C0943    8B86 F4000000   MOV EAX,DWORD PTR DS:[ESI+F4]
+008C0949    5E              POP ESI
+008C094A    8378 0C 00      CMP DWORD PTR DS:[EAX+C],0
+008C094E    0F95C0          SETNZ AL
+008C0951    C3              RETN
+008C0952    8378 0C 00      CMP DWORD PTR DS:[EAX+C],0
+008C0956    5E              POP ESI
+008C0957    0F95C0          SETNZ AL
+008C095A    C3              RETN
+008C095B    32C0            XOR AL,AL
+008C095D    5E              POP ESI
+008C095E    C3              RETN
+008C095F    8B40 08         MOV EAX,DWORD PTR DS:[EAX+8]
+008C0962    FFD0            CALL EAX
+008C0964  ^ EB D0           JMP SHORT League_o.008C0936
+008C0966    8BCE            MOV ECX,ESI
+008C0968    FF50 0C         CALL DWORD PTR DS:[EAX+C]
+008C096B  ^ EB E5           JMP SHORT League_o.008C0952
+008C096D    8B81 94010000   MOV EAX,DWORD PTR DS:[ECX+194]
+008C0973    B9 000000A0     MOV ECX,A0000000
+008C0978    23C1            AND EAX,ECX
+008C097A    3BC1            CMP EAX,ECX
+008C097C    0F94C0          SETZ AL
+008C097F    C3              RETN
+
+============================================================================
+006C2450    55              PUSH EBP
+006C2451    8BEC            MOV EBP,ESP
+006C2453    83E4 F8         AND ESP,FFFFFFF8
+006C2456    8B45 08         MOV EAX,DWORD PTR SS:[EBP+8]
+006C2459    83EC 34         SUB ESP,34
+006C245C    53              PUSH EBX
+006C245D    56              PUSH ESI
+006C245E    57              PUSH EDI
+006C245F    8BF9            MOV EDI,ECX
+006C2461    85C0            TEST EAX,EAX
+006C2463    74 2A           JE SHORT League_o.006C248F
+006C2465    8B75 0C         MOV ESI,DWORD PTR SS:[EBP+C]
+006C2468    83FE 40         CMP ESI,40
+006C246B    77 22           JA SHORT League_o.006C248F
+006C246D    05 48290000     ADD EAX,2948
+006C2472    56              PUSH ESI
+006C2473    8BC8            MOV ECX,EAX
+006C2475    894424 24       MOV DWORD PTR SS:[ESP+24],EAX
+006C2479    E8 B2C7EDFF     CALL League_o.0059EC30
+006C247E    8BD8            MOV EBX,EAX                              ; eax
+006C2480    895C24 24       MOV DWORD PTR SS:[ESP+24],EBX
+006C2484    83BB F4000000 0>CMP DWORD PTR DS:[EBX+F4],0
+006C248B    75 10           JNZ SHORT League_o.006C249D
+006C248D    8BCF            MOV ECX,EDI
+006C248F    8B07            MOV EAX,DWORD PTR DS:[EDI]
+006C2491    FF50 04         CALL DWORD PTR DS:[EAX+4]
+006C2494    5F              POP EDI
+006C2495    5E              POP ESI
+006C2496    5B              POP EBX
+006C2497    8BE5            MOV ESP,EBP
+006C2499    5D              POP EBP
+006C249A    C2 0800         RETN 8
+006C249D    8B45 08         MOV EAX,DWORD PTR SS:[EBP+8]
+006C24A0    8947 1C         MOV DWORD PTR DS:[EDI+1C],EAX
+006C24A3    A1 A8D5A601     MOV EAX,DWORD PTR DS:[1A6D5A8]
+006C24A8    8977 14         MOV DWORD PTR DS:[EDI+14],ESI
+006C24AB    8B8B F4000000   MOV ECX,DWORD PTR DS:[EBX+F4]
+006C24B1    894424 28       MOV DWORD PTR SS:[ESP+28],EAX
+006C24B5    85C9            TEST ECX,ECX
+006C24B7    75 04           JNZ SHORT League_o.006C24BD
+006C24B9    33C0            XOR EAX,EAX
+006C24BB    EB 0E           JMP SHORT League_o.006C24CB
+006C24BD    0FB683 AD000000 MOVZX EAX, BYTE [EBX+AD]
+006C24C4    8B8481 18170000 MOV EAX,DWORD PTR DS:[ECX+EAX*4+1718]
+006C24CB    894424 14       MOV DWORD PTR SS:[ESP+14],EAX
+006C24CF    3B47 18         CMP EAX,DWORD PTR DS:[EDI+18]
+006C24D2    74 29           JE SHORT League_o.006C24FD
+006C24D4    8B47 04         MOV EAX,DWORD PTR DS:[EDI+4]
+006C24D7    FF7424 14       PUSH DWORD PTR SS:[ESP+14]
+006C24DB    8B48 40         MOV ECX,DWORD PTR DS:[EAX+40]
+006C24DE    FF70 44         PUSH DWORD PTR DS:[EAX+44]
+006C24E1    8B11            MOV EDX,DWORD PTR DS:[ECX]
+006C24E3    FF52 50         CALL DWORD PTR DS:[EDX+50]
+006C24E6    8B47 04         MOV EAX,DWORD PTR DS:[EDI+4]
+006C24E9    6A 01           PUSH 1
+006C24EB    8B48 40         MOV ECX,DWORD PTR DS:[EAX+40]
+006C24EE    FF70 44         PUSH DWORD PTR DS:[EAX+44]
+006C24F1    8B11            MOV EDX,DWORD PTR DS:[ECX]
+006C24F3    FF52 28         CALL DWORD PTR DS:[EDX+28]
+006C24F6    8B4424 14       MOV EAX,DWORD PTR SS:[ESP+14]
+006C24FA    8947 18         MOV DWORD PTR DS:[EDI+18],EAX
+006C24FD    8BCB            MOV ECX,EBX                              ; 第二层
+006C24FF    E8 1CE41F00     CALL League_o.008C0920
+
+========================================================================
+0059EC30    56              PUSH ESI
+0059EC31    8B7424 08       MOV ESI,DWORD PTR SS:[ESP+8]
+0059EC35    57              PUSH EDI
+0059EC36    8BF9            MOV EDI,ECX
+0059EC38    85F6            TEST ESI,ESI
+0059EC3A    78 05           JS SHORT League_o.0059EC41
+0059EC3C    83FE 41         CMP ESI,41
+0059EC3F    7C 1E           JL SHORT League_o.0059EC5F
+0059EC41    68 A0814C01     PUSH League_o.014C81A0
+0059EC46    68 A0814C01     PUSH League_o.014C81A0
+0059EC4B    6A 00           PUSH 0
+0059EC4D    68 A0814C01     PUSH League_o.014C81A0
+0059EC52    68 E4584401     PUSH League_o.014458E4                   ; ASCII "ALE-C00960B2"
+0059EC57    E8 54234900     CALL League_o.00A30FB0
+0059EC5C    83C4 14         ADD ESP,14
+0059EC5F    83FE 40         CMP ESI,40
+0059EC62    77 0C           JA SHORT League_o.0059EC70
+0059EC64    8B84B7 60050000 MOV EAX,DWORD PTR DS:[EDI+ESI*4+560]     ; 技能数组
+0059EC6B    5F              POP EDI
+0059EC6C    5E              POP ESI
+0059EC6D    C2 0400         RETN 4
+0059EC70    8B87 60050000   MOV EAX,DWORD PTR DS:[EDI+560]           ; 跟进第三层
+0059EC76    5F              POP EDI
+0059EC77    5E              POP ESI
+0059EC78    C2 0400         RETN 4
+
+=========================================================================
+
+006C2450    55              PUSH EBP
+006C2451    8BEC            MOV EBP,ESP
+006C2453    83E4 F8         AND ESP,FFFFFFF8
+006C2456    8B45 08         MOV EAX,DWORD PTR SS:[EBP+8]
+006C2459    83EC 34         SUB ESP,34
+006C245C    53              PUSH EBX
+006C245D    56              PUSH ESI
+006C245E    57              PUSH EDI
+006C245F    8BF9            MOV EDI,ECX
+006C2461    85C0            TEST EAX,EAX
+006C2463    74 2A           JE SHORT League_o.006C248F
+006C2465    8B75 0C         MOV ESI,DWORD PTR SS:[EBP+C]
+006C2468    83FE 40         CMP ESI,40
+006C246B    77 22           JA SHORT League_o.006C248F
+006C246D    05 48290000     ADD EAX,2948                             ; EAX+ 2948 +ESI*4+560
+006C2472    56              PUSH ESI                                 ; 技能索引
+006C2473    8BC8            MOV ECX,EAX                              ; ECX+ESI*4+560
+006C2475    894424 24       MOV DWORD PTR SS:[ESP+24],EAX
+006C2479    E8 B2C7EDFF     CALL League_o.0059EC30
+006C247E    8BD8            MOV EBX,EAX                              ; eax
+006C2480    895C24 24       MOV DWORD PTR SS:[ESP+24],EBX
+006C2484    83BB F4000000 0>CMP DWORD PTR DS:[EBX+F4],0
+006C248B    75 10           JNZ SHORT League_o.006C249D
+006C248D    8BCF            MOV ECX,EDI
+006C248F    8B07            MOV EAX,DWORD PTR DS:[EDI]
+006C2491    FF50 04         CALL DWORD PTR DS:[EAX+4]
+006C2494    5F              POP EDI
+006C2495    5E              POP ESI
+006C2496    5B              POP EBX
+006C2497    8BE5            MOV ESP,EBP
+006C2499    5D              POP EBP
+006C249A    C2 0800         RETN 8
+006C249D    8B45 08         MOV EAX,DWORD PTR SS:[EBP+8]
+
+=====================================
+0071929C   /74 5D           JE SHORT League_o.007192FB
+0071929E   |51              PUSH ECX
+0071929F   |8B0B            MOV ECX,DWORD PTR DS:[EBX]
+007192A1   |E8 DAA6E9FF     CALL League_o.005B3980
+007192A6   |33F6            XOR ESI,ESI
+007192A8   |8D7B 04         LEA EDI,DWORD PTR DS:[EBX+4]
+007192AB   |0F1F4400 00     NOP DWORD [EAX+EAX+0]
+007192B0   |8B0F            MOV ECX,DWORD PTR DS:[EDI]
+007192B2   |56              PUSH ESI
+007192B3   |FF35 70DAA601   PUSH DWORD PTR DS:[1A6DA70]              ; 人物基地址
+007192B9   |8B01            MOV EAX,DWORD PTR DS:[ECX]
+007192BB   |FF50 08         CALL DWORD PTR DS:[EAX+8]
+007192BE   |56              PUSH ESI
+007192BF   |51              PUSH ECX
+007192C0   |8B4F 18         MOV ECX,DWORD PTR DS:[EDI+18]
+007192C3   |E8 A8401A00     CALL League_o.008BD370
+007192C8   |46              INC ESI
+007192C9   |8D7F 04         LEA EDI,DWORD PTR DS:[EDI+4]
+007192CC   |83FE 04         CMP ESI,4
+007192CF  ^|72 DF           JB SHORT League_o.007192B0
+007192D1   |33F6            XOR ESI,ESI
+007192D3   |8D7B 14         LEA EDI,DWORD PTR DS:[EBX+14]
+007192D6   |8B0F            MOV ECX,DWORD PTR DS:[EDI]
+007192D8   |8D46 04         LEA EAX,DWORD PTR DS:[ESI+4]
+007192DB   |50              PUSH EAX
+007192DC   |FF35 70DAA601   PUSH DWORD PTR DS:[1A6DA70]
+007192E2   |8B11            MOV EDX,DWORD PTR DS:[ECX]
+007192E4   |FF52 08         CALL DWORD PTR DS:[EDX+8]
+007192E7   |46              INC ESI
+007192E8   |8D7F 04         LEA EDI,DWORD PTR DS:[EDI+4]
+007192EB   |83FE 02         CMP ESI,2
+007192EE  ^|72 E6           JB SHORT League_o.007192D6
+007192F0   |8B4B 2C         MOV ECX,DWORD PTR DS:[EBX+2C]
+007192F3   |5F              POP EDI
+
+==================================
+ok，到这里，技能的数组就分析完成了。得到的表达式为：
+
+[1A6DA70] + 2948 +ESI*4+560  //技能对象
+[技能对象]+10 等级（DWORD）
+[技能对象]+18 技能冷却的时间（相对于游戏时间）
+[技能对象]+44 技能冷却时间（需要冷却的时间）
+[[技能对象]+0f4]+18 技能名字或者技能名字指针
+[[技能对象]+0f4]+28 技能名字长度
+[技能对象]+0f0   技能目的坐标的指针
+[技能目的坐标的指针]+10,14,18 人物当前坐标
+[技能目的坐标的指针]+1c,20,24 鼠标的坐标 （根据两个坐标就可以算出技能的朝向）
+[[[技能对象]+0f4]+34]+5a8 + level *4 技能蓝耗
+[[[技能对象]+0f4]+34]+3b0 + level *4 技能距离
+[[[技能对象]+0f4]+34]+3e8 + level *4 技能小范围

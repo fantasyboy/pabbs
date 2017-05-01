@@ -1,0 +1,121 @@
+00840E70  /$  83EC 18                        SUB ESP,18
+00840E73  |.  53                             PUSH EBX
+00840E74  |.  56                             PUSH ESI
+00840E75  |.  57                             PUSH EDI
+00840E76  |.  8B7C24 28                      MOV EDI,DWORD PTR SS:[ESP+28]
+00840E7A  |.  8BD9                           MOV EBX,ECX
+00840E7C  |.  57                             PUSH EDI
+00840E7D  |.  E8 4E410400                    CALL League_o.00884FD0
+00840E82  |.  8BF0                           MOV ESI,EAX
+00840E84  |.  85F6                           TEST ESI,ESI
+00840E86  |.  0F84 3D010000                  JE League_o.00840FC9
+00840E8C  |.  83BE E8000000 00               CMP DWORD PTR DS:[ESI+E8],0
+00840E93  |.  0F84 30010000                  JE League_o.00840FC9
+00840E99  |.  837C24 2C 00                   CMP DWORD PTR SS:[ESP+2C],0
+00840E9E  |.  0F84 9F000000                  JE League_o.00840F43
+00840EA4  |.  8BCE                           MOV ECX,ESI
+00840EA6  |.  E8 FD621803                    CALL League_o.039C71A8
+00840EAB  |.  3C 01                          CMP AL,1
+00840EAD  |.  74 0F                          JE SHORT League_o.00840EBE
+00840EAF  |.  8BCE                           MOV ECX,ESI
+00840EB1  |.  E8 F2621803                    CALL League_o.039C71A8
+00840EB6  |.  3C 05                          CMP AL,5
+00840EB8  |.  0F85 0B010000                  JNZ League_o.00840FC9
+00840EBE  |>  FF7424 2C                      PUSH DWORD PTR SS:[ESP+2C]               ; /Arg1
+00840EC2  |.  E8 897A3E00                    CALL League_o.00C28950                   ; \League_o.00C28950
+00840EC7  |.  8BD0                           MOV EDX,EAX
+00840EC9  |.  85D2                           TEST EDX,EDX
+00840ECB  |.  0F84 F8000000                  JE League_o.00840FC9
+00840ED1  |.  A1 7889A301                    MOV EAX,DWORD PTR DS:[1A38978]
+00840ED6  |.  85C0                           TEST EAX,EAX
+00840ED8  |.  74 08                          JE SHORT League_o.00840EE2
+00840EDA  |.  8D88 18010000                  LEA ECX,DWORD PTR DS:[EAX+118]
+00840EE0  |.  EB 02                          JMP SHORT League_o.00840EE4
+00840EE2  |>  33C9                           XOR ECX,ECX
+00840EE4  |>  83C0 08                        ADD EAX,8
+00840EE7  |.  8D7A 50                        LEA EDI,DWORD PTR DS:[EDX+50]
+00840EEA  |.  50                             PUSH EAX
+00840EEB  |.  51                             PUSH ECX
+00840EEC  |.  8D4424 34                      LEA EAX,DWORD PTR SS:[ESP+34]
+00840EF0  |.  8BCE                           MOV ECX,ESI
+00840EF2  |.  50                             PUSH EAX
+00840EF3  |.  57                             PUSH EDI
+00840EF4  |.  57                             PUSH EDI
+00840EF5  |.  E8 96745600                    CALL League_o.00DA8390
+00840EFA  |.  84C0                           TEST AL,AL
+00840EFC  |.  0F84 C7000000                  JE League_o.00840FC9
+00840F02  |.  8B0D 7889A301                  MOV ECX,DWORD PTR DS:[1A38978]
+00840F08  |.  85C9                           TEST ECX,ECX
+00840F0A  |.  74 08                          JE SHORT League_o.00840F14
+00840F0C  |.  8D91 18010000                  LEA EDX,DWORD PTR DS:[ECX+118]
+00840F12  |.  EB 02                          JMP SHORT League_o.00840F16
+00840F14  |>  33D2                           XOR EDX,EDX
+00840F16  |>  8D81 100C0000                  LEA EAX,DWORD PTR DS:[ECX+C10]
+00840F1C  |.  50                             PUSH EAX
+00840F1D  |.  51                             PUSH ECX
+00840F1E  |.  8D41 08                        LEA EAX,DWORD PTR DS:[ECX+8]
+00840F21  |.  50                             PUSH EAX
+00840F22  |.  52                             PUSH EDX
+00840F23  |.  8D4424 3C                      LEA EAX,DWORD PTR SS:[ESP+3C]
+00840F27  |.  50                             PUSH EAX
+00840F28  |.  57                             PUSH EDI
+00840F29  |.  57                             PUSH EDI
+00840F2A  |>  8D41 50                        LEA EAX,DWORD PTR DS:[ECX+50]
+00840F2D  |.  8BCE                           MOV ECX,ESI
+00840F2F  |.  50                             PUSH EAX
+00840F30  |.  E8 7B1D0500                    CALL League_o.00892CB0
+00840F35  |.  84C0                           TEST AL,AL
+00840F37  |.  0F95C0                         SETNZ AL
+00840F3A  |.  5F                             POP EDI
+00840F3B  |.  5E                             POP ESI
+00840F3C  |.  5B                             POP EBX
+00840F3D  |.  83C4 18                        ADD ESP,18
+00840F40  |.  C2 0800                        RETN 8
+00840F43  |>  A1 3C747001                    MOV EAX,DWORD PTR DS:[170743C]
+00840F48  |.  F30F7E05 34747001              MOVQ XMM0, [1707434]
+00840F50  |.  894424 1C                      MOV DWORD PTR SS:[ESP+1C],EAX
+00840F54  |.  8D4424 28                      LEA EAX,DWORD PTR SS:[ESP+28]
+00840F58  |.  50                             PUSH EAX                                 ; /Arg3
+00840F59  |.  8D4424 18                      LEA EAX,DWORD PTR SS:[ESP+18]            ; |
+00840F5D  |.  660FD64424 18                  MOVQ [ESP+18], XMM0                      ; |
+00840F63  |.  50                             PUSH EAX                                 ; |Arg2
+00840F64  |.  56                             PUSH ESI                                 ; |Arg1
+00840F65  |.  C74424 34 00000000             MOV DWORD PTR SS:[ESP+34],0              ; |
+00840F6D  |.  E8 DEB02300                    CALL League_o.00A7C050                   ; \HOOK¼¼ÄÜCALLµØÖ·
+00840F72  |.  8B4424 28                      MOV EAX,DWORD PTR SS:[ESP+28]
+00840F76  |.  85C0                           TEST EAX,EAX
+00840F78  |.  74 05                          JE SHORT League_o.00840F7F
+00840F7A  |.  8B40 08                        MOV EAX,DWORD PTR DS:[EAX+8]
+00840F7D  |.  EB 02                          JMP SHORT League_o.00840F81
+00840F7F  |>  33C0                           XOR EAX,EAX
+00840F81  |>  894424 10                      MOV DWORD PTR SS:[ESP+10],EAX
+00840F85  |.  8D53 18                        LEA EDX,DWORD PTR DS:[EBX+18]
+00840F88  |.  8B47 34                        MOV EAX,DWORD PTR DS:[EDI+34]
+00840F8B  |.  80B8 9C060000 08               CMP BYTE PTR DS:[EAX+69C],8
+00840F92  |.  74 04                          JE SHORT League_o.00840F98
+00840F94  |.  8D5424 14                      LEA EDX,DWORD PTR SS:[ESP+14]
+00840F98  |>  8B0D 7889A301                  MOV ECX,DWORD PTR DS:[1A38978]
+00840F9E  |.  85C9                           TEST ECX,ECX
+00840FA0  |.  74 08                          JE SHORT League_o.00840FAA
+00840FA2  |.  8DB9 18010000                  LEA EDI,DWORD PTR DS:[ECX+118]
+00840FA8  |.  EB 02                          JMP SHORT League_o.00840FAC
+00840FAA  |>  33FF                           XOR EDI,EDI
+00840FAC  |>  8D81 100C0000                  LEA EAX,DWORD PTR DS:[ECX+C10]
+00840FB2  |.  50                             PUSH EAX
+00840FB3  |.  51                             PUSH ECX
+00840FB4  |.  8D41 08                        LEA EAX,DWORD PTR DS:[ECX+8]
+00840FB7  |.  50                             PUSH EAX
+00840FB8  |.  57                             PUSH EDI
+00840FB9  |.  8D4424 20                      LEA EAX,DWORD PTR SS:[ESP+20]
+00840FBD  |.  50                             PUSH EAX
+00840FBE  |.  8D4424 28                      LEA EAX,DWORD PTR SS:[ESP+28]
+00840FC2  |.  50                             PUSH EAX
+00840FC3  |.  52                             PUSH EDX
+00840FC4  |.^ E9 61FFFFFF                    JMP League_o.00840F2A
+00840FC9  |>  5F                             POP EDI
+00840FCA  |.  5E                             POP ESI
+00840FCB  |.  32C0                           XOR AL,AL
+00840FCD  |.  5B                             POP EBX
+00840FCE  |.  83C4 18                        ADD ESP,18
+00840FD1  \.  C2 0800                        RETN 8
+

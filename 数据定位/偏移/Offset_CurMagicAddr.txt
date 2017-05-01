@@ -1,0 +1,176 @@
+00864440  /$  8B4424 08                      MOV EAX,DWORD PTR SS:[ESP+8]
+00864444  |.  83EC 5C                        SUB ESP,5C
+00864447  |.  0F57C9                         XORPS XMM1, XMM1
+0086444A  |.  55                             PUSH EBP
+0086444B  |.  56                             PUSH ESI
+0086444C  |.  8B7424 78                      MOV ESI,DWORD PTR SS:[ESP+78]
+00864450  |.  8BE9                           MOV EBP,ECX
+00864452  |.  57                             PUSH EDI
+00864453  |.  0FB6F8                         MOVZX EDI, AL
+00864456  |.  8BD7                           MOV EDX,EDI
+00864458  |.  C1E2 04                        SHL EDX,4
+0086445B  |.  03D7                           ADD EDX,EDI
+0086445D  |.  8A4C37 04                      MOV CL,BYTE PTR DS:[EDI+ESI+4]
+00864461  |.  C1E2 02                        SHL EDX,2
+00864464  |.  84C9                           TEST CL,CL
+00864466  |.  74 23                          JE SHORT League_o.0086448B
+00864468  |.  F30F109432 A0000000            MOVSS XMM2, [EDX+ESI+A0]
+00864471  |.  0F2FD1                         COMISS XMM2, XMM1
+00864474  |.  76 3E                          JBE SHORT League_o.008644B4
+00864476  |.  F30F108432 90000000            MOVSS XMM0, [EDX+ESI+90]
+0086447F  |.  F30F5EC2                       DIVSS XMM0, XMM2
+00864483  |.  F30F114424 0C                  MOVSS [ESP+C], XMM0
+00864489  |.  EB 2F                          JMP SHORT League_o.008644BA
+0086448B  |>  8B86 38010000                  MOV EAX,DWORD PTR DS:[ESI+138]
+00864491  |.  F30F109410 28020000            MOVSS XMM2, [EAX+EDX+228]                ;  最大蓝量偏移
+0086449A  |.  0F2FD1                         COMISS XMM2, XMM1
+0086449D  |.  76 15                          JBE SHORT League_o.008644B4
+0086449F  |.  F30F108410 18020000            MOVSS XMM0, [EAX+EDX+218]                ;  当前蓝量偏移
+008644A8  |.  F30F5EC2                       DIVSS XMM0, XMM2
+008644AC  |.  F30F114424 0C                  MOVSS [ESP+C], XMM0
+008644B2  |.  EB 06                          JMP SHORT League_o.008644BA
+008644B4  |>  F30F114C24 0C                  MOVSS [ESP+C], XMM1
+008644BA  |>  F30F104424 0C                  MOVSS XMM0, [ESP+C]
+008644C0  |.  0F2EC1                         UCOMISS XMM0, XMM1
+008644C3  |.  9F                             LAHF
+008644C4  |.  F6C4 44                        TEST AH,44
+008644C7  |.  7A 25                          JPE SHORT League_o.008644EE
+008644C9  |.  F30F1044BD 28                  MOVSS XMM0, [EBP+EDI*4+28]
+008644CF  |.  0F2EC1                         UCOMISS XMM0, XMM1
+008644D2  |.  9F                             LAHF
+008644D3  |.  F6C4 44                        TEST AH,44
+008644D6  |.  7A 10                          JPE SHORT League_o.008644E8
+008644D8  |.  5F                             POP EDI
+008644D9  |.  5E                             POP ESI
+008644DA  |.  C745 30 00000000               MOV DWORD PTR SS:[EBP+30],0
+008644E1  |.  5D                             POP EBP
+008644E2  |.  83C4 5C                        ADD ESP,5C
+008644E5  |.  C2 1800                        RETN 18
+008644E8  |>  F30F104424 0C                  MOVSS XMM0, [ESP+C]
+008644EE  |>  84C9                           TEST CL,CL
+008644F0  |.  74 15                          JE SHORT League_o.00864507
+008644F2  |.  8D4F 03                        LEA ECX,DWORD PTR DS:[EDI+3]
+008644F5  |.  8BC1                           MOV EAX,ECX
+008644F7  |.  C1E0 04                        SHL EAX,4
+008644FA  |.  03C1                           ADD EAX,ECX
+008644FC  |.  8A4C37 04                      MOV CL,BYTE PTR DS:[EDI+ESI+4]
+00864500  |.  F30F101C86                     MOVSS XMM3, [ESI+EAX*4]
+00864505  |.  EB 0F                          JMP SHORT League_o.00864516
+00864507  |>  8B86 38010000                  MOV EAX,DWORD PTR DS:[ESI+138]
+0086450D  |.  F30F109C10 54020000            MOVSS XMM3, [EAX+EDX+254]
+00864516  |>  53                             PUSH EBX
+00864517  |.  84C9                           TEST CL,CL
+00864519  |.  74 09                          JE SHORT League_o.00864524
+0086451B  |.  8B9C32 D0000000                MOV EBX,DWORD PTR DS:[EDX+ESI+D0]
+00864522  |.  EB 0D                          JMP SHORT League_o.00864531
+00864524  |>  8B86 38010000                  MOV EAX,DWORD PTR DS:[ESI+138]
+0086452A  |.  8B9C10 58020000                MOV EBX,DWORD PTR DS:[EAX+EDX+258]
+00864531  |>  84C9                           TEST CL,CL
+00864533  |.  74 0B                          JE SHORT League_o.00864540
+00864535  |.  F30F109432 A0000000            MOVSS XMM2, [EDX+ESI+A0]
+0086453E  |.  EB 0F                          JMP SHORT League_o.0086454F
+00864540  |>  8B86 38010000                  MOV EAX,DWORD PTR DS:[ESI+138]
+00864546  |.  F30F109410 28020000            MOVSS XMM2, [EAX+EDX+228]
+0086454F  |>  0F2FD9                         COMISS XMM3, XMM1
+00864552  |.  76 0F                          JBE SHORT League_o.00864563
+00864554  |.  F30F5ED3                       DIVSS XMM2, XMM3
+00864558  |.  F30F2CC2                       CVTTSS2SI EAX, XMM2
+0086455C  |.  3BC3                           CMP EAX,EBX
+0086455E  |.  0F4CD8                         CMOVL EBX, EAX
+00864561  |.  EB 02                          JMP SHORT League_o.00864565
+00864563  |>  33DB                           XOR EBX,EBX
+00864565  |>  8D4C24 30                      LEA ECX,DWORD PTR SS:[ESP+30]
+00864569  |.  E8 52445700                    CALL League_o.00DD89C0
+0086456E  |.  F30F100D 14546A01              MOVSS XMM1, [16A5414]
+00864576  |.  F30F114424 3C                  MOVSS [ESP+3C], XMM0
+0086457C  |.  F30F1044BD 28                  MOVSS XMM0, [EBP+EDI*4+28]
+00864582  |.  F30F114424 40                  MOVSS [ESP+40], XMM0
+00864588  |.  85DB                           TEST EBX,EBX
+0086458A  |.  7E 13                          JLE SHORT League_o.0086459F
+0086458C  |.  660F6EC3                       MOVD XMM0, EBX
+00864590  |.  0F5BC0                         CVTDQ2PS XMM0, XMM0
+00864593  |.  F30F5EC8                       DIVSS XMM1, XMM0
+00864597  |.  F30F114C24 34                  MOVSS [ESP+34], XMM1
+0086459D  |.  EB 08                          JMP SHORT League_o.008645A7
+0086459F  |>  C74424 34 00000000             MOV DWORD PTR SS:[ESP+34],0
+008645A7  |>  A1 F4847001                    MOV EAX,DWORD PTR DS:[17084F4]
+008645AC  |.  8BCE                           MOV ECX,ESI
+008645AE  |.  8B5C24 74                      MOV EBX,DWORD PTR SS:[ESP+74]
+008645B2  |.  53                             PUSH EBX
+008645B3  |.  C74424 20 00000000             MOV DWORD PTR SS:[ESP+20],0
+008645BB  |.  894424 2C                      MOV DWORD PTR SS:[ESP+2C],EAX
+008645BF  |.  C64424 30 0F                   MOV BYTE PTR SS:[ESP+30],0F
+008645C4  |.  E8 57695700                    CALL League_o.00DDAF20
+008645C9  |.  53                             PUSH EBX
+008645CA  |.  8BCE                           MOV ECX,ESI
+008645CC  |.  8B00                           MOV EAX,DWORD PTR DS:[EAX]
+008645CE  |.  894424 24                      MOV DWORD PTR SS:[ESP+24],EAX
+008645D2  |.  C1E8 18                        SHR EAX,18
+008645D5  |.  660F6EC0                       MOVD XMM0, EAX
+008645D9  |.  0F5BC0                         CVTDQ2PS XMM0, XMM0
+008645DC  |.  F30F598424 88000000            MULSS XMM0, [ESP+88]
+008645E5  |.  F30F2CC0                       CVTTSS2SI EAX, XMM0
+008645E9  |.  884424 27                      MOV BYTE PTR SS:[ESP+27],AL
+008645ED  |.  E8 8E695700                    CALL League_o.00DDAF80
+008645F2  |.  8B4C24 78                      MOV ECX,DWORD PTR SS:[ESP+78]
+008645F6  |.  8B00                           MOV EAX,DWORD PTR DS:[EAX]
+008645F8  |.  894424 24                      MOV DWORD PTR SS:[ESP+24],EAX
+008645FC  |.  C1E8 18                        SHR EAX,18
+008645FF  |.  660F6EC0                       MOVD XMM0, EAX
+00864603  |.  0F5BC0                         CVTDQ2PS XMM0, XMM0
+00864606  |.  F30F598424 84000000            MULSS XMM0, [ESP+84]
+0086460F  |.  F30F2CC0                       CVTTSS2SI EAX, XMM0
+00864613  |.  884424 27                      MOV BYTE PTR SS:[ESP+27],AL
+00864617  |.  8D4424 1C                      LEA EAX,DWORD PTR SS:[ESP+1C]
+0086461B  |.  50                             PUSH EAX
+0086461C  |.  8D4424 34                      LEA EAX,DWORD PTR SS:[ESP+34]
+00864620  |.  50                             PUSH EAX
+00864621  |.  FFB424 84000000                PUSH DWORD PTR SS:[ESP+84]
+00864628  |.  E8 63E3F6FF                    CALL League_o.007D2990
+0086462D  |.  F30F104D 30                    MOVSS XMM1, [EBP+30]
+00864632  |.  F30F5C4C24 10                  SUBSS XMM1, [ESP+10]
+00864638  |.  F30F1005 40556A01              MOVSS XMM0, [16A5540]
+00864640  |.  F30F590D 30556A01              MULSS XMM1, [16A5530]
+00864648  |.  F30F5CC1                       SUBSS XMM0, XMM1
+0086464C  |.  F30F100D 14546A01              MOVSS XMM1, [16A5414]
+00864654  |.  F30F5EC8                       DIVSS XMM1, XMM0
+00864658  |.  F30F5F0D 84536A01              MAXSS XMM1, [16A5384]
+00864660  |.  F30F118C24 80000000            MOVSS [ESP+80], XMM1
+00864669  |.  E8 72DAFDFF                    CALL League_o.008420E0
+0086466E  |.  5B                             POP EBX
+0086466F  |.  8B08                           MOV ECX,DWORD PTR DS:[EAX]
+00864671  |.  8B49 08                        MOV ECX,DWORD PTR DS:[ECX+8]
+00864674  |.  894C24 70                      MOV DWORD PTR SS:[ESP+70],ECX
+00864678  |.  81F9 70B17A00                  CMP ECX,League_o.007AB170
+0086467E  |.  75 5D                          JNZ SHORT League_o.008646DD
+00864680  |.  8B0D 20D6E001                  MOV ECX,DWORD PTR DS:[1E0D620]
+00864686  |.  85C9                           TEST ECX,ECX
+00864688  |.  74 14                          JE SHORT League_o.0086469E
+0086468A  |.  8079 1C 00                     CMP BYTE PTR DS:[ECX+1C],0
+0086468E  |.  74 0E                          JE SHORT League_o.0086469E
+00864690  |.  8B49 08                        MOV ECX,DWORD PTR DS:[ECX+8]
+00864693  |.  E8 D8515E00                    CALL League_o.00E49870
+00864698  |.  F30F5AC0                       CVTSS2SD XMM0, XMM0
+0086469C  |.  EB 08                          JMP SHORT League_o.008646A6
+0086469E  |>  F30F1040 30                    MOVSS XMM0, [EAX+30]
+008646A3  |.  0F5AC0                         CVTPS2PD XMM0, XMM0
+008646A6  |>  F30F104CBD 28                  MOVSS XMM1, [EBP+EDI*4+28]
+008646AC  |.  F20F5AC0                       CVTSD2SS XMM0, XMM0
+008646B0  |.  F30F594424 7C                  MULSS XMM0, [ESP+7C]
+008646B6  |.  F30F5CC8                       SUBSS XMM1, XMM0
+008646BA  |.  F30F5F4C24 0C                  MAXSS XMM1, [ESP+C]
+008646C0  |.  F30F114CBD 28                  MOVSS [EBP+EDI*4+28], XMM1
+008646C6  |.  F30F1045 30                    MOVSS XMM0, [EBP+30]
+008646CB  |.  F30F5FC1                       MAXSS XMM0, XMM1
+008646CF  |.  5F                             POP EDI
+008646D0  |.  5E                             POP ESI
+008646D1  |.  F30F1145 30                    MOVSS [EBP+30], XMM0
+008646D6  |.  5D                             POP EBP
+008646D7  |.  83C4 5C                        ADD ESP,5C
+008646DA  |.  C2 1800                        RETN 18
+008646DD  |>  8BC8                           MOV ECX,EAX
+008646DF  |.  FF5424 70                      CALL DWORD PTR SS:[ESP+70]
+008646E3  |.  DD5C24 10                      FSTP QWORD PTR SS:[ESP+10]
+008646E7  |.  F20F104424 10                  MOVSD XMM0, [ESP+10]
+008646ED  \.^ EB B7                          JMP SHORT League_o.008646A6
+

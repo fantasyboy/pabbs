@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "dllmain.h"
 #include "SkillServices.h"
+#include "BufferServices.h"
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -29,9 +30,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 {
 	CSkillServices cs;
+	CBufferServices bf;
 	while (true)
 	{
-		cs.travse();
+		//cs.travse();
+		bf.travse();
 		Sleep(30);
 	}
 }

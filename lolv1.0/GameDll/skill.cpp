@@ -19,7 +19,7 @@ char* skill::GetName() const
 			return nullptr;
 		}
 		//读名字或者名字指针
-		if (utils::GetInstance()->read<DWORD>(temp +0x28) <0xf)
+		if (utils::GetInstance()->read<DWORD>(temp +0x2c) <= 0x10)
 		{
 			return (char*)(temp + 0x18);
 		}
@@ -85,7 +85,13 @@ float skill::GetExpendMP()
 
 float skill::GetMaxCoolTime()
 {
-	return utils::GetInstance()->read<float>(GetNodeBase() + 0x44);
+	__try {
+		return utils::GetInstance()->read<float>(GetNodeBase() + 0x44);
+	}
+	__except (1) {
+		utils::GetInstance()->log("ERROR: skill::GetMaxCoolTime()!\n");
+		return 0;
+	}
 }
 
 float skill::GetSkillRange()

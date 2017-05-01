@@ -1,0 +1,97 @@
+00DFC2B0   .  83EC 08                        SUB ESP,8
+00DFC2B3   .  53                             PUSH EBX
+00DFC2B4   .  8AB9 2E010000                  MOV BH,BYTE PTR DS:[ECX+12E]
+00DFC2BA   .  8A99 3F010000                  MOV BL,BYTE PTR DS:[ECX+13F]
+00DFC2C0   .  56                             PUSH ESI
+00DFC2C1   .  E8 7AC3E2FF                    CALL League_o.00C28640
+00DFC2C6   .  C74424 08 28000000             MOV DWORD PTR SS:[ESP+8],28
+00DFC2CE   .  8D70 10                        LEA ESI,DWORD PTR DS:[EAX+10]
+00DFC2D1   .  8D4424 08                      LEA EAX,DWORD PTR SS:[ESP+8]
+00DFC2D5   .  8BCE                           MOV ECX,ESI
+00DFC2D7   .  50                             PUSH EAX
+00DFC2D8   .  8D4424 10                      LEA EAX,DWORD PTR SS:[ESP+10]
+00DFC2DC   .  50                             PUSH EAX
+00DFC2DD   .  E8 0EC5E2FF                    CALL League_o.00C287F0
+00DFC2E2   .  8B4424 0C                      MOV EAX,DWORD PTR SS:[ESP+C]
+00DFC2E6   .  3B06                           CMP EAX,DWORD PTR DS:[ESI]
+00DFC2E8   .  74 48                          JE SHORT League_o.00DFC332
+00DFC2EA   .  8378 14 01                     CMP DWORD PTR DS:[EAX+14],1
+00DFC2EE   .  75 60                          JNZ SHORT League_o.00DFC350
+00DFC2F0   .  84FF                           TEST BH,BH
+00DFC2F2   .  0F84 96000000                  JE League_o.00DFC38E
+00DFC2F8   .  8B4424 14                      MOV EAX,DWORD PTR SS:[ESP+14]
+00DFC2FC   .  8B0D 4CD6E001                  MOV ECX,DWORD PTR DS:[1E0D64C]
+00DFC302   .  FF70 44                        PUSH DWORD PTR DS:[EAX+44]
+00DFC305   .  8B49 30                        MOV ECX,DWORD PTR DS:[ECX+30]
+00DFC308   .  84DB                           TEST BL,BL
+00DFC30A   .  74 13                          JE SHORT League_o.00DFC31F
+00DFC30C   .  6A 06                          PUSH 6
+00DFC30E   .  6A 02                          PUSH 2
+00DFC310   .  E8 9B6E91FF                    CALL League_o.007131B0
+00DFC315   .  B0 01                          MOV AL,1
+00DFC317   .  5E                             POP ESI
+00DFC318   .  5B                             POP EBX
+00DFC319   .  83C4 08                        ADD ESP,8
+00DFC31C   .  C2 0400                        RETN 4
+00DFC31F   >  6A 04                          PUSH 4
+00DFC321   .  6A 02                          PUSH 2
+00DFC323   .  E8 886E91FF                    CALL League_o.007131B0
+00DFC328   .  B0 01                          MOV AL,1
+00DFC32A   .  5E                             POP ESI
+00DFC32B   .  5B                             POP EBX
+00DFC32C   .  83C4 08                        ADD ESP,8
+00DFC32F   .  C2 0400                        RETN 4
+00DFC332   >  68 9D6D4B01                    PUSH League_o.014B6D9D                   ; /Arg5 = 014B6D9D
+00DFC337   .  68 9D6D4B01                    PUSH League_o.014B6D9D                   ; |Arg4 = 014B6D9D
+00DFC33C   .  6A 00                          PUSH 0                                   ; |Arg3 = 00000000
+00DFC33E   .  68 9D6D4B01                    PUSH League_o.014B6D9D                   ; |Arg2 = 014B6D9D
+00DFC343   .  68 9CB34201                    PUSH League_o.0142B39C                   ; |Arg1 = 0142B39C ASCII "ALE-7D38993D"
+00DFC348   .  E8 632A98FF                    CALL League_o.0077EDB0                   ; \League_o.0077EDB0
+00DFC34D   .  83C4 14                        ADD ESP,14
+00DFC350   >  84FF                           TEST BH,BH
+00DFC352   .  74 3A                          JE SHORT League_o.00DFC38E
+00DFC354   .  8B4424 14                      MOV EAX,DWORD PTR SS:[ESP+14]
+00DFC358   .  8B0D 4CD6E001                  MOV ECX,DWORD PTR DS:[1E0D64C]           ;  技能CALL ECX
+00DFC35E   .  FF70 44                        PUSH DWORD PTR DS:[EAX+44]
+00DFC361   .  8B49 30                        MOV ECX,DWORD PTR DS:[ECX+30]            ;  技能CALL ecx偏移1
+00DFC364   .  84DB                           TEST BL,BL
+00DFC366   .  74 13                          JE SHORT League_o.00DFC37B
+00DFC368   .  6A 05                          PUSH 5
+00DFC36A   .  6A 02                          PUSH 2
+00DFC36C   .  E8 3F6E91FF                    CALL League_o.007131B0
+00DFC371   .  B0 01                          MOV AL,1
+00DFC373   .  5E                             POP ESI
+00DFC374   .  5B                             POP EBX
+00DFC375   .  83C4 08                        ADD ESP,8
+00DFC378   .  C2 0400                        RETN 4
+00DFC37B   >  6A 02                          PUSH 2
+00DFC37D   .  6A 02                          PUSH 2
+00DFC37F   .  E8 2C6E91FF                    CALL League_o.007131B0                   ;  按键CALL
+00DFC384   .  B0 01                          MOV AL,1
+00DFC386   .  5E                             POP ESI
+00DFC387   .  5B                             POP EBX
+00DFC388   .  83C4 08                        ADD ESP,8
+00DFC38B   .  C2 0400                        RETN 4
+00DFC38E   >  8B4424 14                      MOV EAX,DWORD PTR SS:[ESP+14]
+00DFC392   .  8B0D 4CD6E001                  MOV ECX,DWORD PTR DS:[1E0D64C]
+00DFC398   .  FF70 44                        PUSH DWORD PTR DS:[EAX+44]
+00DFC39B   .  8B49 30                        MOV ECX,DWORD PTR DS:[ECX+30]
+00DFC39E   .  84DB                           TEST BL,BL
+00DFC3A0   .  74 13                          JE SHORT League_o.00DFC3B5
+00DFC3A2   .  6A 03                          PUSH 3
+00DFC3A4   .  6A 02                          PUSH 2
+00DFC3A6   .  E8 056E91FF                    CALL League_o.007131B0
+00DFC3AB   .  B0 01                          MOV AL,1
+00DFC3AD   .  5E                             POP ESI
+00DFC3AE   .  5B                             POP EBX
+00DFC3AF   .  83C4 08                        ADD ESP,8
+00DFC3B2   .  C2 0400                        RETN 4
+00DFC3B5   >  6A 01                          PUSH 1
+00DFC3B7   .  6A 02                          PUSH 2
+00DFC3B9   .  E8 F26D91FF                    CALL League_o.007131B0
+00DFC3BE   .  5E                             POP ESI
+00DFC3BF   .  B0 01                          MOV AL,1
+00DFC3C1   .  5B                             POP EBX
+00DFC3C2   .  83C4 08                        ADD ESP,8
+00DFC3C5   .  C2 0400                        RETN 4
+
