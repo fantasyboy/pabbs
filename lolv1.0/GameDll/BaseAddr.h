@@ -9,3 +9,5 @@ const DWORD Base_SkillOffset_Object = 0x0f4;     //技能对象偏移
 const DWORD Base_SkillOffset_MP = 0x5a8;		 //技能蓝耗偏移
 const DWORD Base_SkillOffset_Range = 0x3b0;		 //技能范围偏移
 const DWORD Base_BufferAddr = 0x1A7383C;		 //buff数组基地址
+const DWORD Base_equipmentTravseOffset1 = 0x15d8;
+const DWORD Base_equipmentTravseOffset2 = 0x288;

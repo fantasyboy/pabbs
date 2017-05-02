@@ -12,3 +12,5 @@ public:
 protected:
 	DWORD m_nodeBase;
 };
+
+

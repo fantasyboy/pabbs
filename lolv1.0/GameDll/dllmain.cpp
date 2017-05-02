@@ -3,6 +3,8 @@
 #include "dllmain.h"
 #include "SkillServices.h"
 #include "BufferServices.h"
+#include "EquipmentServices.h"
+#include "BaseAddr.h"
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -31,10 +33,12 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 {
 	CSkillServices cs;
 	CBufferServices bf;
+	CEquipmentServices eq(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
 	while (true)
 	{
-		cs.travse();
-		bf.travse();
+		//cs.travse();
+		//bf.travse();
+		eq.travse();
 		Sleep(3);
 	}
 }

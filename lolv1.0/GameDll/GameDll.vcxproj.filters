@@ -31,11 +31,14 @@
     <Filter Include="Game\游戏基地址">
       <UniqueIdentifier>{794dbd85-edcf-42b4-803e-296ae684e01c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\BUFF">
-      <UniqueIdentifier>{bb8b8f79-7ef6-406e-b220-5f0f7cc61eba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\装备对象">
       <UniqueIdentifier>{12efdc6a-fae1-407a-9f3b-3054c211dc1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\怪物对象">
+      <UniqueIdentifier>{592527b0-2864-4ab2-838b-4e391e7ad2cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\BUFF对象">
+      <UniqueIdentifier>{bb8b8f79-7ef6-406e-b220-5f0f7cc61eba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,16 +73,22 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="buffer.h">
-      <Filter>Game\BUFF</Filter>
+      <Filter>Game\BUFF对象</Filter>
     </ClInclude>
     <ClInclude Include="BufferServices.h">
-      <Filter>Game\BUFF</Filter>
+      <Filter>Game\BUFF对象</Filter>
     </ClInclude>
     <ClInclude Include="equipment.h">
       <Filter>Game\装备对象</Filter>
     </ClInclude>
     <ClInclude Include="EquipmentServices.h">
       <Filter>Game\装备对象</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterBase.h">
+      <Filter>Game\怪物对象</Filter>
+    </ClInclude>
+    <ClInclude Include="person.h">
+      <Filter>Game\怪物对象</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,16 +117,22 @@
       <Filter>Game\技能对象</Filter>
     </ClCompile>
     <ClCompile Include="buffer.cpp">
-      <Filter>Game\BUFF</Filter>
+      <Filter>Game\BUFF对象</Filter>
     </ClCompile>
     <ClCompile Include="BufferServices.cpp">
-      <Filter>Game\BUFF</Filter>
+      <Filter>Game\BUFF对象</Filter>
     </ClCompile>
     <ClCompile Include="equipment.cpp">
       <Filter>Game\装备对象</Filter>
     </ClCompile>
     <ClCompile Include="EquipmentServices.cpp">
       <Filter>Game\装备对象</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterBase.cpp">
+      <Filter>Game\怪物对象</Filter>
+    </ClCompile>
+    <ClCompile Include="person.cpp">
+      <Filter>Game\怪物对象</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

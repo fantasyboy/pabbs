@@ -7,7 +7,9 @@ class GameCall
 public:
 	~GameCall();
 	static GameCall* GetInstance();
+	//获取到游戏时间
 	float GetClientTickTime()const;
+
 private:
 	static GameCall* m_pInstance;
 	static std::mutex m_mutex;

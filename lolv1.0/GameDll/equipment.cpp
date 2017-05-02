@@ -16,16 +16,14 @@ char* equipment::GetName() const
 		DWORD nodeBase = utils::GetInstance()->read<DWORD>(GetNodeBase());
 		if (nodeBase == 0)
 		{
-			utils::GetInstance()->log("ERROR: equipment::GetName() nodeBase read failed!\n");
 			return nullptr;
 		}
 		nodeBase = utils::GetInstance()->read<DWORD>(nodeBase + 0xc);
 		if (nodeBase == 0)
 		{
-			utils::GetInstance()->log("ERROR: equipment::GetName() nodeBase-1 read failed!\n");
 			return nullptr;
 		}
-		return (char*)(nodeBase + 0x8);
+		return (char*)(utils::GetInstance()->read<DWORD>(nodeBase + 0x0c));
 	}
 	__except (1) {
 		return nullptr;

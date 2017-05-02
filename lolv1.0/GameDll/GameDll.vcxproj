@@ -155,6 +155,8 @@
     <ClInclude Include="equipment.h" />
     <ClInclude Include="EquipmentServices.h" />
     <ClInclude Include="GameCall.h" />
+    <ClInclude Include="MonsterBase.h" />
+    <ClInclude Include="person.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="SkillServices.h" />
     <ClInclude Include="stdafx.h" />
@@ -183,6 +185,8 @@
     <ClCompile Include="EquipmentServices.cpp" />
     <ClCompile Include="GameCall.cpp" />
     <ClCompile Include="GameDll.cpp" />
+    <ClCompile Include="MonsterBase.cpp" />
+    <ClCompile Include="person.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="SkillServices.cpp" />
     <ClCompile Include="stdafx.cpp">

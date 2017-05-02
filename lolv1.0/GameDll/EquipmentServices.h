@@ -9,6 +9,7 @@ public:
 
 	void travse();
 private:
+	CEquipmentServices();
 	std::vector<equipment> m_equipmentList;
 	DWORD m_dwObjectBase;
 };
