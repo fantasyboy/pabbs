@@ -4,11 +4,12 @@
 class CEquipmentServices
 {
 public:
-	CEquipmentServices();
+	CEquipmentServices(DWORD dwObjectBase);
 	~CEquipmentServices();
 
 	void travse();
 private:
 	std::vector<equipment> m_equipmentList;
+	DWORD m_dwObjectBase;
 };
 

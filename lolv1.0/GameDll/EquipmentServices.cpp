@@ -2,7 +2,7 @@
 #include "EquipmentServices.h"
 
 
-CEquipmentServices::CEquipmentServices()
+CEquipmentServices::CEquipmentServices(DWORD dwObjectBase): m_dwObjectBase(dwObjectBase)
 {
 }
 
