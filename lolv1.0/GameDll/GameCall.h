@@ -9,7 +9,9 @@ public:
 	static GameCall* GetInstance();
 	//获取到游戏时间
 	float GetClientTickTime()const;
-
+	//普通攻击call
+	bool HeroAttack(DWORD dwNodeBase);
+	//技能攻击
 private:
 	static GameCall* m_pInstance;
 	static std::mutex m_mutex;

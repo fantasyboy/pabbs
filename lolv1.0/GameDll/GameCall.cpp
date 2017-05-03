@@ -51,3 +51,32 @@ float GameCall::GetClientTickTime() const
 		return 0;
 	}
 }
+
+bool GameCall::HeroAttack(DWORD dwNodeBase)
+{
+	__try {
+		__asm
+		{
+			pushad;
+			push 1;
+			push 0;
+			push 0;
+			mov esi, dwNodeBase;
+			lea eax, DWORD PTR DS : [esi + 0x50];
+			push esi;
+			push eax;
+			push 3;
+			mov EDX, Base_RoleSelfAddr;
+			mov EDX, [EDX];
+			mov ecx, edx;
+			mov eax, 0x00827650;
+			call eax;
+			popad;
+		}
+	}
+	__except (1)
+	{
+		return false;
+	}
+	return true;
+}
