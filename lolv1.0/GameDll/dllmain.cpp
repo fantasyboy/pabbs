@@ -4,6 +4,7 @@
 #include "SkillServices.h"
 #include "BufferServices.h"
 #include "EquipmentServices.h"
+#include "MonsterServices.h"
 #include "BaseAddr.h"
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -34,12 +35,16 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 	CSkillServices cs;
 	CBufferServices bf;
 	CEquipmentServices eq(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
+	CMonsterServices cm;
 	while (true)
 	{
 		//cs.travse();
 		//bf.travse();
-		eq.travse();
-		Sleep(3);
+		//eq.travse();
+		utils::GetInstance()->log("name = %s", Utf8ToAnsi((char*)cm.GetNearleastPerson()).c_str()) ;
+		Sleep(300);
 	}
+
+	return 0;
 }
 

@@ -90,6 +90,12 @@
     <ClInclude Include="person.h">
       <Filter>Game\怪物对象</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterServices.h">
+      <Filter>Game\怪物对象</Filter>
+    </ClInclude>
+    <ClInclude Include="StringCovert.h">
+      <Filter>Game\工具类</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -132,6 +138,9 @@
       <Filter>Game\怪物对象</Filter>
     </ClCompile>
     <ClCompile Include="person.cpp">
+      <Filter>Game\怪物对象</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterServices.cpp">
       <Filter>Game\怪物对象</Filter>
     </ClCompile>
   </ItemGroup>

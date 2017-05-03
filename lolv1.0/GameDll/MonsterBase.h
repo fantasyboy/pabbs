@@ -8,14 +8,17 @@
 typedef struct EM_POINT_3D
 {
 	float x;
+	float z;	
 	float y;
-	float z;
 }EM_POINT_3D, *PEM_POINT_3D;
 
 //阵营
 enum EM_CAMP
 {
-	CAMP_EM,
+	CAM_UNKNOW = 0,
+	CAMP_BULE =100,
+	CAMP_RED = 200,
+	CAM_NEUTRAL = 300,
 };
 //类型
 enum EM_TYPE
@@ -30,6 +33,9 @@ public:
 	MonsterBase(DWORD dwNodeBase);
 	~MonsterBase();
 
+	//获取名字
+	virtual char* GetName()const;
+
 	//接口
 	float GetCurHp()const;
 	float GetMaxHp()const;
@@ -41,12 +47,15 @@ public:
 
 	EM_CAMP GetCamp()const;
 
-	EM_TYPE GetType()const;
+	DWORD GetType()const;
 
 	//是否在战争迷雾中
 	virtual bool BInShowInFag()const;
 
 	//是否死亡
 	bool BDead()const;
+
+	//获取距离
+	float GetDistance(MonsterBase* mon);
 };
 

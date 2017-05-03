@@ -1,5 +1,6 @@
 #pragma once
 #include <mutex>
+#include "StringCovert.h"
 class utils
 {
 public:
