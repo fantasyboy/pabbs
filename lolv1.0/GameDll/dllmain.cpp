@@ -41,7 +41,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		//cs.travse();
 		//bf.travse();
 		//eq.travse();
-		utils::GetInstance()->log("name = %s", Utf8ToAnsi((char*)cm.GetNearleastPerson()).c_str()) ;
+		utils::GetInstance()->log("name = %s", Utf8ToAnsi((char*)cm.GetNearleastPerson()).c_str());
 		Sleep(300);
 	}
 
