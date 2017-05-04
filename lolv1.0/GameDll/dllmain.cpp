@@ -58,20 +58,17 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		//技能判断
 		//如果 (最近玩家的距离 < 技能Q的距离 && 玩家当前的蓝 > 技能消耗的蓝 && 技能已经学习 && 技能已经冷却) 就调用 （技能CALL（Q））；
 		//其他技能同理
-
-		utils::GetInstance()->log("TIPS: q = %d w = %d e = %d r = %d",
-			pSharedMemoryPointer->bLockQ,
-			pSharedMemoryPointer->bLockW,
-			pSharedMemoryPointer->bLockE, 
-			pSharedMemoryPointer->bLockR);
-
 		cm.travse();
 
 
 		//判断按键是否被按下
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 		{
-			
+			//如果锁定Q
+			if (pSharedMemoryPointer->bLockQ)
+			{
+
+			}
 		}
 
 		Sleep(3);
