@@ -3,7 +3,8 @@
 //
 
 #pragma once
-
+#include "ShareMemory.h"
+#include "afxwin.h"
 
 // CConsoleDlg 对话框
 class CConsoleDlg : public CDialogEx
@@ -20,6 +21,8 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 
+private:
+	CShareMemory m_sharedMemory;
 
 // 实现
 protected:
@@ -31,4 +34,15 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedCheck1();
+	CButton m_bLockQ;
+	afx_msg void OnBnClickedCheck2();
+	CButton m_bLockW;
+	CButton m_bLockE;
+	CButton m_bLockR;
+	CButton m_bLockQAA;
+	afx_msg void OnBnClickedCheck3();
+	afx_msg void OnBnClickedCheck4();
+	afx_msg void OnBnClickedCheck5();
 };

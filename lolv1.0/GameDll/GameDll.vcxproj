@@ -151,6 +151,7 @@
     <ClInclude Include="BaseAddr.h" />
     <ClInclude Include="buffer.h" />
     <ClInclude Include="BufferServices.h" />
+    <ClInclude Include="CShareStruct.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="equipment.h" />
     <ClInclude Include="EquipmentServices.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="MonsterBase.h" />
     <ClInclude Include="MonsterServices.h" />
     <ClInclude Include="person.h" />
+    <ClInclude Include="ShareMemory.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="SkillServices.h" />
     <ClInclude Include="stdafx.h" />
@@ -190,6 +192,7 @@
     <ClCompile Include="MonsterBase.cpp" />
     <ClCompile Include="MonsterServices.cpp" />
     <ClCompile Include="person.cpp" />
+    <ClCompile Include="ShareMemory.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="SkillServices.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -96,6 +96,12 @@
     <ClInclude Include="StringCovert.h">
       <Filter>Game\工具类</Filter>
     </ClInclude>
+    <ClInclude Include="CShareStruct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ShareMemory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -142,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="MonsterServices.cpp">
       <Filter>Game\怪物对象</Filter>
+    </ClCompile>
+    <ClCompile Include="ShareMemory.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

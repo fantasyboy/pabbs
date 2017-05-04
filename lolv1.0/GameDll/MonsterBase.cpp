@@ -99,7 +99,14 @@ bool MonsterBase::BInShowInFag() const
 
 bool MonsterBase::BDead() const
 {
-	return false;
+	__try {
+		return utils::GetInstance()->read<bool>(GetNodeBase() + 0x10c);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: MonsterBase::BDead()³öÏÖÒì³££¡\n");
+		return false;
+	}
 }
 
 float MonsterBase::GetDistance(MonsterBase* mon)

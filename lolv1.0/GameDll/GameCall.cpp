@@ -55,6 +55,8 @@ float GameCall::GetClientTickTime() const
 bool GameCall::HeroAttack(DWORD dwNodeBase)
 {
 	__try {
+
+		float* xyz = (float*)utils::GetInstance()->read<DWORD>(dwNodeBase + 0x50);
 		__asm
 		{
 			pushad;
@@ -62,7 +64,7 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 			push 0;
 			push 0;
 			mov esi, dwNodeBase;
-			lea eax, DWORD PTR DS : [esi + 0x50];
+			lea eax, xyz;
 			push esi;
 			push eax;
 			push 3;
@@ -76,7 +78,30 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 	}
 	__except (1)
 	{
+		utils::GetInstance()->log("ERROR: GameCall::HeroAttack(DWORD dwNodeBase) 出现异常！\n");
 		return false;
 	}
 	return true;
+}
+
+bool GameCall::UseSkill(DWORD _index)
+{
+	__try
+	{ 
+		__asm
+		{
+
+		}
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("TIPS: GameCall::UseSkill(DWORD _index) 出现异常！\n");
+		return false;
+	}
+	return true;
+}
+
+bool GameCall::HookSkillUse()
+{
+	return false;
 }

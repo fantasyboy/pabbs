@@ -6,7 +6,7 @@
 #include "Console.h"
 #include "ConsoleDlg.h"
 #include "afxdialogex.h"
-
+#include "ShareMemory.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -58,12 +58,22 @@ CConsoleDlg::CConsoleDlg(CWnd* pParent /*=NULL*/)
 void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_CHECK1, m_bLockQ);
+	DDX_Control(pDX, IDC_CHECK2, m_bLockW);
+	DDX_Control(pDX, IDC_CHECK3, m_bLockE);
+	DDX_Control(pDX, IDC_CHECK4, m_bLockR);
+	DDX_Control(pDX, IDC_CHECK5, m_bLockQAA);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_CHECK1, &CConsoleDlg::OnBnClickedCheck1)
+	ON_BN_CLICKED(IDC_CHECK2, &CConsoleDlg::OnBnClickedCheck2)
+	ON_BN_CLICKED(IDC_CHECK3, &CConsoleDlg::OnBnClickedCheck3)
+	ON_BN_CLICKED(IDC_CHECK4, &CConsoleDlg::OnBnClickedCheck4)
+	ON_BN_CLICKED(IDC_CHECK5, &CConsoleDlg::OnBnClickedCheck5)
 END_MESSAGE_MAP()
 
 
@@ -99,6 +109,13 @@ BOOL CConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+
+	//创建共享内存
+	if (!m_sharedMemory.CreateSharedMemory())
+	{
+		AfxMessageBox("创建共享内存失败，是否打开了两个同样的窗口！");
+		return FALSE;
+	}
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -152,3 +169,33 @@ HCURSOR CConsoleDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CConsoleDlg::OnBnClickedCheck1()
+{
+	m_sharedMemory.GetPointerOfMapView()->bLockQ = m_bLockQ.GetCheck() == BST_CHECKED ? true : false;
+}
+
+void CConsoleDlg::OnBnClickedCheck2()
+{
+	m_sharedMemory.GetPointerOfMapView()->bLockW = m_bLockW.GetCheck() == BST_CHECKED ? true : false;
+}
+
+
+void CConsoleDlg::OnBnClickedCheck3()
+{
+	m_sharedMemory.GetPointerOfMapView()->bLockE = m_bLockE.GetCheck() == BST_CHECKED ? true : false;
+}
+
+
+void CConsoleDlg::OnBnClickedCheck4()
+{
+	m_sharedMemory.GetPointerOfMapView()->bLockR = m_bLockR.GetCheck() == BST_CHECKED ? true : false;
+}
+
+
+void CConsoleDlg::OnBnClickedCheck5()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_sharedMemory.GetPointerOfMapView()->bOpenAA = m_bLockQAA.GetCheck() == BST_CHECKED ? true : false;
+}

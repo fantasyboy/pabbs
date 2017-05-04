@@ -2,10 +2,10 @@
 #include "SkillServices.h"
 #include "BaseAddr.h"
 
-CSkillServices::CSkillServices()
+CSkillServices::CSkillServices(DWORD dwObjectBase): m_dwObjectBase(dwObjectBase)
 {
-}
 
+}
 
 CSkillServices::~CSkillServices()
 {
@@ -15,7 +15,7 @@ void CSkillServices::travse()
 {
 	m_skillList.clear();
 
-	auto dwBase = utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr) + Base_SkillTravseOffset1 + Base_SkillTravseOffset2;
+	auto dwBase = utils::GetInstance()->read<DWORD>(m_dwObjectBase) + Base_SkillTravseOffset1 + Base_SkillTravseOffset2;
 	for (auto i = 0 ; i != 0x3f; i++)
 	{
 		auto skillBase = utils::GetInstance()->read<DWORD>(dwBase + i * 4);

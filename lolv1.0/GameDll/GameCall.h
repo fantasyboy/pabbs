@@ -12,6 +12,9 @@ public:
 	//普通攻击call
 	bool HeroAttack(DWORD dwNodeBase);
 	//技能攻击
+	bool UseSkill(DWORD _index);
+	//Hook 技能call
+	bool HookSkillUse();
 private:
 	static GameCall* m_pInstance;
 	static std::mutex m_mutex;
