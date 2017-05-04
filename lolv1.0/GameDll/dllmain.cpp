@@ -8,7 +8,7 @@
 #include "BaseAddr.h"
 #include "CShareStruct.h"
 #include "ShareMemory.h"
-
+#include "GameCall.h"
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -38,7 +38,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 	//CSkillServices cs(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
 	//CBufferServices bf;
 	//CEquipmentServices eq(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
-	//CMonsterServices cm;
+	CMonsterServices cm;
+
+	GameCall::GetInstance()->HookSkillUse();
 
 	//创建共享内存
 	std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory(new ShareMemory<SHARED_MEMORY>(MAP_NAME));
@@ -62,6 +64,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			pSharedMemoryPointer->bLockW,
 			pSharedMemoryPointer->bLockE, 
 			pSharedMemoryPointer->bLockR);
+
+		cm.travse();
+
 
 		//判断按键是否被按下
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000)

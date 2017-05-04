@@ -6,7 +6,7 @@
 //
 GameCall* GameCall::m_pInstance = nullptr;
 std::mutex GameCall::m_mutex;
-
+DWORD g_MonsterObj = NULL;
 GameCall::GameCall()
 {
 }
@@ -103,5 +103,35 @@ bool GameCall::UseSkill(DWORD _index)
 
 bool GameCall::HookSkillUse()
 {
-	return false;
+	DWORD HookAddr = 0x69fa5d;
+	char hookData[5] = { 0xe8, 0x0, 0x0, 0x0, 0x0 };
+	*(DWORD*)(&hookData[1]) = (DWORD)(&SkillHookStub) - HookAddr - 0x5;
+	DWORD oldProtected = 0;
+	VirtualProtect((LPVOID)HookAddr, 5,PAGE_READWRITE ,&oldProtected);
+	memcpy((void*)HookAddr, (void*)hookData, 5);
+	VirtualProtect((LPVOID)HookAddr, 5, oldProtected, &oldProtected);
+	return true;
+}
+
+void __stdcall SkillHookStub(DWORD skillObj, DWORD xyz, DWORD monsObj)
+{
+	if (g_MonsterObj)
+	{
+		//如果有对象存在，就调用自己的
+		xyz = g_MonsterObj + 0x50;
+		monsObj = g_MonsterObj;
+		g_MonsterObj = NULL;
+		return;
+	}
+	else
+	{
+		//调用原始的
+		__asm {
+			push monsObj;
+			push xyz;
+			push skillObj;
+			mov eax, 0x006874A0;
+			call eax;
+		}
+	}
 }

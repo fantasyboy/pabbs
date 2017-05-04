@@ -2,6 +2,8 @@
 #include <mutex>
 #include "utils.h"
 #include "BaseAddr.h"
+
+
 class GameCall
 {
 public:
@@ -24,3 +26,5 @@ private:
 	GameCall operator= (const GameCall& _call);
 };
 
+
+void __stdcall SkillHookStub(DWORD skillObj, DWORD xyz, DWORD monsObj);

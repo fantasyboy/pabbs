@@ -36,7 +36,10 @@ void CMonsterServices::travse()
 
 	}
 	utils::GetInstance()->log("TIPS: 当前怪物个数为：%d\n", m_PersonList.size());
-
+	for (auto temp : m_PersonList)
+	{
+		utils::GetInstance()->log("ERROR: %x", temp.GetNodeBase());
+	}
 }
 
 void* CMonsterServices::GetNearleastPerson()
