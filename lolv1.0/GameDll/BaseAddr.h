@@ -10,6 +10,15 @@ const DWORD Base_SkillTravseOffset1 = 0x2948;    //技能数组第一层偏移
 const DWORD Base_SkillTravseOffset2 = 0x560;     //技能数组第二层偏移
 const DWORD Base_SkillOffset_Object = 0x0f4;     //技能对象偏移
 const DWORD Base_SkillOffset_MP = 0x5a8;		 //技能蓝耗偏移
-const DWORD Base_SkillOffset_Range = 0x3b0;		 //技能范围偏移
+const DWORD Base_SkillOffset_Range1 = 0x3b0;		 //技能范围偏移
+const DWORD Base_SkillOffset_Range2 = 0x3cc;		 //技能范围偏移
 const DWORD Base_equipmentTravseOffset1 = 0x15d8; //装备数组遍历偏移1
 const DWORD Base_equipmentTravseOffset2 = 0x288;  //装备数组遍历偏移2
+
+const DWORD Base_MonsterCurrentHpOffset = 0x570;  //当前血量偏移
+const DWORD Base_MonsterCurrentMpOffset = 0x1f8;  //当前栏量偏移
+
+const DWORD Base_SkillCallEcxAddr = 0x1E46A3C;     //技能CALL ECX
+const DWORD Base_SkillCallAddr = 0x009B6DC0;       //技能CALL
+const DWORD Base_SkillCallHookAddr = 0x0069FA5D;   //技能CALL Hook
+

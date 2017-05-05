@@ -15,7 +15,7 @@ void CSkillServices::travse()
 {
 	m_skillList.clear();
 
-	auto dwBase = utils::GetInstance()->read<DWORD>(m_dwObjectBase) + Base_SkillTravseOffset1 + Base_SkillTravseOffset2;
+	auto dwBase = m_dwObjectBase + Base_SkillTravseOffset1 + Base_SkillTravseOffset2;
 	for (auto i = 0 ; i != 0x3f; i++)
 	{
 		auto skillBase = utils::GetInstance()->read<DWORD>(dwBase + i * 4);
@@ -27,18 +27,30 @@ void CSkillServices::travse()
 		
 		m_skillList.push_back(skill(i, skillBase));
 	}
-	utils::GetInstance()->log("TIPS: 技能数量为：%d\n", m_skillList.size());
-	for (auto temp : m_skillList)
+	//utils::GetInstance()->log("TIPS: 技能数量为：%d\n", m_skillList.size());
+	//for (auto temp : m_skillList)
+	//{
+	//	utils::GetInstance()->log("TIPS: %x %s %d %d %d %f %f %f\n",
+	//		temp.GetNodeBase(),
+	//		temp.GetName(),
+	//		temp.GetIndex(),
+	//		temp.GetLevel(),
+	//		temp.bCoolDown(),
+	//		temp.GetExpendMP(),
+	//		temp.GetMaxCoolTime(),
+	//		temp.GetSkillRange());
+	//}
+}
+
+skill CSkillServices::GetSkillObjectByIndex(DWORD dwIndex)
+{
+	travse();
+	if (dwIndex > m_skillList.size())
 	{
-		utils::GetInstance()->log("TIPS: %x %s %d %d %d %f %f %f\n",
-			temp.GetNodeBase(),
-			temp.GetName(),
-			temp.GetIndex(),
-			temp.GetLevel(),
-			temp.bCoolDown(),
-			temp.GetExpendMP(),
-			temp.GetMaxCoolTime(),
-			temp.GetSkillRange());
+		//如果传入的索引 > 技能的索引 返回第一个技能
+		return m_skillList.at(0);
 	}
+
+	return m_skillList.at(dwIndex);
 }
 

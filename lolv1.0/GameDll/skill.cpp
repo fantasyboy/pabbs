@@ -65,13 +65,13 @@ float skill::GetExpendMP()
 	__try {
 		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_SkillOffset_Object);
 		if (temp == 0) {
-			utils::GetInstance()->log("ERROR: 读取技能对象偏移1失败！\n");
+			utils::GetInstance()->log("ERROR: 读取GetExpendMP偏移1失败！\n");
 			return 0;
 		}
 		auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
 		if (temp2 == 0)
 		{
-			utils::GetInstance()->log("ERROR: 读取技能对象偏移2失败！\n");
+			utils::GetInstance()->log("ERROR: 读取GetExpendMP偏移2失败！\n");
 			return 0;
 		}
 		return utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_MP + GetLevel() * 4);
@@ -99,17 +99,27 @@ float skill::GetSkillRange()
 	__try {
 		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_SkillOffset_Object);
 		if (temp == 0) {
-			utils::GetInstance()->log("ERROR: 读取技能对象偏移1失败！\n");
+			utils::GetInstance()->log("ERROR: 读取GetSkillRange偏移1失败！\n");
 			return 0;
 		}
 		auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
 		if (temp2 == 0)
 		{
-			utils::GetInstance()->log("ERROR: 读取技能对象偏移2失败！\n");
+			utils::GetInstance()->log("ERROR: 读取GetSkillRange偏移2失败！\n");
 			return 0;
 		}
+		auto range1= utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range1 +GetLevel() *4);
+		auto range2 = utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range2 + GetLevel() * 4);
+		if (range2 < 1)
+		{
+			return range1;
+		}
+		else
+		{
+			return (range1 < range2 ? range1 : range2);
+		}
 
-		return utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range + GetLevel() * 4);
+		
 	}
 	__except (1) {
 		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");

@@ -35,27 +35,26 @@ void CMonsterServices::travse()
 		}
 
 	}
-	utils::GetInstance()->log("TIPS: 当前怪物个数为：%d\n", m_PersonList.size());
-	for (auto temp : m_PersonList)
-	{
-		utils::GetInstance()->log("ERROR: %x", temp.GetNodeBase());
-	}
+	//utils::GetInstance()->log("TIPS: 当前怪物个数为：%d\n", m_PersonList.size());
+	//for (auto temp : m_PersonList)
+	//{
+	//	utils::GetInstance()->log("ERROR: %x", temp.GetNodeBase());
+	//}
 }
 
-void* CMonsterServices::GetNearleastPerson()
+person CMonsterServices::GetNearleastPerson()
 {
 	//根据 玩家坐标 和 m_PersonList 进行比较，取最近的对象
 	travse();
-	float aaa = 100000.0;
-	void* p = nullptr;
+	float MaxDistance = 100000.0;
+	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
 	{
-		if (temp.GetDistance(dynamic_cast<MonsterBase*>(m_role.get())) < aaa)
+		if (temp.GetDistance(dynamic_cast<MonsterBase*>(m_role.get())) < MaxDistance)
 		{
-			aaa = temp.GetDistance(dynamic_cast<MonsterBase*>(m_role.get()));
-			utils::GetInstance()->log("TIPS: DIS = %f", aaa);
-			p  = (void*)(temp.GetName());
+			MaxDistance = temp.GetDistance(dynamic_cast<MonsterBase*>(m_role.get()));
+			minDistanceObj = temp.GetNodeBase();
 		}
 	}
-	return p;
+	return person(minDistanceObj);
 }

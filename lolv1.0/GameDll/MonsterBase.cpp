@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MonsterBase.h"
-
+#include "BaseAddr.h"
 
 MonsterBase::MonsterBase(DWORD dwNodeBase): base(dwNodeBase)
 {
@@ -34,22 +34,50 @@ char* MonsterBase::GetName() const
 
 float MonsterBase::GetCurHp() const
 {
-	return 0;
+	__try {
+		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentHpOffset);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: MonsterBase::GetCurHp() 出现异常！\n");
+		return 0;
+	}
 }
 
 float MonsterBase::GetMaxHp() const
 {
-	return 0;
+	__try {
+		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentHpOffset+0x10);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: MonsterBase::GetMaxHp() 出现异常！\n");
+		return 0;
+	}
 }
 
 float MonsterBase::GetCurMp() const
 {
-	return 0;
+	__try {
+		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentMpOffset);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: MonsterBase::GetCurMp() 出现异常！\n");
+		return 0;
+	}
 }
 
 float MonsterBase::GetMaxMp() const
 {
-	return 0;
+	__try {
+		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentMpOffset+0x10);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: MonsterBase::GetMaxMp() 出现异常！\n");
+		return 0;
+	}
 
 }
 

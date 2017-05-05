@@ -14,7 +14,7 @@ public:
 	//普通攻击call
 	bool HeroAttack(DWORD dwNodeBase);
 	//技能攻击
-	bool UseSkill(DWORD _index);
+	bool UseSkill(DWORD _index, DWORD monsObj);
 	//Hook 技能call
 	bool HookSkillUse();
 private:
@@ -27,4 +27,4 @@ private:
 };
 
 
-void __stdcall SkillHookStub(DWORD skillObj, DWORD xyz, DWORD monsObj);
+void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj);

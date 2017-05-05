@@ -9,7 +9,7 @@ public:
 	~CMonsterServices();
 
 	void travse();
-	void* GetNearleastPerson();
+	person GetNearleastPerson();
 private:
 	//Íæ¼ÒÁÐ±í
 	std::vector<person> m_PersonList;

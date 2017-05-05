@@ -84,13 +84,23 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 	return true;
 }
 
-bool GameCall::UseSkill(DWORD _index)
+bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
-	{ 
+	{
+		g_MonsterObj = monsObj;
 		__asm
 		{
-
+			pushad;
+			mov     ecx, Base_SkillCallEcxAddr;
+			mov     ecx, dword ptr[ecx];
+			mov     ecx, dword ptr[ecx + 0x30];
+			push    0;
+			push    2;
+			push    dwIndex;
+			mov     eax, Base_SkillCallAddr;
+			call    eax;
+			popad;
 		}
 	}
 	__except (1)
@@ -103,7 +113,7 @@ bool GameCall::UseSkill(DWORD _index)
 
 bool GameCall::HookSkillUse()
 {
-	DWORD HookAddr = 0x69fa5d;
+	DWORD HookAddr = Base_SkillCallHookAddr;
 	char hookData[5] = { 0xe8, 0x0, 0x0, 0x0, 0x0 };
 	*(DWORD*)(&hookData[1]) = (DWORD)(&SkillHookStub) - HookAddr - 0x5;
 	DWORD oldProtected = 0;
@@ -113,15 +123,14 @@ bool GameCall::HookSkillUse()
 	return true;
 }
 
-void __stdcall SkillHookStub(DWORD skillObj, DWORD xyz, DWORD monsObj)
+void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
 	if (g_MonsterObj)
 	{
 		//如果有对象存在，就调用自己的
-		xyz = g_MonsterObj + 0x50;
-		monsObj = g_MonsterObj;
+		memcpy(xyz, (float*)(g_MonsterObj + 0x50), 0xc);
+		*monsObj = g_MonsterObj;
 		g_MonsterObj = NULL;
-		return;
 	}
 	else
 	{

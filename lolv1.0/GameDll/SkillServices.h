@@ -9,6 +9,7 @@ public:
 
 	//完成对象的遍历
 	void travse();
+	skill GetSkillObjectByIndex(DWORD dwIndex);
 private:
 	std::vector<skill> m_skillList;
 	DWORD m_dwObjectBase;
