@@ -89,6 +89,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!m_role.BDead() &&
 					skillQ.bCoolDown())
 				{
+					utils::GetInstance()->log("TIPS: 当前敌人名字:%s 使用技能Q！", Utf8ToAnsi(mons.GetName()));
 					GameCall::GetInstance()->UseSkill(0, mons.GetNodeBase());
 					Sleep(10);
 				}
@@ -103,6 +104,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!m_role.BDead() &&
 					skillQ.bCoolDown())
 				{
+					utils::GetInstance()->log("TIPS: 当前敌人名字:%s 使用技能W！", Utf8ToAnsi(mons.GetName()));
 					GameCall::GetInstance()->UseSkill(1, mons.GetNodeBase());
 					Sleep(10);
 				}
@@ -117,6 +119,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!m_role.BDead() &&
 					skillQ.bCoolDown())
 				{
+					utils::GetInstance()->log("TIPS: 当前敌人名字:%s 使用技能E！", Utf8ToAnsi(mons.GetName()));
 					GameCall::GetInstance()->UseSkill(2, mons.GetNodeBase());
 					Sleep(10);
 				}
@@ -131,6 +134,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!m_role.BDead() &&
 					skillQ.bCoolDown())
 				{
+					utils::GetInstance()->log("TIPS: 当前敌人名字:%s 使用技能R！", Utf8ToAnsi(mons.GetName()));
 					GameCall::GetInstance()->UseSkill(3, mons.GetNodeBase());
 					Sleep(10);
 				}
@@ -140,7 +144,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			//如果 （最近玩家的距离 < 攻击距离 && 延时 > 走A延时） 就调用 寻路到（鼠标位置） 和 调用普通攻击CALL
 		}
 
-		Sleep(10);
+		Sleep(50);
 	}
 
 	return 0;

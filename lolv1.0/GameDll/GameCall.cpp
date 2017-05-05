@@ -134,6 +134,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			memcpy(xyz, (float*)(g_MonsterObj + 0x50), 0xc);
 			*monsObj = g_MonsterObj;
 			g_MonsterObj = NULL;
+			return;
 		}
 		else
 		{
