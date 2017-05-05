@@ -68,7 +68,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		//走A判断
 		//如果 （最近玩家的距离 < 攻击距离 && 延时 > 走A延时） 就调用 寻路到（鼠标位置） 和 调用普通攻击CALL
 
-		//判断按键是否被按下 && 锁定了技能Q
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 		{
 			auto mons = cm.GetNearleastPerson();
@@ -91,7 +90,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					utils::GetInstance()->log("TIPS: 不满足技能Q使用条件，调用默认的技能！\n");
 				}
 			}
-
 			if (pSharedMemoryPointer->bLockW)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
@@ -109,7 +107,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					utils::GetInstance()->log("TIPS: 不满足技能W使用条件，调用默认的技能！\n");
 				}
 			}
-
 			if (pSharedMemoryPointer->bLockE)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
@@ -127,7 +124,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					utils::GetInstance()->log("TIPS: 不满足技能E使用条件，调用默认的技能！\n");
 				}
 			}
-
 			if (pSharedMemoryPointer->bLockR)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
