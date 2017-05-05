@@ -10,7 +10,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+#include "InjectDll.h"
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -31,6 +31,17 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 };
+
+DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter)
+{
+	//监视窗口的回调函数
+	CInjectDll injectClass("", "RiotWindowClass", "GameDll.dll");
+	while (true)
+	{
+		injectClass.injectDll();
+		Sleep(1000);
+	}
+}
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 {
@@ -53,6 +64,11 @@ CConsoleDlg::CConsoleDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_CONSOLE_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+CConsoleDlg::~CConsoleDlg()
+{
+
 }
 
 void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
@@ -116,6 +132,9 @@ BOOL CConsoleDlg::OnInitDialog()
 		AfxMessageBox("创建共享内存失败，是否打开了两个同样的窗口！");
 		return FALSE;
 	}
+
+	//创建注入线程
+	m_ThreadHanle = ::CreateThread(NULL, NULL,LPTHREAD_START_ROUTINE(ThreadProcA) , NULL, NULL, NULL);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -199,3 +218,5 @@ void CConsoleDlg::OnBnClickedCheck5()
 	// TODO: 在此添加控件通知处理程序代码
 	m_sharedMemory.GetPointerOfMapView()->bOpenAA = m_bLockQAA.GetCheck() == BST_CHECKED ? true : false;
 }
+
+

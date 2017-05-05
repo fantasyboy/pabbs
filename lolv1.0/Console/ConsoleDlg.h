@@ -5,14 +5,15 @@
 #pragma once
 #include "ShareMemory.h"
 #include "afxwin.h"
-
+#include<windows.h>
+DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter);
 // CConsoleDlg 对话框
 class CConsoleDlg : public CDialogEx
 {
 // 构造
 public:
 	CConsoleDlg(CWnd* pParent = NULL);	// 标准构造函数
-
+	~CConsoleDlg();
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_CONSOLE_DIALOG };
@@ -23,7 +24,7 @@ public:
 
 private:
 	CShareMemory m_sharedMemory;
-
+	HANDLE m_ThreadHanle;
 // 实现
 protected:
 	HICON m_hIcon;
@@ -46,3 +47,4 @@ public:
 	afx_msg void OnBnClickedCheck4();
 	afx_msg void OnBnClickedCheck5();
 };
+

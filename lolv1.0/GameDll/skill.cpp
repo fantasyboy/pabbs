@@ -51,7 +51,8 @@ DWORD skill::GetLevel() const
 
 bool skill::bCoolDown()
 {
-	return GameCall::GetInstance()->GetClientTickTime() > utils::GetInstance()->read<float>(GetNodeBase() + 0x18);
+	utils::GetInstance()->log("µ±Ç°Ê±¼ä %f ÀäÈ´Ê±¼ä%f ", GameCall::GetInstance()->GetClientTickTime(),utils::GetInstance()->read<float>(GetNodeBase() + 0x18));
+	return (GameCall::GetInstance()->GetClientTickTime() > utils::GetInstance()->read<float>(GetNodeBase() + 0x18));
 }
 
 //bool skill::bCouldUse()
@@ -74,7 +75,7 @@ float skill::GetExpendMP()
 			utils::GetInstance()->log("ERROR: ¶ÁÈ¡GetExpendMPÆ«ÒÆ2Ê§°Ü£¡\n");
 			return 0;
 		}
-		return utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_MP + GetLevel() * 4);
+		return utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_MP + (GetLevel() - 1) * 4);
 	}
 	__except (1)
 	{
@@ -108,8 +109,8 @@ float skill::GetSkillRange()
 			utils::GetInstance()->log("ERROR: ¶ÁÈ¡GetSkillRangeÆ«ÒÆ2Ê§°Ü£¡\n");
 			return 0;
 		}
-		auto range1= utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range1 +GetLevel() *4);
-		auto range2 = utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range2 + GetLevel() * 4);
+		auto range1= utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range1 +(GetLevel()-1) *4);
+		auto range2 = utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range2 + (GetLevel() - 1) * 4);
 		if (range2 < 1)
 		{
 			return range1;

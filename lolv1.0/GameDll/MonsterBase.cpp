@@ -139,5 +139,5 @@ bool MonsterBase::BDead() const
 
 float MonsterBase::GetDistance(MonsterBase* mon)
 {
-	return sqrt((GetPoint().x - mon->GetPoint().x)*(GetPoint().x - mon->GetPoint().x) + (GetPoint().y - mon->GetPoint().y)*((GetPoint().y - mon->GetPoint().y)));
+	return sqrt((GetPoint().x - mon->GetPoint().x)*(GetPoint().x - mon->GetPoint().x) + (GetPoint().y - mon->GetPoint().y)*(GetPoint().y - mon->GetPoint().y));
 }

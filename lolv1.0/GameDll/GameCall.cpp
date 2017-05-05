@@ -6,6 +6,7 @@
 //
 GameCall* GameCall::m_pInstance = nullptr;
 std::mutex GameCall::m_mutex;
+std::mutex g_mutex;
 DWORD g_MonsterObj = NULL;
 GameCall::GameCall()
 {
@@ -86,6 +87,7 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 
 bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
+
 	__try
 	{
 		g_MonsterObj = monsObj;
@@ -125,22 +127,27 @@ bool GameCall::HookSkillUse()
 
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
-	if (g_MonsterObj)
-	{
-		//如果有对象存在，就调用自己的
-		memcpy(xyz, (float*)(g_MonsterObj + 0x50), 0xc);
-		*monsObj = g_MonsterObj;
-		g_MonsterObj = NULL;
-	}
-	else
-	{
-		//调用原始的
-		__asm {
-			push monsObj;
-			push xyz;
-			push skillObj;
-			mov eax, 0x006874A0;
-			call eax;
+	__try {
+		if (g_MonsterObj)
+		{
+			//如果有对象存在，就调用自己的
+			memcpy(xyz, (float*)(g_MonsterObj + 0x50), 0xc);
+			*monsObj = g_MonsterObj;
+			g_MonsterObj = NULL;
 		}
+		else
+		{
+			//调用原始的
+			__asm {
+				push monsObj;
+				push xyz;
+				push skillObj;
+				mov eax, 0x006874A0;
+				call eax;
+			}
+		}
+	}
+	__except (1) {
+		utils::GetInstance()->log("ERROR: SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)出现异常！\n");
 	}
 }

@@ -16,6 +16,9 @@
     <Filter Include="共享内存">
       <UniqueIdentifier>{2b8899fc-493c-4114-9c01-7c29df83c1dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="代码注入">
+      <UniqueIdentifier>{f29cd458-a692-4a5f-9153-c5f24b87275a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -42,6 +45,9 @@
     <ClInclude Include="CShareStruct.h">
       <Filter>共享内存</Filter>
     </ClInclude>
+    <ClInclude Include="InjectDll.h">
+      <Filter>代码注入</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp">
@@ -55,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="ShareMemory.cpp">
       <Filter>共享内存</Filter>
+    </ClCompile>
+    <ClCompile Include="InjectDll.cpp">
+      <Filter>代码注入</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

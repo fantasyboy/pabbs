@@ -35,9 +35,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -188,6 +188,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="ConsoleDlg.h" />
     <ClInclude Include="CShareStruct.h" />
+    <ClInclude Include="InjectDll.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ShareMemory.h" />
     <ClInclude Include="stdafx.h" />
@@ -196,6 +197,7 @@
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ConsoleDlg.cpp" />
+    <ClCompile Include="InjectDll.cpp" />
     <ClCompile Include="ShareMemory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
