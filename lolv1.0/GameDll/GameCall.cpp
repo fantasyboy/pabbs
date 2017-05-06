@@ -89,6 +89,10 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
+		if (g_MonsterObj)
+		{
+			return true;
+		}
 		g_mutex.lock();
 		g_MonsterObj = monsObj;
 		g_mutex.unlock();

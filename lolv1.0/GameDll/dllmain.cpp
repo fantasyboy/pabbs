@@ -121,6 +121,16 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					GameCall::GetInstance()->UseSkill(2, mons.GetNodeBase());
 				}
 			}
+
+
+			//如果开启走A
+			//如果 （最近玩家的距离 < 攻击距离 && 延时 > 走A延时） 就调用 寻路到（鼠标位置） 和 调用普通攻击CALL
+		}
+
+		//如果按下了T & 就自动释放R
+		if (GetAsyncKeyState(0x54)&0x8000)
+		{
+			person m_role(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
 			if (pSharedMemoryPointer->bLockR)
 			{
 				//auto mons = cm.GetNearleastPerson(&m_role);
@@ -137,9 +147,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					GameCall::GetInstance()->UseSkill(3, mons.GetNodeBase());
 				}
 			}
-
-			//如果开启走A
-			//如果 （最近玩家的距离 < 攻击距离 && 延时 > 走A延时） 就调用 寻路到（鼠标位置） 和 调用普通攻击CALL
 		}
 
 		Sleep(1);
