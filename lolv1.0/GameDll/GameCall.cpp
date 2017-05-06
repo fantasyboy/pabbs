@@ -89,8 +89,6 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
-		if (g_MonsterObj)
-			return true;
 		g_mutex.lock();
 		g_MonsterObj = monsObj;
 		g_mutex.unlock();
@@ -140,7 +138,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 
 			memcpy(xyz, (float*)(temp + 0x50), 0xc);
 			*monsObj = temp;
-			g_MonsterObj = NULL;
+			g_MonsterObj = NULL; 
 			return;
 		}
 		//调用原始的
