@@ -51,7 +51,14 @@ DWORD skill::GetLevel() const
 
 bool skill::bCoolDown()
 {
-	return (GameCall::GetInstance()->GetClientTickTime() > utils::GetInstance()->read<float>(GetNodeBase() + 0x18));
+	__try {
+		return (GameCall::GetInstance()->GetClientTickTime() > utils::GetInstance()->read<float>(GetNodeBase() + 0x18));
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: skill::bCoolDown() 调用异常！\n");
+		return false;
+	}
 }
 
 //bool skill::bCouldUse()
@@ -109,18 +116,16 @@ float skill::GetSkillRange()
 			utils::GetInstance()->log("ERROR: 读取GetSkillRange偏移2失败！\n");
 			return 0;
 		}
-		auto range1= utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range1 +GetLevel() *4);
-		auto range2 = utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range2 + GetLevel() * 4);
+		auto range1= utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range1 + 4 * 1);
+		auto range2 = utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range2 + 1 * 4);
 		if (range2 < 1)
 		{
 			return range1;
 		}
 		else
 		{
-			return (range1 < range2 ? range1 : range2);
+			return (range1 < range2 ? range1: range2);
 		}
-
-		
 	}
 	__except (1) {
 		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");

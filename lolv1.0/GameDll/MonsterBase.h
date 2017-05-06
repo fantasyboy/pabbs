@@ -56,6 +56,6 @@ public:
 	bool BDead()const;
 
 	//ªÒ»°æ‡¿Î
-	float GetDistance(MonsterBase* mon);
+	float GetDistance(EM_POINT_3D* mon);
 };
 

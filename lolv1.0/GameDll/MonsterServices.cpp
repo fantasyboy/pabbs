@@ -4,8 +4,6 @@
 
 CMonsterServices::CMonsterServices()
 {
-	auto temp = utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr);
-	m_role = std::shared_ptr<person>(new person(temp));
 }
 
 
@@ -29,7 +27,7 @@ void CMonsterServices::travse()
 		}
 		person per(temp);
 		//判断类型 = 玩家 && 阵营 = 敌人 && 对象存在
-		if (per.GetCamp() != m_role->GetCamp() && per.GetCamp() != CAM_NEUTRAL && per.GetType() == 0x1401)
+		if (per.GetCamp() != CAM_NEUTRAL && per.GetType() == 0x1401)
 		{
 			m_PersonList.push_back(person(temp));
 		}
@@ -38,21 +36,37 @@ void CMonsterServices::travse()
 	//utils::GetInstance()->log("TIPS: 当前怪物个数为：%d\n", m_PersonList.size());
 	//for (auto temp : m_PersonList)
 	//{
-	//	utils::GetInstance()->log("ERROR: %x", temp.GetNodeBase());
+	//	utils::GetInstance()->log("TIPS: %x %s %x %x ", temp.GetNodeBase(), temp.GetName(),temp.GetCamp());
 	//}
 }
 
-person CMonsterServices::GetNearleastPerson()
+person CMonsterServices::GetNearleastPerson(person* role)
 {
 	//根据 玩家坐标 和 m_PersonList 进行比较，取最近的对象
 	travse();
-	float MaxDistance = 100000.0;
+	float MaxDistance = FLT_MAX;
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
 	{
-		if (temp.GetDistance(dynamic_cast<MonsterBase*>(m_role.get())) < MaxDistance)
+		if (temp.GetDistance(&role->GetPoint()) < MaxDistance &&role->GetCamp() != temp.GetCamp()&& !temp.BDead())
 		{
-			MaxDistance = temp.GetDistance(dynamic_cast<MonsterBase*>(m_role.get()));
+			MaxDistance = temp.GetDistance(&role->GetPoint());
+			minDistanceObj = temp.GetNodeBase();
+		}
+	}
+	return person(minDistanceObj);
+}
+
+person CMonsterServices::GetHealthLeastPerson(person* role,float SkillRange)
+{
+	travse();
+	float MaxHealth = FLT_MAX;
+	DWORD minDistanceObj = 0;
+	for (auto temp : m_PersonList)
+	{
+		if (temp.GetCurHp() < MaxHealth &&role->GetCamp() != temp.GetCamp()&& !temp.BDead() && temp.GetDistance(&role->GetPoint()) < SkillRange)
+		{
+			MaxHealth = temp.GetCurHp();
 			minDistanceObj = temp.GetNodeBase();
 		}
 	}

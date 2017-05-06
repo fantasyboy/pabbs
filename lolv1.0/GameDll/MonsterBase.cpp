@@ -18,7 +18,7 @@ char* MonsterBase::GetName() const
 	{
 		auto stringSize = utils::GetInstance()->read<DWORD>(GetNodeBase() + 0x30);
 		auto maxSize = utils::GetInstance()->read<DWORD>(GetNodeBase() + 0x34);
-		if (stringSize < 0x10 && maxSize == 0xf)
+		if (stringSize < 0x10)
 		{
 			return (char*)(GetNodeBase() + 0x20);
 		}
@@ -137,7 +137,7 @@ bool MonsterBase::BDead() const
 	}
 }
 
-float MonsterBase::GetDistance(MonsterBase* mon)
+float MonsterBase::GetDistance(EM_POINT_3D* mon)
 {
-	return sqrt((GetPoint().x - mon->GetPoint().x)*(GetPoint().x - mon->GetPoint().x) + (GetPoint().y - mon->GetPoint().y)*(GetPoint().y - mon->GetPoint().y));
+	return sqrt((GetPoint().x - mon->x)*(GetPoint().x - mon->x) + (GetPoint().y - mon->y)*(GetPoint().y - mon->y));
 }

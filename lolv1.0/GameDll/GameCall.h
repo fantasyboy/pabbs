@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "BaseAddr.h"
 
-
+extern DWORD g_MonsterObj;
 class GameCall
 {
 public:

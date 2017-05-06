@@ -87,10 +87,13 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 
 bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
-
 	__try
 	{
+		if (g_MonsterObj)
+			return true;
+		g_mutex.lock();
 		g_MonsterObj = monsObj;
+		g_mutex.unlock();
 		__asm
 		{
 			pushad;
@@ -131,21 +134,24 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 		if (g_MonsterObj)
 		{
 			//如果有对象存在，就调用自己的
-			memcpy(xyz, (float*)(g_MonsterObj + 0x50), 0xc);
-			*monsObj = g_MonsterObj;
+			g_mutex.lock();
+			auto temp = g_MonsterObj;
+			g_mutex.unlock();
+
+			memcpy(xyz, (float*)(temp + 0x50), 0xc);
+			*monsObj = temp;
 			g_MonsterObj = NULL;
 			return;
 		}
-		else
-		{
-			//调用原始的
-			__asm {
-				push monsObj;
-				push xyz;
-				push skillObj;
-				mov eax, 0x006874A0;
-				call eax;
-			}
+		//调用原始的
+		__asm {
+			pushad;
+			push monsObj;
+			push xyz;
+			push skillObj;
+			mov eax, 0x006874A0;
+			call eax;
+			popad;
 		}
 	}
 	__except (1) {
