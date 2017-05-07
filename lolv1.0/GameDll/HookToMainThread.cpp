@@ -88,6 +88,9 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 			}
 			case MESSAGE::MSG_ATTACKCALL:
 			{
+				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
+				utils::GetInstance()->log("TIPS: 开始使用技能%d 攻击 %x", p.index, p.monsObj);
+				GameCall::GetInstance()->HeroAttack(p.monsObj);
 				break;
 			}
 			case MESSAGE::MSG_FINDWAY:
