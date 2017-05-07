@@ -104,6 +104,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
+					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
 					skillQ.bCoolDown())
@@ -121,6 +122,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
+					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
 					skillQ.bCoolDown())
@@ -144,6 +146,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
+					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					skillQ.GetLevel() > 0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
