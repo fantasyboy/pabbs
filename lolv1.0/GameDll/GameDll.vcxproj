@@ -157,6 +157,7 @@
     <ClInclude Include="equipment.h" />
     <ClInclude Include="EquipmentServices.h" />
     <ClInclude Include="GameCall.h" />
+    <ClInclude Include="HookToMainThread.h" />
     <ClInclude Include="MonsterBase.h" />
     <ClInclude Include="MonsterServices.h" />
     <ClInclude Include="person.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="EquipmentServices.cpp" />
     <ClCompile Include="GameCall.cpp" />
     <ClCompile Include="GameDll.cpp" />
+    <ClCompile Include="HookToMainThread.cpp" />
     <ClCompile Include="MonsterBase.cpp" />
     <ClCompile Include="MonsterServices.cpp" />
     <ClCompile Include="person.cpp" />

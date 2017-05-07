@@ -40,6 +40,12 @@
     <Filter Include="Game\BUFF对象">
       <UniqueIdentifier>{bb8b8f79-7ef6-406e-b220-5f0f7cc61eba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="共享内存通信">
+      <UniqueIdentifier>{f916d87d-dc4a-4c68-97ba-ff57ce85389b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="主线程">
+      <UniqueIdentifier>{90891dac-7436-4a20-89f4-4d57fae99f1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -97,10 +103,13 @@
       <Filter>Game\工具类</Filter>
     </ClInclude>
     <ClInclude Include="CShareStruct.h">
-      <Filter>头文件</Filter>
+      <Filter>共享内存通信</Filter>
     </ClInclude>
     <ClInclude Include="ShareMemory.h">
-      <Filter>头文件</Filter>
+      <Filter>共享内存通信</Filter>
+    </ClInclude>
+    <ClInclude Include="HookToMainThread.h">
+      <Filter>主线程</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +159,10 @@
       <Filter>Game\怪物对象</Filter>
     </ClCompile>
     <ClCompile Include="ShareMemory.cpp">
-      <Filter>源文件</Filter>
+      <Filter>共享内存通信</Filter>
+    </ClCompile>
+    <ClCompile Include="HookToMainThread.cpp">
+      <Filter>主线程</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

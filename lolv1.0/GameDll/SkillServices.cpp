@@ -25,7 +25,7 @@ void CSkillServices::travse()
 			continue;
 		}
 		
-		m_skillList.push_back(skill(i, skillBase));
+		m_skillList.push_back(skill((EM_SKILL_INDEX)i, skillBase));
 	}
 	//utils::GetInstance()->log("TIPS: 技能数量为：%d\n", m_skillList.size());
 	//for (auto temp : m_skillList)

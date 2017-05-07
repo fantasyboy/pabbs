@@ -1,10 +1,19 @@
 #pragma once
 #include "base.h"
+
+enum EM_SKILL_INDEX
+{
+	Q,
+	W,
+	E,
+	R,
+};
+
 class skill :
 	public base
 {
 public:
-	skill(DWORD _index,DWORD dwNodeBase);
+	skill(EM_SKILL_INDEX _index,DWORD dwNodeBase);
 	~skill();
 	//获取技能名字
 	virtual char* GetName() const;
@@ -21,6 +30,6 @@ public:
 	//获取技能索引
 	DWORD GetIndex()const;
 private:
-	DWORD m_index;
+	EM_SKILL_INDEX m_index;
 };
 

@@ -21,3 +21,5 @@ const DWORD Base_SkillCallEcxAddr = 0x1E46A3C;     //技能CALL ECX
 const DWORD Base_SkillCallAddr = 0x009B6DC0;       //技能CALL
 const DWORD Base_SkillCallHookAddr = 0x0069FA5D;   //技能CALL Hook
 
+const DWORD Base_GameWndHwndAddr = 0x1A6E8D0;
+

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "skill.h"
 #include "GameCall.h"
-skill::skill(DWORD _index, DWORD dwNodeBase) :base(dwNodeBase), m_index(_index)
+skill::skill(EM_SKILL_INDEX _index, DWORD dwNodeBase) :base(dwNodeBase), m_index(_index)
 {
 
 }
