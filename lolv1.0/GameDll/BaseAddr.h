@@ -19,6 +19,8 @@ const DWORD Base_equipmentTravseOffset2 = 0x00000288;    //装备数组遍历偏移2    
 const DWORD Base_equipmentTravseOffset1 = 0x000015D8;    //装备数组遍历偏移1     偏移:2    //OD地址:0x00B3CCDB
 const DWORD Base_MonsterBVisableOffset = 0x0000394C;    //是否可见偏移     偏移:2    //OD地址:0x00A9CB43
 const DWORD Base_MousePointAddr = 0x1E46A3C;            //鼠标位置基地址
+const DWORD Base_FindWayCallAddr = 0x00827650; //寻路call
+const DWORD Base_AttackHeroCallAddr = 0x00827650; //普攻CALL
 //下面的代码暂时没有做更新
 const DWORD Base_SkillOffset_Range1 = 0x3b0;		 //技能范围偏移
 const DWORD Base_SkillOffset_Range2 = 0x3cc;		 //技能范围偏移

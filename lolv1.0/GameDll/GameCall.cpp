@@ -8,6 +8,7 @@ GameCall* GameCall::m_pInstance = nullptr;
 std::mutex GameCall::m_mutex;
 std::mutex g_mutex;
 DWORD g_MonsterObj = NULL;
+DWORD g_HookCallAddr = 0;
 GameCall::GameCall(): m_bUsedSkill(false), m_bUsedAttack(false)
 {
 }
@@ -73,7 +74,7 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 			mov EDX, Base_RoleSelfAddr;
 			mov EDX, [EDX];
 			mov ecx, edx;
-			mov eax, 0x00827650;
+			mov eax, Base_AttackHeroCallAddr;
 			call eax;
 			popad;
 		}
@@ -120,6 +121,7 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 bool GameCall::HookSkillUse()
 {
 	DWORD HookAddr = Base_SkillCallHookAddr;
+	memcpy(&g_HookCallAddr, (void*)(HookAddr + 1), 4);
 	char hookData[5] = { 0xe8, 0x0, 0x0, 0x0, 0x0 };
 	*(DWORD*)(&hookData[1]) = (DWORD)(&SkillHookStub) - HookAddr - 0x5;
 	DWORD oldProtected = 0;
@@ -157,7 +159,7 @@ bool GameCall::FindWay(EM_POINT_3D pnt)
 			PUSH 2;
 			MOV ECX, Base_RoleSelfAddr;
 			MOV ECX, DWORD PTR DS : [ECX];
-			MOV EAX, 0x00827650;
+			MOV EAX, Base_FindWayCallAddr;
 			CALL EAX;
 			POPAD;
 		}
@@ -218,7 +220,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			push monsObj;
 			push xyz;
 			push skillObj;
-			mov eax, 0x006874A0;
+			mov eax, g_HookCallAddr;
 			call eax;
 			popad;
 		}
