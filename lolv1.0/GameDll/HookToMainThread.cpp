@@ -95,6 +95,11 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 			}
 			case MESSAGE::MSG_FINDWAY:
 			{
+				auto pnt = GameCall::GetInstance()->GetMousePnt();
+				if (pnt.x)
+				{
+					GameCall::GetInstance()->FindWay(pnt);
+				}
 				break;
 			}
 

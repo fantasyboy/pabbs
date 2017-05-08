@@ -2,7 +2,7 @@
 #include <mutex>
 #include "utils.h"
 #include "BaseAddr.h"
-
+#include "person.h"
 extern DWORD g_MonsterObj;
 class GameCall
 {
@@ -19,6 +19,10 @@ public:
 	bool HookSkillUse();
 	//停止动作
 	bool StopAction();
+	//寻路
+	bool FindWay(EM_POINT_3D pnt);
+	//获取鼠标位置
+	EM_POINT_3D GetMousePnt()const;
 private:
 	static GameCall* m_pInstance;
 	static std::mutex m_mutex;

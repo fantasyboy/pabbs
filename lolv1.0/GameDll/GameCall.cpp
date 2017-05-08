@@ -134,6 +134,69 @@ bool GameCall::StopAction()
 	return UseSkill(0xa, 0);
 }
 
+bool GameCall::FindWay(EM_POINT_3D pnt)
+{
+	__try
+	{
+		static float fArray[32] = { 0 };
+		fArray[0] = pnt.x;
+		fArray[1] = pnt.z;
+		fArray[2] = pnt.y;
+		fArray[3] = pnt.x;
+		fArray[4] = pnt.z;
+		fArray[5] = pnt.y;
+		__asm
+		{
+			PUSHAD;
+			PUSH 1;
+			PUSH 0;
+			PUSH 0;
+			PUSH 0;
+			LEA EAX, fArray;
+			PUSH EAX;
+			PUSH 2;
+			MOV ECX, Base_RoleSelfAddr;
+			MOV ECX, DWORD PTR DS : [ECX];
+			MOV EAX, 0x00827650;
+			CALL EAX;
+			POPAD;
+		}
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: 寻路出现异常！\n");
+		return false;
+	}
+	return TRUE;
+}
+
+EM_POINT_3D GameCall::GetMousePnt() const
+{
+	//dd [[1E46A3C]+10]+1c
+	EM_POINT_3D temp = { 0 };
+	__try
+	{
+		auto dwBase = utils::GetInstance()->read<DWORD>(Base_MousePointAddr);
+		if (dwBase)
+		{
+			auto Offset1 = utils::GetInstance()->read<DWORD>(dwBase+0x10);
+			if (Offset1)
+			{
+				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x1c);
+				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x20);
+				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x24);
+				return temp;
+			}
+		}
+	}
+	__except (1)
+	{
+		memset(&temp, 0, sizeof(EM_POINT_3D));
+		return temp;
+	}
+	return temp;
+}
+
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
 	__try {

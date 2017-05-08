@@ -152,6 +152,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!mons.BDead()&&
 					m_role.GetDistance(&mons.GetPoint()) < m_role.GetAttackRange())
 				{
+					//如果攻击间隔成立，调用平A，否则就调用寻路
 					SKILL_TO_MONS temp;
 					temp.monsObj = mons.GetNodeBase();
 					if ((GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.1) / m_role.GetAttackSpeed()))
@@ -161,7 +162,11 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 						//重新计算攻击间隔
 						timeSec = GameCall::GetInstance()->GetClientTickTime(); //100
 					}
-
+				}
+				else
+				{
+					//寻路到鼠标位置
+					hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
 				}
 			}
 
