@@ -140,7 +140,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				}
 			}
 			
-			if (pSharedMemoryPointer->bOpenAA)
+			if (pSharedMemoryPointer->bOpenAA) 
 			{
 				//获取在玩家攻击范围内的血量最低的怪物
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
@@ -150,24 +150,23 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				if (mons.GetNodeBase() && 
 					!m_role.BDead()&&
 					!mons.BDead()&&
-					m_role.GetDistance(&mons.GetPoint()) < m_role.GetAttackRange())
+					m_role.GetDistance(&mons.GetPoint()) < m_role.GetAttackRange()&&
+					(GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.0) / m_role.GetAttackSpeed()))
 				{
 					//如果攻击间隔成立，调用平A，否则就调用寻路
 					SKILL_TO_MONS temp;
 					temp.monsObj = mons.GetNodeBase();
-					if ((GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.1) / m_role.GetAttackSpeed()))
-					{
-						utils::GetInstance()->log("TIPS:当前时间差为: %f", (GameCall::GetInstance()->GetClientTickTime() - timeSec));
-						hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
-						//重新计算攻击间隔
-						timeSec = GameCall::GetInstance()->GetClientTickTime(); //100
-					}
+					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
+					Sleep(m_role.GetAttackSpeed()*1000.0 /2.5);
+					//重新计算攻击间隔
+					timeSec = GameCall::GetInstance()->GetClientTickTime();
 				}
 				else
 				{
 					//寻路到鼠标位置
 					hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
 				}
+
 			}
 
 		}

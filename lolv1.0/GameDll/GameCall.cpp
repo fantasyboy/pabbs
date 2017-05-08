@@ -56,7 +56,7 @@ float GameCall::GetClientTickTime() const
 bool GameCall::HeroAttack(DWORD dwNodeBase)
 {
 	__try {
-		//StopAction();
+		StopAction();
 		static float fTargetPointArray[3] = { 0 };
 		memcpy(fTargetPointArray, (void*)(dwNodeBase + 0x50), sizeof(float) * 3);
 		__asm
