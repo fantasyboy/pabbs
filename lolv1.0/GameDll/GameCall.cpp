@@ -121,7 +121,8 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 bool GameCall::HookSkillUse()
 {
 	DWORD HookAddr = Base_SkillCallHookAddr;
-	memcpy(&g_HookCallAddr, (void*)(HookAddr + 1), 4);
+	//±£´æCALLµØÖ·
+	g_HookCallAddr =  utils::GetInstance()->read<DWORD>(HookAddr + 0x1) + HookAddr + 5;
 	char hookData[5] = { 0xe8, 0x0, 0x0, 0x0, 0x0 };
 	*(DWORD*)(&hookData[1]) = (DWORD)(&SkillHookStub) - HookAddr - 0x5;
 	DWORD oldProtected = 0;
