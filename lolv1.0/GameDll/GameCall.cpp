@@ -8,7 +8,7 @@ GameCall* GameCall::m_pInstance = nullptr;
 std::mutex GameCall::m_mutex;
 std::mutex g_mutex;
 DWORD g_MonsterObj = NULL;
-GameCall::GameCall()
+GameCall::GameCall(): m_bUsedSkill(false), m_bUsedAttack(false)
 {
 }
 
@@ -56,6 +56,7 @@ float GameCall::GetClientTickTime() const
 bool GameCall::HeroAttack(DWORD dwNodeBase)
 {
 	__try {
+		//StopAction();
 		static float fTargetPointArray[3] = { 0 };
 		memcpy(fTargetPointArray, (void*)(dwNodeBase + 0x50), sizeof(float) * 3);
 		__asm
@@ -89,9 +90,11 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
-		g_mutex.lock();
-		g_MonsterObj = monsObj;
-		g_mutex.unlock();
+		if (monsObj) {
+			g_mutex.lock();
+			g_MonsterObj = monsObj;
+			g_mutex.unlock();
+		}
 		__asm
 		{
 			pushad;
@@ -124,6 +127,11 @@ bool GameCall::HookSkillUse()
 	memcpy((void*)HookAddr, (void*)hookData, 5);
 	VirtualProtect((LPVOID)HookAddr, 5, oldProtected, &oldProtected);
 	return true;
+}
+
+bool GameCall::StopAction()
+{
+	return UseSkill(0xa, 0);
 }
 
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)

@@ -10,6 +10,7 @@
 #include "ShareMemory.h"
 #include "GameCall.h"
 #include "HookToMainThread.h"
+
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -122,7 +123,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			if (pSharedMemoryPointer->bLockE)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
-				utils::GetInstance()->log("TIPS: 技能名字:%s", skillQ.GetName());
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
@@ -145,21 +145,23 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				//获取在玩家攻击范围内的血量最低的怪物
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
 				//攻击间隔
-				static float speedSec = GameCall::GetInstance()->GetClientTickTime();
+				static float timeSec = 0;
 				//如果攻击间隔 > 攻击需要的秒数 && 怪物存在  && 玩家活着
-				utils::GetInstance()->log("TIPS: %f %f %f", speedSec, m_role.GetAttackSpeed(), m_role.GetAttackSpeed() / (float)(0.8));
-				if ((speedSec > (m_role.GetAttackSpeed() / (float)(0.8))) &&
-					mons.GetNodeBase() && 
+				if (mons.GetNodeBase() && 
 					!m_role.BDead()&&
 					!mons.BDead()&&
 					m_role.GetDistance(&mons.GetPoint()) < m_role.GetAttackRange())
 				{
-					//调用普攻CALL
 					SKILL_TO_MONS temp;
 					temp.monsObj = mons.GetNodeBase();
-					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
-					//重新计算攻击间隔
-					speedSec = GameCall::GetInstance()->GetClientTickTime() - speedSec;
+					if ((GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.1) / m_role.GetAttackSpeed()))
+					{
+						utils::GetInstance()->log("TIPS:当前时间差为: %f", (GameCall::GetInstance()->GetClientTickTime() - timeSec));
+						hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
+						//重新计算攻击间隔
+						timeSec = GameCall::GetInstance()->GetClientTickTime(); //100
+					}
+
 				}
 			}
 

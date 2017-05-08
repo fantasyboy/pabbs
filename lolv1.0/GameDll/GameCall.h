@@ -17,6 +17,8 @@ public:
 	bool UseSkill(DWORD _index, DWORD monsObj);
 	//Hook 技能call
 	bool HookSkillUse();
+	//停止动作
+	bool StopAction();
 private:
 	static GameCall* m_pInstance;
 	static std::mutex m_mutex;
@@ -24,6 +26,9 @@ private:
 	GameCall();
 	GameCall(const GameCall& _call);
 	GameCall operator= (const GameCall& _call);
+private:
+	bool m_bUsedAttack;
+	bool m_bUsedSkill;
 };
 
 

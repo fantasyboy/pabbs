@@ -90,6 +90,7 @@ BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK3, &CConsoleDlg::OnBnClickedCheck3)
 	ON_BN_CLICKED(IDC_CHECK4, &CConsoleDlg::OnBnClickedCheck4)
 	ON_BN_CLICKED(IDC_CHECK5, &CConsoleDlg::OnBnClickedCheck5)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -220,3 +221,12 @@ void CConsoleDlg::OnBnClickedCheck5()
 }
 
 
+
+
+void CConsoleDlg::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	//屏蔽掉原生的WM_CLOSE
+	//CDialogEx::OnClose();
+}

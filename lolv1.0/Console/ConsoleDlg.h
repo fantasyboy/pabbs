@@ -46,5 +46,6 @@ public:
 	afx_msg void OnBnClickedCheck3();
 	afx_msg void OnBnClickedCheck4();
 	afx_msg void OnBnClickedCheck5();
+	afx_msg void OnClose();
 };
 
