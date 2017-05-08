@@ -9,17 +9,20 @@ const DWORD Base_SkillTravseOffset1 = 0x00002948;    //技能数组第一层偏移     偏
 const DWORD Base_SkillTravseOffset2 = 0x00000560;    //技能数组第二层偏移     偏移:2    //OD地址:0x0059EC70
 const DWORD Base_SkillOffset_Object = 0x000000F4;    //技能对象偏移     偏移:2    //OD地址:0x006C2484
 const DWORD Base_SkillOffset_MP = 0x000005A8;    //技能蓝耗偏移     偏移:5    //OD地址:0x0077FBDB
+const DWORD Base_AttackDistanceOffset = 0x00000E54;    //攻击距离     偏移:4    //OD地址:0x009B3E03
+const DWORD Base_AttackSpeedOffset = 0x00003898;    //攻击速度     偏移:4    //OD地址:0x00A945C5
+const DWORD Base_SkillCallEcxAddr = 0x01E46A3C;    //技能CALL ECX     偏移:2    //OD地址:0x00DD9028
+const DWORD Base_SkillCallAddr = 0x009B6DC0;    //技能CALL     偏移:1    //OD地址:0x00DD904F
+const DWORD Base_SkillCallHookAddr = 0x0069FA5D;    //技能CALL Hook     偏移:1    //OD地址:0x0069FA5D
+const DWORD Base_GameWndHwndAddr = 0x01A6E8D0;    //游戏窗口基地址     偏移:2    //OD地址:0x0055DC54
+const DWORD Base_MonsterCurrentHpOffset = 0x00000570;    //当前血量偏移     偏移:4    //OD地址:0x007C43B7
+const DWORD Base_MonsterCurrentMpOffset = 0x000001F8;    //当前蓝量偏移     偏移:5    //OD地址:0x008967DF
+const DWORD Base_equipmentTravseOffset2 = 0x00000288;    //装备数组遍历偏移2     偏移:3    //OD地址:0x00B8C079
+const DWORD Base_equipmentTravseOffset1 = 0x000015D8;    //装备数组遍历偏移1     偏移:2    //OD地址:0x00B3CCDB
+const DWORD Base_MonsterBVisableOffset = 0x0000394C;    //是否可见偏移     偏移:2    //OD地址:0x00A9CB43
 
-
+//下面的代码暂时没有做更新
 const DWORD Base_SkillOffset_Range1 = 0x3b0;		 //技能范围偏移
 const DWORD Base_SkillOffset_Range2 = 0x3cc;		 //技能范围偏移
-const DWORD Base_equipmentTravseOffset1 = 0x15d8; //装备数组遍历偏移1
-const DWORD Base_equipmentTravseOffset2 = 0x288;  //装备数组遍历偏移2
-const DWORD Base_MonsterCurrentHpOffset = 0x570;  //当前血量偏移
-const DWORD Base_MonsterCurrentMpOffset = 0x1f8;  //当前蓝量偏移
-const DWORD Base_SkillCallEcxAddr = 0x1E46A3C;     //技能CALL ECX
-const DWORD Base_SkillCallAddr = 0x009B6DC0;       //技能CALL
-const DWORD Base_SkillCallHookAddr = 0x0069FA5D;   //技能CALL Hook
 
-const DWORD Base_GameWndHwndAddr = 0x1A6E8D0;
 

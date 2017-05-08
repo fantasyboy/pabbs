@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameCall.h"
-
+#include "person.h"
 //
 //全局变量声明
 //
@@ -56,8 +56,8 @@ float GameCall::GetClientTickTime() const
 bool GameCall::HeroAttack(DWORD dwNodeBase)
 {
 	__try {
-
-		float* xyz = (float*)utils::GetInstance()->read<DWORD>(dwNodeBase + 0x50);
+		static float fTargetPointArray[3] = { 0 };
+		memcpy(fTargetPointArray, (void*)(dwNodeBase + 0x50), sizeof(float) * 3);
 		__asm
 		{
 			pushad;
@@ -65,8 +65,8 @@ bool GameCall::HeroAttack(DWORD dwNodeBase)
 			push 0;
 			push 0;
 			mov esi, dwNodeBase;
-			lea eax, xyz;
 			push esi;
+			lea eax, fTargetPointArray;
 			push eax;
 			push 3;
 			mov EDX, Base_RoleSelfAddr;

@@ -122,7 +122,15 @@ DWORD MonsterBase::GetType() const
 
 bool MonsterBase::BInShowInFag() const
 {
-	return false;
+	__try {
+		auto dwBase = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_MonsterBVisableOffset);
+		return utils::GetInstance()->read<bool>(dwBase + 0x18);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: MonsterBase::BInShowInFag()³öÏÖÒì³££¡\n");
+		return true;
+	}
 }
 
 bool MonsterBase::BDead() const

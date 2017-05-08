@@ -89,7 +89,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					skillQ.GetLevel() > 0 && 
 					m_role.GetCurMp() > skillQ.GetExpendMP()&&
 					!m_role.BDead() &&
-					skillQ.bCoolDown())
+					skillQ.bCoolDown()&&
+					mons.GetNodeBase()&&
+					!mons.BDead())
 				{
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::Q;
@@ -107,7 +109,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
-					skillQ.bCoolDown())
+					skillQ.bCoolDown()&&
+					mons.GetNodeBase()&&
+					!mons.BDead())
 				{
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::W;
@@ -125,7 +129,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
-					skillQ.bCoolDown())
+					skillQ.bCoolDown()&&
+					mons.GetNodeBase()&&
+					!mons.BDead())
 				{
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::E;
@@ -133,7 +139,30 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 				}
 			}
-			//如果开启走A &&（最近玩家的距离 < 攻击距离 && 延时 > 走A延时） 就调用 寻路到（鼠标位置） 和 调用普通攻击CALL
+			
+			if (pSharedMemoryPointer->bOpenAA)
+			{
+				//获取在玩家攻击范围内的血量最低的怪物
+				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
+				//攻击间隔
+				static float speedSec = GameCall::GetInstance()->GetClientTickTime();
+				//如果攻击间隔 > 攻击需要的秒数 && 怪物存在  && 玩家活着
+				utils::GetInstance()->log("TIPS: %f %f %f", speedSec, m_role.GetAttackSpeed(), m_role.GetAttackSpeed() / (float)(0.8));
+				if ((speedSec > (m_role.GetAttackSpeed() / (float)(0.8))) &&
+					mons.GetNodeBase() && 
+					!m_role.BDead()&&
+					!mons.BDead()&&
+					m_role.GetDistance(&mons.GetPoint()) < m_role.GetAttackRange())
+				{
+					//调用普攻CALL
+					SKILL_TO_MONS temp;
+					temp.monsObj = mons.GetNodeBase();
+					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
+					//重新计算攻击间隔
+					speedSec = GameCall::GetInstance()->GetClientTickTime() - speedSec;
+				}
+			}
+
 		}
 
 		//如果按下了T & 就自动释放R
@@ -150,7 +179,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					skillQ.GetLevel() > 0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
-					skillQ.bCoolDown())
+					skillQ.bCoolDown()&&
+					mons.GetNodeBase()&&
+					!mons.BDead())
 				{
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::R;

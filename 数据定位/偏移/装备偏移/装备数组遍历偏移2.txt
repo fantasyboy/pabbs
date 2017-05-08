@@ -1,0 +1,54 @@
+00B8C008    CC                      INT3
+00B8C009    CC                      INT3
+00B8C00A    CC                      INT3
+00B8C00B    CC                      INT3
+00B8C00C    CC                      INT3
+00B8C00D    CC                      INT3
+00B8C00E    CC                      INT3
+00B8C00F    CC                      INT3
+00B8C010    56                      PUSH ESI
+00B8C011    8B7424 08               MOV ESI,DWORD PTR SS:[ESP+8]
+00B8C015    57                      PUSH EDI
+00B8C016    8BF9                    MOV EDI,ECX
+00B8C018    85F6                    TEST ESI,ESI
+00B8C01A    78 05                   JS SHORT League_o.00B8C021
+00B8C01C    83FE 27                 CMP ESI,27
+00B8C01F    72 1E                   JB SHORT League_o.00B8C03F
+00B8C021    68 A0814C01             PUSH League_o.014C81A0
+00B8C026    68 A0814C01             PUSH League_o.014C81A0
+00B8C02B    6A 00                   PUSH 0
+00B8C02D    68 A0814C01             PUSH League_o.014C81A0
+00B8C032    68 440E4301             PUSH League_o.01430E44                   ; ASCII "ALE-D18C85F9"
+00B8C037    E8 744FEAFF             CALL League_o.00A30FB0
+00B8C03C    83C4 14                 ADD ESP,14
+00B8C03F    8B84B7 88020000         MOV EAX,DWORD PTR DS:[EDI+ESI*4+288]
+00B8C046    8338 00                 CMP DWORD PTR DS:[EAX],0
+00B8C049    75 07                   JNZ SHORT League_o.00B8C052
+00B8C04B    33C0                    XOR EAX,EAX
+00B8C04D    5F                      POP EDI
+00B8C04E    5E                      POP ESI
+00B8C04F    C2 0400                 RETN 4
+00B8C052    85F6                    TEST ESI,ESI
+00B8C054    78 05                   JS SHORT League_o.00B8C05B
+00B8C056    83FE 27                 CMP ESI,27
+00B8C059    72 1E                   JB SHORT League_o.00B8C079
+00B8C05B    68 A0814C01             PUSH League_o.014C81A0
+00B8C060    68 A0814C01             PUSH League_o.014C81A0
+00B8C065    6A 00                   PUSH 0
+00B8C067    68 A0814C01             PUSH League_o.014C81A0
+00B8C06C    68 440E4301             PUSH League_o.01430E44                   ; ASCII "ALE-D18C85F9"
+00B8C071    E8 3A4FEAFF             CALL League_o.00A30FB0
+00B8C076    83C4 14                 ADD ESP,14
+00B8C079    8B84B7 88020000         MOV EAX,DWORD PTR DS:[EDI+ESI*4+288]     ; ×°±¸±éÀúÆ«ÒÆ2
+00B8C080    5F                      POP EDI
+00B8C081    5E                      POP ESI
+00B8C082    8B40 04                 MOV EAX,DWORD PTR DS:[EAX+4]
+00B8C085    C2 0400                 RETN 4
+00B8C088    CC                      INT3
+00B8C089    CC                      INT3
+00B8C08A    CC                      INT3
+00B8C08B    CC                      INT3
+00B8C08C    CC                      INT3
+00B8C08D    CC                      INT3
+00B8C08E    CC                      INT3
+

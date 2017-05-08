@@ -49,7 +49,7 @@ public:
 
 	DWORD GetType()const;
 
-	//是否在战争迷雾中
+	//是否在战争迷雾中 (true 表示在)
 	virtual bool BInShowInFag()const;
 
 	//是否死亡

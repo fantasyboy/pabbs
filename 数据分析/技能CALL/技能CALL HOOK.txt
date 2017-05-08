@@ -81,7 +81,7 @@
 0069FA53  |.  50            PUSH EAX                                 ; |坐标
 0069FA54  |.  56            PUSH ESI                                 ; |技能对象
 0069FA55  |.  C74424 34 000>MOV DWORD PTR SS:[ESP+34],0              ; |qqqqqqqqqqqqqqqqqqqqqq
-0069FA5D  |.  E8 3E7AFEFF   CALL League_o.006874A0                   ; \League_o.006874A0
+0069FA5D  |.  E8 3E7AFEFF   CALL League_o.006874A0                   ; |技能CALL hook地址
 0069FA62  |.  8B4424 28     MOV EAX,DWORD PTR SS:[ESP+28]
 0069FA66  |.  85C0          TEST EAX,EAX
 0069FA68  |.  74 05         JE SHORT League_o.0069FA6F
