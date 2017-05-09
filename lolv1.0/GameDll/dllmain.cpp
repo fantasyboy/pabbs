@@ -102,7 +102,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				}
 			}
 			//如果锁定了技能W
-		 if (pSharedMemoryPointer->bLockW)
+		    if (pSharedMemoryPointer->bLockW)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
@@ -143,6 +143,8 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
+				utils::GetInstance()->log("TIPS: 走A");
+
 				static DWORD m_AttackDisTime = 0;
 				//获取在玩家攻击范围内的血量最低的怪物
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
@@ -166,8 +168,10 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				else
 				{
 					//攻击延时
-					if ((GetTickCount() - m_AttackDisTime) > 300)
+					utils::GetInstance()->log("TIPS: 1");
+					if ((GetTickCount() - m_AttackDisTime) > 400)
 					{					
+						utils::GetInstance()->log("TIPS:  2");
 						//寻路到鼠标位置
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
 					}

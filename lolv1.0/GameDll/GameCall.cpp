@@ -185,10 +185,12 @@ EM_POINT_3D GameCall::GetMousePnt() const
 			auto Offset1 = utils::GetInstance()->read<DWORD>(dwBase+0x10);
 			if (Offset1)
 			{
-				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x1c);
-				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x20);
-				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x24);
-
+// 				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x1c);
+// 				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x20);
+// 				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x24);
+				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x10);
+				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x14);
+				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x18);
 				return temp;
 			}
 		}
@@ -203,28 +205,27 @@ EM_POINT_3D GameCall::GetMousePnt() const
 
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
-	if (g_MonsterObj) {
+	if (g_MonsterObj)
+	{
 		g_mutex.lock();
 		person temp(g_MonsterObj);
 		g_MonsterObj = NULL;
 		g_mutex.unlock();
 
-		if (temp.BDead())
+		if (!temp.BDead())
 		{
+			EM_POINT_3D pnt;
+			pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(35.0);
+			pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(35.0);
+			pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(35.0);
+
+			//填充数据
+			memcpy(xyz, &pnt, 0xc);
+			*monsObj = temp.GetNodeBase();
 			return;
 		}
 
-		EM_POINT_3D pnt;
-		pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(35.0);
-		pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(35.0);
-		pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(35.0);
-
-		//填充数据
-		memcpy(xyz, &pnt, 0xc);
-		*monsObj = temp.GetNodeBase();
-		return;
 	}
-	
 		//调用原始的
 	try 
 	{

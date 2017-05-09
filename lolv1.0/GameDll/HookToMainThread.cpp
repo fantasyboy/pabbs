@@ -81,18 +81,22 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 			switch (pArg->wParam)
 			{
 			case MESSAGE::MSG_SKILLCALL: {
+				utils::GetInstance()->log("TIPS: 开始技能！\n");
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
 				person temp(p.monsObj);
 				if (temp.GetPoint().x && temp.GetPoint().y) {
+					utils::GetInstance()->log("TIPS: 使用技能中！\n");
 					GameCall::GetInstance()->UseSkill(p.index, p.monsObj);
 				}
 				break;
 			}
 			case MESSAGE::MSG_ATTACKCALL:
 			{
+				utils::GetInstance()->log("TIPS: 开始攻击！\n");
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
 				person temp(p.monsObj);
 				if (temp.GetPoint().x && temp.GetPoint().y) {
+					utils::GetInstance()->log("TIPS: 攻击中！\n");
 					GameCall::GetInstance()->HeroAttack(p.monsObj);
 				}
 				break;
@@ -102,6 +106,7 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 				auto pnt = GameCall::GetInstance()->GetMousePnt();
 				if (pnt.x > 0 && pnt.y > 0 && pnt.z > 0)
 				{
+					utils::GetInstance()->log("TIPS: 寻路中！\n");
 					GameCall::GetInstance()->FindWay(pnt);
 				}
 				break;
