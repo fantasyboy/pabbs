@@ -228,7 +228,7 @@ void CConsoleDlg::OnClose()
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
 	//屏蔽掉原生的WM_CLOSE
-	//CDialogEx::OnClose();
+	CDialogEx::OnClose();
 }
 
 
