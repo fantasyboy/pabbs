@@ -209,10 +209,15 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 		g_MonsterObj = NULL;
 		g_mutex.unlock();
 
+		if (temp.BDead())
+		{
+			return;
+		}
+
 		EM_POINT_3D pnt;
-		pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(20.0);
-		pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(20.0);
-		pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(20.0);
+		pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(35.0);
+		pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(35.0);
+		pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(35.0);
 
 		//Ìî³äÊý¾Ý
 		memcpy(xyz, &pnt, 0xc);

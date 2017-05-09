@@ -60,5 +60,8 @@ public:
 
 	//获取朝向 返回值为 坐标
 	EM_POINT_3D GetMonsterOrientation()const;
+
+	//获取移动速度
+	float GetMoveSpeed()const;
 };
 
