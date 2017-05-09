@@ -44,7 +44,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 
 	//判断是否进入游戏
-	while ((DWORD)GameCall::GetInstance()->GetClientTickTime() < 1 || utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr) < 1)
+	while ((DWORD)GameCall::GetInstance()->GetClientTickTime() < 1 /*|| utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr) < 1*/)
 	{
 		Sleep(3000);
 	}
@@ -168,10 +168,8 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				else
 				{
 					//攻击延时
-					utils::GetInstance()->log("TIPS: 1");
-					if ((GetTickCount() - m_AttackDisTime) > 400)
+					if ((GetTickCount() - m_AttackDisTime) > 300)
 					{					
-						utils::GetInstance()->log("TIPS:  2");
 						//寻路到鼠标位置
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
 					}

@@ -127,7 +127,13 @@ BOOL CConsoleDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
-	//ch  sdsah da 
+	//
+	auto handle = ::CreateMutex(NULL, FALSE, ("Mutex201007311111"));
+	if (GetLastError() == ERROR_ALREADY_EXISTS)
+	{
+		CloseHandle(handle);
+		return FALSE;
+	}
 
 	//创建共享内存
 	if (!m_sharedMemory.CreateSharedMemory())
