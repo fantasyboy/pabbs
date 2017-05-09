@@ -10,6 +10,7 @@
 #include "ShareMemory.h"
 #include "GameCall.h"
 #include "HookToMainThread.h"
+#include <ctime>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -142,6 +143,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
+				static float m_AttackDisTime = 0;
 				//获取在玩家攻击范围内的血量最低的怪物
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
 				//攻击间隔
@@ -157,14 +159,18 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					SKILL_TO_MONS temp;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
-					Sleep(400);
 					//重新计算攻击间隔
 					timeSec = GameCall::GetInstance()->GetClientTickTime();
+					m_AttackDisTime = GetTickCount();
 				}
 				else
 				{
-					//寻路到鼠标位置
-					hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
+					//攻击延时
+					if ((GetTickCount() - m_AttackDisTime) > 450)
+					{					
+						//寻路到鼠标位置
+						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
+					}
 				}
 
 			}

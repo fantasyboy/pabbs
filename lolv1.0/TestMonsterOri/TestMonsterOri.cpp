@@ -3,12 +3,20 @@
 
 #include "stdafx.h"
 #include <cmath>
-
+#include <ctime>
+#include <iostream>
 int main()
 {
-	float x = -0.2322780341;
-	float y = -0.9726494551;
+	auto a = GetTickCount();
+	Sleep(3000);
+	auto b = GetTickCount();
+
+	auto c = b - a;
+	std::cout << c << std::endl;
+
 	getchar();
-    return 0;
+	getchar();
+
+	return 0;
 }
 
