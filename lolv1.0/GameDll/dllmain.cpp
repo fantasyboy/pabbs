@@ -166,7 +166,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				else
 				{
 					//攻击延时
-					if ((GetTickCount() - m_AttackDisTime) > 450)
+					if ((GetTickCount() - m_AttackDisTime) > 500)
 					{					
 						//寻路到鼠标位置
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);

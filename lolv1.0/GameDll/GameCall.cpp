@@ -210,9 +210,9 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 		g_mutex.unlock();
 
 		EM_POINT_3D pnt;
-		pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(15.0);
-		pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(15.0);
-		pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(15.0);
+		pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(20.0);
+		pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(20.0);
+		pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(20.0);
 
 		//Ìî³äÊý¾Ý
 		memcpy(xyz, &pnt, 0xc);
