@@ -127,6 +127,8 @@ BOOL CConsoleDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
+	//ch  sdsah da 
+
 	//创建共享内存
 	if (!m_sharedMemory.CreateSharedMemory())
 	{
