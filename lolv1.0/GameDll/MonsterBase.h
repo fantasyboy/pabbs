@@ -57,5 +57,8 @@ public:
 
 	//获取距离
 	float GetDistance(EM_POINT_3D* mon);
+
+	//获取朝向 返回值为 坐标
+	EM_POINT_3D GetMonsterOrientation()const;
 };
 

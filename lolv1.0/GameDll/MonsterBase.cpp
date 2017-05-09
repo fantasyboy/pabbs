@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MonsterBase.h"
 #include "BaseAddr.h"
-
+#include <cmath>
 MonsterBase::MonsterBase(DWORD dwNodeBase): base(dwNodeBase)
 {
 
@@ -148,4 +148,20 @@ bool MonsterBase::BDead() const
 float MonsterBase::GetDistance(EM_POINT_3D* mon)
 {
 	return sqrt((GetPoint().x - mon->x)*(GetPoint().x - mon->x) + (GetPoint().y - mon->y)*(GetPoint().y - mon->y));
+}
+
+EM_POINT_3D MonsterBase::GetMonsterOrientation() const
+{
+	EM_POINT_3D temp = { 0 };
+	__try {
+		
+		temp.x = utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterOrientationXOffset);
+		temp.z = utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterOrientationXOffset + 0x4);
+		temp.y = utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterOrientationXOffset + 0x8);
+	}
+	__except (1)
+	{
+		memset(&temp, 0, sizeof(EM_POINT_3D));
+	}
+	return temp;
 }

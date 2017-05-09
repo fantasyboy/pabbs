@@ -203,20 +203,26 @@ EM_POINT_3D GameCall::GetMousePnt() const
 
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
-	__try {
-		if (g_MonsterObj)
-		{
-			//如果有对象存在，就调用自己的
-			g_mutex.lock();
-			auto temp = g_MonsterObj;
-			g_mutex.unlock();
+	if (g_MonsterObj) {
+		g_mutex.lock();
+		person temp(g_MonsterObj);
+		g_MonsterObj = NULL;
+		g_mutex.unlock();
 
-			memcpy(xyz, (float*)(temp + 0x50), 0xc);
-			*monsObj = temp;
-			g_MonsterObj = NULL; 
-			return;
-		}
+		EM_POINT_3D pnt;
+		pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(20.0);
+		pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(20.0);
+		pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(20.0);
+
+		//填充数据
+		memcpy(xyz, &pnt, 0xc);
+		*monsObj = temp.GetNodeBase();
+		return;
+	}
+	
 		//调用原始的
+	try 
+	{
 		__asm {
 			pushad;
 			push monsObj;
@@ -227,7 +233,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			popad;
 		}
 	}
-	__except (1) {
+	catch(...) {
 		utils::GetInstance()->log("ERROR: SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)出现异常！\n");
 	}
 }

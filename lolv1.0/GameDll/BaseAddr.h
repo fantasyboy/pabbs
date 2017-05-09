@@ -29,4 +29,6 @@ const DWORD Base_MousePointAddr = 0x1A90F60;            //鼠标位置基地址（已更新
 const DWORD Base_SkillOffset_Range1 = 0x3b0;		 //技能范围偏移（已更新）
 const DWORD Base_SkillOffset_Range2 = 0x3cc;		 //技能范围偏移（已更新）
 
+const DWORD Base_MonsterOrientationXOffset = 0x3124;  //玩家X朝向
+
 
