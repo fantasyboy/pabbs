@@ -157,7 +157,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					SKILL_TO_MONS temp;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
-					Sleep(500);
+					Sleep(400);
 					//重新计算攻击间隔
 					timeSec = GameCall::GetInstance()->GetClientTickTime();
 				}
