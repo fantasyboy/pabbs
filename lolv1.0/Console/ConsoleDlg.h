@@ -47,5 +47,6 @@ public:
 	afx_msg void OnBnClickedCheck4();
 	afx_msg void OnBnClickedCheck5();
 	afx_msg void OnClose();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 

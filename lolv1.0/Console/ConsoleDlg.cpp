@@ -230,3 +230,15 @@ void CConsoleDlg::OnClose()
 	//ÆÁ±ÎµôÔ­ÉúµÄWM_CLOSE
 	//CDialogEx::OnClose();
 }
+
+
+BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: ÆÁ±ÎESC
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE)
+	{
+		return TRUE;
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
+}

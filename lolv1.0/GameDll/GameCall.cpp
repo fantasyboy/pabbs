@@ -188,6 +188,7 @@ EM_POINT_3D GameCall::GetMousePnt() const
 				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x1c);
 				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x20);
 				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x24);
+
 				return temp;
 			}
 		}
