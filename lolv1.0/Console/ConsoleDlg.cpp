@@ -40,7 +40,11 @@ DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter)
 	CInjectDll injectClass("", "RiotWindowClass", "GameDll.dll");
 	while (true)
 	{
-		injectClass.injectDll();
+		if (!injectClass.getResult())
+		{
+			injectClass.injectDll();
+		}
+		
 		Sleep(1000);
 	}
 }

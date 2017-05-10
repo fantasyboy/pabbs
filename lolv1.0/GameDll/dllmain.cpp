@@ -176,7 +176,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					}
 					else
 					{
-						timeSec = 250;
+						timeSec = 400;
 					}
 					//¹¥»÷ÑÓÊ±
 					if ((GetTickCount() - m_AttackDisTime) > timeSec)
