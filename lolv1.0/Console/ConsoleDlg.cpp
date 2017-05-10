@@ -37,15 +37,26 @@ protected:
 DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter)
 {
 	//监视窗口的回调函数
-	CInjectDll injectClass("", "RiotWindowClass", "GameDll.dll");
+	CInjectDll injectClass("GameDll.dll");
 	while (true)
 	{
-		if (!injectClass.getResult())
+
+		auto hwnd = FindWindow("RiotWindowClass", NULL);
+		if (hwnd)
 		{
-			injectClass.injectDll();
+			//如果没有注入
+			if (!injectClass.GetInject()) {
+				injectClass.injectDll(hwnd);
+			}
+		}
+		else
+		{
+			//如果游戏退出，设置成没有注入
+			injectClass.SetInject(false);
+
 		}
 		
-		Sleep(1000);
+		Sleep(100);
 	}
 }
 

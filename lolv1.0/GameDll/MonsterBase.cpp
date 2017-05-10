@@ -166,10 +166,7 @@ EM_POINT_3D MonsterBase::GetMonsterOrientation() const
 	return temp;
 }
 
-float MonsterBase::GetMoveSpeed() const
-{
-	return 0;
-}
+
 
 bool MonsterBase::GetBMoving() const
 {

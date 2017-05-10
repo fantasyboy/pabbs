@@ -235,9 +235,9 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				if (temp.GetBMoving())
 				{
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * 20.0;
-					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * 20.0;
-					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * 20.0;
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * temp.GetMoveSpeed() *0.1;
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * temp.GetMoveSpeed() *0.1;
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * temp.GetMoveSpeed() *0.1;
 
 					memcpy(xyz, &pnt, 0xc);
 					*monsObj = 0;
@@ -245,6 +245,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				else
 				{
 					memcpy(xyz, &temp.GetPoint(), 0xc);
+					//memset(xyz, 0, 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
 				

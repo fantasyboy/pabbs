@@ -3,15 +3,14 @@
 class CInjectDll
 {
 public:
-	CInjectDll(std::string wndName , std::string className,std::string dllName);
+	CInjectDll(std::string dllName);
 	~CInjectDll();
 
-	bool injectDll();
-	bool getResult()const;
+	bool injectDll(HWND hwnd);
+	void SetInject(bool val);
+	bool GetInject() { return m_bInjectDllSuccess; }
 private:
 	bool m_bInjectDllSuccess;
-	std::string m_wndName;
-	std::string m_className;
 	std::string m_dllName;
 };
 

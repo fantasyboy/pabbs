@@ -74,3 +74,31 @@ float person::GetGold() const
 {
 	return 0;
 }
+
+float person::GetMoveSpeed() const
+{
+	__try {
+		auto dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_BufferAddr);
+		if (dwBase)
+		{
+			auto dwOffset1 = utils::GetInstance()->read<DWORD>(dwBase + 0x20);
+			if (dwOffset1)
+			{
+				auto dwOffset2 = utils::GetInstance()->read<DWORD>(dwOffset1 + 0x4);
+				if (dwOffset2)
+				{
+					auto dwOffset3 = utils::GetInstance()->read<DWORD>(dwOffset2 + 0x10);
+					if (dwOffset3)
+					{
+						return utils::GetInstance()->read<float>(dwOffset3 + 0x28);
+					}
+				}
+			}
+		}
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: person::GetMoveSpeed()³öÏÖÒì³££¡\n");
+	}
+	return 0;
+}

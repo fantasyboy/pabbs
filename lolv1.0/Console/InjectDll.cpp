@@ -4,11 +4,9 @@
 
 
 
-CInjectDll::CInjectDll(std::string wndName, std::string className, std::string dllName)
+CInjectDll::CInjectDll(std::string dllName)
 {
 	m_dllName = dllName;
-	m_wndName = wndName;
-	m_className = className;
 	m_bInjectDllSuccess = false;
 }
 
@@ -16,7 +14,7 @@ CInjectDll::~CInjectDll()
 {
 }
 
-bool CInjectDll::injectDll()
+bool CInjectDll::injectDll(HWND m_hwnd)
 {
 	//如果已经注入，就直接返回
 
@@ -29,16 +27,9 @@ bool CInjectDll::injectDll()
 	HANDLE threadHandle = NULL;
 
 	//获取游戏窗口句柄  
-	auto GameHwnd = FindWindow("RiotWindowClass", NULL);
-	if (GameHwnd != 0) {
-
-		//判断是否注入
-		if (m_bInjectDllSuccess)
-		{
-			return true;
-		}
+	if (m_hwnd != 0) {
 		//获取进程pid  
-		GetWindowThreadProcessId(GameHwnd, &pid);
+		GetWindowThreadProcessId(m_hwnd, &pid);
 		if (pid != 0) {
 			//获取游戏进程句柄  
 			hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
@@ -96,7 +87,7 @@ bool CInjectDll::injectDll()
 	return true;
 }
 
-bool CInjectDll::getResult() const
+void CInjectDll::SetInject(bool val)
 {
-	return m_bInjectDllSuccess;
+	m_bInjectDllSuccess = val;
 }
