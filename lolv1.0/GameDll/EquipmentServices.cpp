@@ -14,7 +14,7 @@ CEquipmentServices::~CEquipmentServices()
 void CEquipmentServices::travse()
 {
 	m_equipmentList.clear();
-	auto nodeBase = m_dwObjectBase + Base_equipmentTravseOffset1 + Base_equipmentTravseOffset2;
+	auto nodeBase = m_dwObjectBase + pSharedMemoryPointer->Base_equipmentTravseOffset1 + pSharedMemoryPointer->Base_equipmentTravseOffset2;
 	for (auto i = 0 ; i != 0x27; i++)
 	{
 		auto temp = utils::GetInstance()->read<DWORD>(nodeBase + 4 * i);

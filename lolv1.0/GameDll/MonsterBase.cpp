@@ -35,7 +35,7 @@ char* MonsterBase::GetName() const
 float MonsterBase::GetCurHp() const
 {
 	__try {
-		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentHpOffset);
+		return utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterCurrentHpOffset);
 	}
 	__except (1)
 	{
@@ -47,7 +47,7 @@ float MonsterBase::GetCurHp() const
 float MonsterBase::GetMaxHp() const
 {
 	__try {
-		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentHpOffset+0x10);
+		return utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterCurrentHpOffset+0x10);
 	}
 	__except (1)
 	{
@@ -59,7 +59,7 @@ float MonsterBase::GetMaxHp() const
 float MonsterBase::GetCurMp() const
 {
 	__try {
-		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentMpOffset);
+		return utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterCurrentMpOffset);
 	}
 	__except (1)
 	{
@@ -71,7 +71,7 @@ float MonsterBase::GetCurMp() const
 float MonsterBase::GetMaxMp() const
 {
 	__try {
-		return utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterCurrentMpOffset+0x10);
+		return utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterCurrentMpOffset+0x10);
 	}
 	__except (1)
 	{
@@ -123,7 +123,7 @@ DWORD MonsterBase::GetType() const
 bool MonsterBase::BInShowInFag() const
 {
 	__try {
-		auto dwBase = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_MonsterBVisableOffset);
+		auto dwBase = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterBVisableOffset);
 		return utils::GetInstance()->read<bool>(dwBase + 0x18);
 	}
 	__except (1)
@@ -155,9 +155,9 @@ EM_POINT_3D MonsterBase::GetMonsterOrientation() const
 	EM_POINT_3D temp = { 0 };
 	__try {
 		
-		temp.x = utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterOrientationXOffset);
-		temp.z = utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterOrientationXOffset + 0x4);
-		temp.y = utils::GetInstance()->read<float>(GetNodeBase() + Base_MonsterOrientationXOffset + 0x8);
+		temp.x = utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterOrientationXOffset);
+		temp.z = utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterOrientationXOffset + 0x4);
+		temp.y = utils::GetInstance()->read<float>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterOrientationXOffset + 0x8);
 	}
 	__except (1)
 	{
@@ -168,14 +168,18 @@ EM_POINT_3D MonsterBase::GetMonsterOrientation() const
 
 float MonsterBase::GetMoveSpeed() const
 {
+	return 0;
+}
+
+bool MonsterBase::GetBMoving() const
+{
 	__try
 	{
-
+		return utils::GetInstance()->read<bool>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterBMovingOffset);
 	}
 	__except (1)
 	{
-
+		utils::GetInstance()->log("ERROR: MonsterBase::GetBMoving()³öÏÖÒì³££¡\n");
 	}
-
-	return 0;
+	return false;
 }

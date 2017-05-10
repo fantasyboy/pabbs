@@ -11,7 +11,7 @@
 #include "GameCall.h"
 #include "HookToMainThread.h"
 #include <ctime>
-
+SHARED_MEMORY* pSharedMemoryPointer = nullptr;
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -38,14 +38,24 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 {
+	utils::GetInstance()->log("TIPS: Base_GameStartTime");
+	//创建共享内存
+	std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory(new ShareMemory<SHARED_MEMORY>(MAP_NAME));
+	if (!m_pSharedMemory->openShareMemory())
+	{
+		utils::GetInstance()->log("ERROR: m_pSharedMemory->openShareMemory()出现错误！\n");
+		return 0;
+	}
+	pSharedMemoryPointer = m_pSharedMemory->GetPointerOfFile();
+	utils::GetInstance()->log("TIPS: Base_GameStartTime = %x", pSharedMemoryPointer->Base_GameStartTime);
 	//对象声明
 	CMonsterServices cm;
 	CHookToMainThread hk;
 
-
 	//判断是否进入游戏
-	while ((DWORD)GameCall::GetInstance()->GetClientTickTime() < 1 /*|| utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr) < 1*/)
+	while ((DWORD)GameCall::GetInstance()->GetClientTickTime() < 1 || utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr) < 1)
 	{
+		utils::GetInstance()->log("TIPS: 等待中， %f %x", GameCall::GetInstance()->GetClientTickTime(), pSharedMemoryPointer->Base_RoleSelfAddr);
 		Sleep(3000);
 	}
 
@@ -62,24 +72,15 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		return 0;
 	}
 
-	//创建共享内存
-	std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory(new ShareMemory<SHARED_MEMORY>(MAP_NAME));
-	if (!m_pSharedMemory->openShareMemory())
-	{
-		utils::GetInstance()->log("ERROR: m_pSharedMemory->openShareMemory()出现错误！\n");
-		return 0;
-	}
-	auto pSharedMemoryPointer = m_pSharedMemory->GetPointerOfFile();
-
 	//定义玩家对象
-	CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
+	CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 
 	utils::GetInstance()->log("TIPS: 开启成功！\n");
 	while (true)
 	{
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 		{
-			person m_role(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
+			person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 			//如果锁定了技能Q
 			if (pSharedMemoryPointer->bLockQ)
 			{
@@ -95,6 +96,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					mons.GetNodeBase()&&
 					!mons.BDead())
 				{
+					utils::GetInstance()->log("TIPS: 开始技能Q！\n");
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::Q;
 					temp.monsObj = mons.GetNodeBase();
@@ -167,8 +169,17 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				}
 				else
 				{
+					static	DWORD timeSec = 0;
+					if (m_role.GetAttackSpeed() > 1.0)
+					{
+						timeSec = 200;
+					}
+					else
+					{
+						timeSec = 250;
+					}
 					//攻击延时
-					if ((GetTickCount() - m_AttackDisTime) > 300)
+					if ((GetTickCount() - m_AttackDisTime) > timeSec)
 					{					
 						//寻路到鼠标位置
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
@@ -182,7 +193,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		//如果按下了T & 就自动释放R
 		if (GetAsyncKeyState(0x54)&0x8000)
 		{
-			person m_role(utils::GetInstance()->read<DWORD>(Base_RoleSelfAddr));
+			person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 			if (pSharedMemoryPointer->bLockR)
 			{
 				//auto mons = cm.GetNearleastPerson(&m_role);

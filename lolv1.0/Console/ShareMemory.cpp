@@ -48,3 +48,8 @@ PSHARED_MOMERY CShareMemory::GetPointerOfMapView()
 {
 	return m_pSharedMomory;
 }
+
+SHARED_MEMORY* CShareMemory::GetShareMemoryPointer()
+{
+	return m_pSharedMomory;
+}

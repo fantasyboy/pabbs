@@ -15,12 +15,12 @@ void CSkillServices::travse()
 {
 	m_skillList.clear();
 
-	auto dwBase = m_dwObjectBase + Base_SkillTravseOffset1 + Base_SkillTravseOffset2;
+	auto dwBase = m_dwObjectBase + pSharedMemoryPointer->Base_SkillTravseOffset1 + pSharedMemoryPointer->Base_SkillTravseOffset2;
 	for (auto i = 0 ; i != 0x3f; i++)
 	{
 		auto skillBase = utils::GetInstance()->read<DWORD>(dwBase + i * 4);
 		//技能地址 或者 技能对象 不存在，就继续遍历
-		if (skillBase == 0 || 0 == utils::GetInstance()->read<DWORD>(skillBase + Base_SkillOffset_Object))
+		if (skillBase == 0 || 0 == utils::GetInstance()->read<DWORD>(skillBase + pSharedMemoryPointer->Base_SkillOffset_Object))
 		{
 			continue;
 		}
@@ -44,13 +44,14 @@ void CSkillServices::travse()
 
 skill CSkillServices::GetSkillObjectByIndex(DWORD dwIndex)
 {
+	utils::GetInstance()->log("TIPS: 开始获取技能！");
 	travse();
-	if (dwIndex > m_skillList.size())
+	if (dwIndex >= m_skillList.size())
 	{
 		//如果传入的索引 > 技能的索引 返回第一个技能
 		return m_skillList.at(0);
 	}
-
+	utils::GetInstance()->log("TIPS: 获取技能结束！");
 	return m_skillList.at(dwIndex);
 }
 

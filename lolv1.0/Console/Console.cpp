@@ -70,6 +70,15 @@ BOOL CConsoleApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
+	//防止多开
+	auto handle = ::CreateMutex(NULL, FALSE, ("Mutex2010073"));
+	if (GetLastError() == ERROR_ALREADY_EXISTS)
+	{
+		CloseHandle(handle);
+		return FALSE;
+	}
+
+
 	CConsoleDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();

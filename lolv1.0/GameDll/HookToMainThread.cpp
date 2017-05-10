@@ -11,7 +11,7 @@ HWND CHookToMainThread::GetGameHwnd() const
 {
 	__try
 	{
-		return  (HWND)utils::GetInstance()->read<DWORD>(Base_GameWndHwndAddr);
+		return  (HWND)utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_GameWndHwndAddr);
 	}
 	__except (1)
 	{

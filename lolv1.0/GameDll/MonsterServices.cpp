@@ -14,8 +14,8 @@ CMonsterServices::~CMonsterServices()
 void CMonsterServices::travse()
 {
 	m_PersonList.clear();
-	auto startAddr = utils::GetInstance()->read<DWORD>(Base_MonsterArrayAddr);
-	auto endAddr = utils::GetInstance()->read<DWORD>(Base_MonsterArrayAddr + 0x4);
+	auto startAddr = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_MonsterArrayAddr);
+	auto endAddr = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_MonsterArrayAddr + 0x4);
 	for (auto i = startAddr; i != endAddr; i += 4)
 	{
 		//temp就是具体的怪物对象。
@@ -59,6 +59,7 @@ person CMonsterServices::GetNearleastPerson(person* role)
 
 person CMonsterServices::GetHealthLeastPerson(person* role,float SkillRange)
 {
+	utils::GetInstance()->log("TIPS: 开始获取玩家最小血量！\n");
 	travse();
 	float MaxHealth = FLT_MAX;
 	DWORD minDistanceObj = 0;
@@ -70,5 +71,6 @@ person CMonsterServices::GetHealthLeastPerson(person* role,float SkillRange)
 			minDistanceObj = temp.GetNodeBase();
 		}
 	}
+	utils::GetInstance()->log("TIPS: 获取玩家最小血量结束！\n");
 	return person(minDistanceObj);
 }

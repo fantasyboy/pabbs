@@ -15,7 +15,7 @@ void CBufferServices::travse()
 {
 	m_bufferList.clear();
 
-	DWORD dwBase = utils::GetInstance()->read<DWORD>(Base_BufferAddr);
+	DWORD dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr);
 	if (dwBase == 0)
 	{
 		utils::GetInstance()->log("ERROR: CBufferServices::travse() dwBase ³öÏÖÒì³££¡\n");

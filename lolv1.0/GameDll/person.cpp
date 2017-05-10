@@ -16,7 +16,7 @@ float person::GetAttackRange() const
 {
 	__try {
 		//return utils::GetInstance()->read<float>(GetNodeBase() + Base_AttackDistanceOffset);
-		auto dwBase = utils::GetInstance()->read<DWORD>(Base_BufferAddr);
+		auto dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_BufferAddr);
 		if (dwBase)
 		{
 			auto dwOffset1 = utils::GetInstance()->read<DWORD>(dwBase+0x20);
@@ -44,7 +44,7 @@ float person::GetAttackRange() const
 float person::GetAttackSpeed() const
 {
 	__try{
-		auto dwBase = utils::GetInstance()->read<DWORD>(Base_BufferAddr);
+		auto dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_BufferAddr);
 		if (dwBase)
 		{
 			auto dwOffset1 = utils::GetInstance()->read<DWORD>(dwBase + 0x20);

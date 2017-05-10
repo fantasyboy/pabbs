@@ -25,6 +25,8 @@ public:
 private:
 	CShareMemory m_sharedMemory;
 	HANDLE m_ThreadHanle;
+
+	void InitGameStruct();
 // й╣ож
 protected:
 	HICON m_hIcon;
@@ -48,5 +50,6 @@ public:
 	afx_msg void OnBnClickedCheck5();
 	afx_msg void OnClose();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual void PreInitDialog();
 };
 

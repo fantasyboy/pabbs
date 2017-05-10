@@ -63,5 +63,8 @@ public:
 
 	//获取移动速度
 	float GetMoveSpeed()const;
+
+	//获取玩家是否移动
+	bool GetBMoving()const;
 };
 

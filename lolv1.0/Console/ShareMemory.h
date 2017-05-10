@@ -11,6 +11,7 @@ public:
 	//Ïú»Ù¹²ÏíÄÚ´æ
 	bool DestorySharedMemory();
 	PSHARED_MOMERY GetPointerOfMapView();
+	SHARED_MEMORY* GetShareMemoryPointer();
 private:
 	SHARED_MEMORY *m_pSharedMomory;
 	HANDLE m_hMapping;

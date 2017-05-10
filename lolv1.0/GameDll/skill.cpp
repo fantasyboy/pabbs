@@ -13,7 +13,7 @@ skill::~skill()
 char* skill::GetName() const
 {
 	__try {
-		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_SkillOffset_Object);
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
 		if (temp == 0)
 		{
 			return nullptr;
@@ -70,7 +70,7 @@ bool skill::bCoolDown()
 float skill::GetExpendMP()
 {
 	__try {
-		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_SkillOffset_Object);
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
 		if (temp == 0) {
 			utils::GetInstance()->log("ERROR: ¶ÁÈ¡GetExpendMPÆ«ÒÆ1Ê§°Ü£¡\n");
 			return 0;
@@ -81,7 +81,7 @@ float skill::GetExpendMP()
 			utils::GetInstance()->log("ERROR: ¶ÁÈ¡GetExpendMPÆ«ÒÆ2Ê§°Ü£¡\n");
 			return 0;
 		}
-		return utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_MP + (GetLevel() - 1) * 4);
+		return utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_MP + (GetLevel() - 1) * 4);
 	}
 	__except (1)
 	{
@@ -105,7 +105,7 @@ float skill::GetMaxCoolTime()
 float skill::GetSkillRange()
 {
 	__try {
-		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + Base_SkillOffset_Object);
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
 		if (temp == 0) {
 			utils::GetInstance()->log("ERROR: ¶ÁÈ¡GetSkillRangeÆ«ÒÆ1Ê§°Ü£¡\n");
 			return 0;
@@ -116,8 +116,8 @@ float skill::GetSkillRange()
 			utils::GetInstance()->log("ERROR: ¶ÁÈ¡GetSkillRangeÆ«ÒÆ2Ê§°Ü£¡\n");
 			return 0;
 		}
-		auto range1= utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range1 + 4 * 1);
-		auto range2 = utils::GetInstance()->read<float>(temp2 + Base_SkillOffset_Range2 + 1 * 4);
+		auto range1= utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range1 + 4 * 1);
+		auto range2 = utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 1 * 4);
 		if (range2 < 1)
 		{
 			return range1;

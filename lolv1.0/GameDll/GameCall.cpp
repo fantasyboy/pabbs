@@ -45,7 +45,7 @@ GameCall* GameCall::GetInstance()
 float GameCall::GetClientTickTime() const
 {
 	__try {
-		return utils::GetInstance()->read<float>(Base_GameStartTime + 0x30);
+		return utils::GetInstance()->read<float>(pSharedMemoryPointer->Base_GameStartTime + 0x30);
 	}
 	__except(1)
 	{
@@ -57,9 +57,11 @@ float GameCall::GetClientTickTime() const
 bool GameCall::HeroAttack(DWORD dwNodeBase)
 {
 	__try {
-		StopAction();
+		//StopAction();
 		static float fTargetPointArray[3] = { 0 };
 		memcpy(fTargetPointArray, (void*)(dwNodeBase + 0x50), sizeof(float) * 3);
+		DWORD  Base_RoleSelfAddr = pSharedMemoryPointer->Base_RoleSelfAddr;
+		DWORD Base_AttackHeroCallAddr = pSharedMemoryPointer->Base_AttackHeroCallAddr;
 		__asm
 		{
 			pushad;
@@ -91,11 +93,19 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
+		if (g_MonsterObj)
+		{
+			return true;
+		}
+
 		if (monsObj) {
 			g_mutex.lock();
 			g_MonsterObj = monsObj;
 			g_mutex.unlock();
 		}
+
+		DWORD Base_SkillCallEcxAddr = pSharedMemoryPointer->Base_SkillCallEcxAddr;
+		DWORD Base_SkillCallAddr = pSharedMemoryPointer->Base_SkillCallAddr;
 		__asm
 		{
 			pushad;
@@ -120,7 +130,7 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 
 bool GameCall::HookSkillUse()
 {
-	DWORD HookAddr = Base_SkillCallHookAddr;
+	DWORD HookAddr = pSharedMemoryPointer->Base_SkillCallHookAddr;
 	//保存CALL地址
 	g_HookCallAddr =  utils::GetInstance()->read<DWORD>(HookAddr + 0x1) + HookAddr + 5;
 	char hookData[5] = { 0xe8, 0x0, 0x0, 0x0, 0x0 };
@@ -148,6 +158,9 @@ bool GameCall::FindWay(EM_POINT_3D pnt)
 		fArray[3] = pnt.x;
 		fArray[4] = pnt.z;
 		fArray[5] = pnt.y;
+
+		DWORD Base_RoleSelfAddr = pSharedMemoryPointer->Base_RoleSelfAddr;
+		DWORD Base_FindWayCallAddr = pSharedMemoryPointer->Base_FindWayCallAddr;
 		__asm
 		{
 			PUSHAD;
@@ -179,7 +192,7 @@ EM_POINT_3D GameCall::GetMousePnt() const
 	EM_POINT_3D temp = { 0 };
 	__try
 	{
-		auto dwBase = utils::GetInstance()->read<DWORD>(Base_MousePointAddr);
+		auto dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_MousePointAddr);
 		if (dwBase)
 		{
 			auto Offset1 = utils::GetInstance()->read<DWORD>(dwBase+0x10);
@@ -205,30 +218,41 @@ EM_POINT_3D GameCall::GetMousePnt() const
 
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
-	if (g_MonsterObj)
+	try
 	{
-		g_mutex.lock();
-		person temp(g_MonsterObj);
-		g_MonsterObj = NULL;
-		g_mutex.unlock();
-
-		if (!temp.BDead())
+		if (g_MonsterObj)
 		{
-			EM_POINT_3D pnt;
-			pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(35.0);
-			pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(35.0);
-			pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(35.0);
+			//拷贝对象
+			g_mutex.lock();
+			person temp(g_MonsterObj);
+			g_MonsterObj = NULL;
+			g_mutex.unlock();
 
-			//填充数据
-			memcpy(xyz, &pnt, 0xc);
-			*monsObj = temp.GetNodeBase();
+
+			if (!temp.BDead())
+			{
+				//如果玩家在移动，就预判
+				if (temp.GetBMoving())
+				{
+					EM_POINT_3D pnt = { 0 };
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * 20.0;
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * 20.0;
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * 20.0;
+
+					memcpy(xyz, &pnt, 0xc);
+					*monsObj = 0;
+				}
+				else
+				{
+					memcpy(xyz, &temp.GetPoint(), 0xc);
+					*monsObj = temp.GetNodeBase();
+				}
+				
+			}
 			return;
 		}
-
-	}
 		//调用原始的
-	try 
-	{
+
 		__asm {
 			pushad;
 			push monsObj;
