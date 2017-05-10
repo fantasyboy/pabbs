@@ -102,7 +102,12 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 				}
+				else
+				{
+					utils::GetInstance()->log("TIPS: 不满足技能Q使用条件！\n");
+				}
 			}
+
 			//如果锁定了技能W
 		    if (pSharedMemoryPointer->bLockW)
 			{
@@ -117,14 +122,21 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					mons.GetNodeBase()&&
 					!mons.BDead())
 				{
+					utils::GetInstance()->log("TIPS: 开始技能W！\n");
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::W;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 				}
+				else
+				{
+					utils::GetInstance()->log("TIPS: 不满足技能w使用条件！\n");
+				}
 			}
+
 		 if (pSharedMemoryPointer->bLockE)
 			{
+			 
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
@@ -136,12 +148,18 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					mons.GetNodeBase()&&
 					!mons.BDead())
 				{
+					utils::GetInstance()->log("TIPS: 开始技能E！\n");
 					SKILL_TO_MONS temp;
 					temp.index = EM_SKILL_INDEX::E;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 				}
-			}
+				else
+				{
+					utils::GetInstance()->log("TIPS: 不满足技能E使用条件！\n");
+				}
+		 }
+
 			
 			if (pSharedMemoryPointer->bOpenAA) 
 			{

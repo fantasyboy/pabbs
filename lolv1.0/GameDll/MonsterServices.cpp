@@ -59,7 +59,6 @@ person CMonsterServices::GetNearleastPerson(person* role)
 
 person CMonsterServices::GetHealthLeastPerson(person* role,float SkillRange)
 {
-	utils::GetInstance()->log("TIPS: 开始获取玩家最小血量！\n");
 	travse();
 	float MaxHealth = FLT_MAX;
 	DWORD minDistanceObj = 0;
@@ -71,6 +70,5 @@ person CMonsterServices::GetHealthLeastPerson(person* role,float SkillRange)
 			minDistanceObj = temp.GetNodeBase();
 		}
 	}
-	utils::GetInstance()->log("TIPS: 获取玩家最小血量结束！\n");
 	return person(minDistanceObj);
 }

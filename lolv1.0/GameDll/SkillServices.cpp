@@ -44,14 +44,12 @@ void CSkillServices::travse()
 
 skill CSkillServices::GetSkillObjectByIndex(DWORD dwIndex)
 {
-	utils::GetInstance()->log("TIPS: 开始获取技能！");
 	travse();
 	if (dwIndex >= m_skillList.size())
 	{
 		//如果传入的索引 > 技能的索引 返回第一个技能
 		return m_skillList.at(0);
 	}
-	utils::GetInstance()->log("TIPS: 获取技能结束！");
 	return m_skillList.at(dwIndex);
 }
 

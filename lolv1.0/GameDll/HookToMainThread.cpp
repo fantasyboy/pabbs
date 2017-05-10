@@ -81,11 +81,9 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 			switch (pArg->wParam)
 			{
 			case MESSAGE::MSG_SKILLCALL: {
-				utils::GetInstance()->log("TIPS: 开始技能！\n");
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
 				person temp(p.monsObj);
 				if (!temp.BDead()) {
-					utils::GetInstance()->log("TIPS: 使用技能中！\n");
 					GameCall::GetInstance()->UseSkill(p.index, p.monsObj);
 				}
 				break;

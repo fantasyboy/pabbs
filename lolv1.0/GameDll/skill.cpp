@@ -52,7 +52,7 @@ DWORD skill::GetLevel() const
 bool skill::bCoolDown()
 {
 	__try {
-		return (GameCall::GetInstance()->GetClientTickTime() > utils::GetInstance()->read<float>(GetNodeBase() + 0x18));
+		return (GameCall::GetInstance()->GetClientTickTime() >= utils::GetInstance()->read<float>(GetNodeBase() + 0x18));
 	}
 	__except (1)
 	{
