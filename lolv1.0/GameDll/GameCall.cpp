@@ -288,15 +288,6 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				}
 				return;
 			}
-			else
-			{
-				//如果怪物死亡。调用默认逻辑
-				*monsObj = 0;
-// 				memset(xyz,   0x7F7FFFFF, 0x4);
-// 				memset(xyz+4, 0x7F7FFFFF, 0x4);
-// 				memset(xyz+8, 0x7F7FFFFF, 0x4);
-			}
-		
 		}
 		//调用原始的
 
