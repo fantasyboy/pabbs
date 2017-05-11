@@ -272,9 +272,9 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				{
 					utils::GetInstance()->log("TIPS: µ÷ÓÃÔ¤ÅÐÂß¼­£¡\n");
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(300.0);
-					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(300.0);
-					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(300.0);
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(350.0);
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(350.0);
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(350.0);
 
 					memcpy(xyz, &pnt, 0xc);
 					*monsObj = 0;
