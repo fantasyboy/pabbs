@@ -100,12 +100,10 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
+
 		g_mutex.lock();
-		g_MonsterObj = NULL;
 		if (monsObj) {
 			g_MonsterObj = monsObj;
-// 			person temp(monsObj);
-// 			GameCall::GetInstance()->SetMousePnt(temp.GetPoint());
 		}
 		g_mutex.unlock();
 
@@ -274,9 +272,9 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				{
 					utils::GetInstance()->log("TIPS: 调用预判逻辑！\n");
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(150.0);
-					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(150.0);
-					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(150.0);
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(300.0);
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(300.0);
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(300.0);
 
 					memcpy(xyz, &pnt, 0xc);
 					*monsObj = 0;
@@ -284,13 +282,21 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				else
 				{
 					utils::GetInstance()->log("TIPS: 调用正常逻辑！\n");
-					//memset(xyz, 0, 0xc);
+					
 					memcpy(xyz, &temp.GetPoint(), 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
 				return;
 			}
-			//如果怪物死亡。调用默认逻辑
+			else
+			{
+				//如果怪物死亡。调用默认逻辑
+				*monsObj = 0;
+// 				memset(xyz,   0x7F7FFFFF, 0x4);
+// 				memset(xyz+4, 0x7F7FFFFF, 0x4);
+// 				memset(xyz+8, 0x7F7FFFFF, 0x4);
+			}
+		
 		}
 		//调用原始的
 
