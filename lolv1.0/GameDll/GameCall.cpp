@@ -272,33 +272,30 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				{
 					utils::GetInstance()->log("TIPS: 调用预判逻辑！\n");
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(350.0);
-					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(350.0);
-					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(350.0);
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(250.0);
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(250.0);
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(250.0);
 
 					memcpy(xyz, &pnt, 0xc);
-					*monsObj = 0;
+					*monsObj = temp.GetNodeBase();
 				}
 				else
 				{
 					utils::GetInstance()->log("TIPS: 调用正常逻辑！\n");
 					
-					memcpy(xyz, &temp.GetPoint(), 0xc);
+					//memcpy(xyz, &temp.GetPoint(), 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
-				return;
 			}
 		}
 		//调用原始的
 
 		__asm {
-			pushad;
 			push monsObj;
 			push xyz;
 			push skillObj;
 			mov eax, g_HookCallAddr;
 			call eax;
-			popad;
 		}
 	}
 	catch(...) {
