@@ -99,11 +99,12 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
+		g_mutex.lock();
+		g_MonsterObj = NULL;
 		if (monsObj) {
-			g_mutex.lock();
 			g_MonsterObj = monsObj;
-			g_mutex.unlock();
 		}
+		g_mutex.unlock();
 
 		DWORD Base_SkillCallEcxAddr = pSharedMemoryPointer->Base_SkillCallEcxAddr;
 		DWORD Base_SkillCallAddr = pSharedMemoryPointer->Base_SkillCallAddr;
@@ -236,22 +237,22 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				if (temp.GetBMoving())
 				{
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * temp.GetMoveSpeed() *0.1;
-					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * temp.GetMoveSpeed() *0.1;
-					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * temp.GetMoveSpeed() *0.1;
+					pnt.x = temp.GetPoint().x/* + temp.GetMonsterOrientation().x * temp.GetMoveSpeed() *0.1*/;
+					pnt.z = temp.GetPoint().z /*+ temp.GetMonsterOrientation().z * temp.GetMoveSpeed() *0.1*/;
+					pnt.y = temp.GetPoint().y /*+ temp.GetMonsterOrientation().y * temp.GetMoveSpeed() *0.1*/;
 
 					memcpy(xyz, &pnt, 0xc);
 					*monsObj = 0;
 				}
 				else
 				{
+					memset(xyz, 0, 0xc);
 					memcpy(xyz, &temp.GetPoint(), 0xc);
-					//memset(xyz, 0, 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
-				
+				return;
 			}
-			return;
+			//如果怪物死亡。调用默认逻辑
 		}
 		//调用原始的
 
