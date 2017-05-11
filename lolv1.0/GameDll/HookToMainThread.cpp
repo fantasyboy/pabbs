@@ -82,10 +82,8 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 			{
 			case MESSAGE::MSG_SKILLCALL: {
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
-				person temp(p.monsObj);
-				if (!temp.BDead()) {
-					GameCall::GetInstance()->UseSkill(p.index, p.monsObj);
-				}
+				GameCall::GetInstance()->UseSkill(p.index, p.monsObj);
+
 				break;
 			}
 			case MESSAGE::MSG_ATTACKCALL:
@@ -93,10 +91,8 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 				utils::GetInstance()->log("TIPS: 开始攻击！\n");
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
 				person temp(p.monsObj);
-				if (!temp.BDead()) {
-					utils::GetInstance()->log("TIPS: 攻击中！\n");
-					GameCall::GetInstance()->HeroAttack(p.monsObj);
-				}
+				utils::GetInstance()->log("TIPS: 攻击中！\n");
+				GameCall::GetInstance()->HeroAttack(p.monsObj);
 				break;
 			}
 			case MESSAGE::MSG_FINDWAY:

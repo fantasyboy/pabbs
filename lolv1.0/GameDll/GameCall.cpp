@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameCall.h"
 #include "person.h"
+#include "skill.h"
 //
 //全局变量声明
 //
@@ -261,23 +262,21 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			g_MonsterObj = NULL;
 			g_mutex.unlock();
 
-
 			if (!temp.BDead())
 			{
-				utils::GetInstance()->log("TIPS: 当前怪物对象为: %x", temp.GetNodeBase());
-				//如果玩家在移动，就预判
-				if (temp.GetBMoving())
+				utils::GetInstance()->log("TIPS: 当前怪物对象为: %x 技能对象为: %x", temp.GetNodeBase() ,skillObj);
+
+				auto tempSkill = utils::GetInstance()->read<DWORD>(skillObj);
+				skill sk(EM_SKILL_INDEX::Q,tempSkill);
+
+				//玩家移动  并且不是锁定技能
+				if (temp.GetBMoving()&& (DWORD)sk.GetSkillType() == 0 && (DWORD)sk.GetSkillRange2() != 0)
 				{
 					utils::GetInstance()->log("TIPS: 调用预判逻辑！\n");
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * 100.0;
-					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * 100.0;
-					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * 100.0;
-
-					utils::GetInstance()->log("TIPS: 怪物坐标： %f %f %f", temp.GetPoint().x, temp.GetPoint().z, temp.GetPoint().y);
-					utils::GetInstance()->log("TIPS: 预判坐标： %f %f %f", pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * 100.0,
-						pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * 100.0,
-						pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * 100.0);
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(150.0);
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(150.0);
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(150.0);
 
 					memcpy(xyz, &pnt, 0xc);
 					*monsObj = 0;
@@ -286,7 +285,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				{
 					utils::GetInstance()->log("TIPS: 调用正常逻辑！\n");
 					//memset(xyz, 0, 0xc);
-					//memcpy(xyz, &temp.GetPoint(), 0xc);
+					memcpy(xyz, &temp.GetPoint(), 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
 				return;

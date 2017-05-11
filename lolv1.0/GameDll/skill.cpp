@@ -104,36 +104,79 @@ float skill::GetMaxCoolTime()
 
 float skill::GetSkillRange()
 {
+	if (GetSkillType() > 0)
+	{
+		return GetSkillType();
+	}
+
+	if (GetSkillRange2() > 0)
+	{
+		return GetSkillRange2();
+	}
+
+	if (GetSkillRange1() > 0)
+	{
+		return GetSkillRange1();
+	}
+
+	return 0;
+}
+
+float skill::GetSkillRange1()
+{
 	__try {
+		//非锁定技能距离判断
 		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
-		if (temp == 0) {
-			utils::GetInstance()->log("ERROR: 读取GetSkillRange偏移1失败！\n");
-			return 0;
-		}
-		auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
-		if (temp2 == 0)
+		if (temp)
 		{
-			utils::GetInstance()->log("ERROR: 读取GetSkillRange偏移2失败！\n");
-			return 0;
-		}
-		auto range1= utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range1 + 4 * 1);
-		auto range2 = utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 1 * 4);
-		if (range2 < 1)
-		{
-			return range1;
-		}
-		else
-		{
-			return (range1 < range2 ? range1: range2);
+			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
+			if (temp2)
+			{
+				return utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range1 + 4 * GetLevel());
+			}
 		}
 	}
 	__except (1) {
 		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
 		return 0;
 	}
+	return 0;
+}
+
+float skill::GetSkillRange2()
+{
+	__try {
+		//非锁定技能距离判断
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
+		if (temp)
+		{
+			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
+			if (temp2)
+			{
+				return utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 4 * GetLevel());
+			}
+		}
+	}
+	__except (1) {
+		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
+		return 0;
+	}
+	return 0;
 }
 
 DWORD skill::GetIndex() const
 {
 	return m_index;
+}
+
+float skill::GetSkillType() const
+{
+	__try {
+		return utils::GetInstance()->read<float>(GetNodeBase() +0x4C);
+	}
+	__except (1)
+	{
+		utils::GetInstance()->log("ERROR: skill::GetSkillType()出现异常！\n");
+	}
+	return 0;
 }

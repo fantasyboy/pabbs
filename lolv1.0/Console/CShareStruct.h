@@ -36,5 +36,6 @@ typedef struct _SHARED_MOMORY
 	bool bLockR;  //预判R
 	bool bOpenAA; //开启走A
 	DWORD dwZouAMs; //走A频率
+	DWORD dwTargetSelecter; //目标选择器
 }SHARED_MEMORY, *PSHARED_MOMERY;
 #pragma pack()

@@ -56,5 +56,7 @@ public:
 	DWORD m_showZouAMs;
 	CSliderCtrl m_ZouAliderCtl;
 	afx_msg void OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult);
+	int m_radiobtngroup1;
+	afx_msg void OnBnClickedRadio1();
 };
 

@@ -80,6 +80,7 @@ END_MESSAGE_MAP()
 CConsoleDlg::CConsoleDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_CONSOLE_DIALOG, pParent)
 	, m_showZouAMs(0)
+	, m_radiobtngroup1(1)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -99,6 +100,7 @@ void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK5, m_bLockQAA);
 	DDX_Text(pDX, IDC_STATIC_ZOUA, m_showZouAMs);
 	DDX_Control(pDX, IDC_SLIDER1, m_ZouAliderCtl);
+	DDX_Radio(pDX, IDC_RADIO1, m_radiobtngroup1);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
@@ -111,10 +113,9 @@ BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK4, &CConsoleDlg::OnBnClickedCheck4)
 	ON_BN_CLICKED(IDC_CHECK5, &CConsoleDlg::OnBnClickedCheck5)
 	ON_WM_CLOSE()
-//	ON_NOTIFY(TRBN_THUMBPOSCHANGING, IDC_SLIDER1, &CConsoleDlg::OnTRBNThumbPosChangingSlider1)
-//	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &CConsoleDlg::OnNMCustomdrawSlider1)
-//ON_NOTIFY(NM_RELEASEDCAPTURE, IDC_SLIDER1, &CConsoleDlg::OnNMReleasedcaptureSlider1)
 ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &CConsoleDlg::OnNMCustomdrawSlider1)
+ON_BN_CLICKED(IDC_RADIO1, &CConsoleDlg::OnBnClickedRadio1)
+ON_BN_CLICKED(IDC_RADIO2, &CConsoleDlg::OnBnClickedRadio1)
 END_MESSAGE_MAP()
 
 
@@ -329,4 +330,29 @@ void CConsoleDlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = m_ZouAliderCtl.GetPos();
 	UpdateData(FALSE);
 	*pResult = 0;
+}
+
+
+void CConsoleDlg::OnBnClickedRadio1()
+{
+	// TODO: 单选框事件处理
+
+	UpdateData(TRUE);
+
+	switch (m_radiobtngroup1)
+	{
+	case 0:
+	{
+		m_sharedMemory.GetPointerOfMapView()->dwTargetSelecter = 0;
+		break;
+	}
+	case 1:
+	{
+		m_sharedMemory.GetPointerOfMapView()->dwTargetSelecter = 1;
+		break;
+	}
+	default:
+		AfxMessageBox("选择目标错误！");
+		break;
+	}
 }

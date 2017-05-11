@@ -86,6 +86,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			if (pSharedMemoryPointer->bLockQ)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
+				utils::GetInstance()->log("TIPS: 当前技能范围：%f", skillQ.GetSkillRange());
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				//如果 (最近玩家的距离 < 技能Q的距离 && 玩家当前的蓝 > 技能消耗的蓝 && 技能已经学习 && 技能已经冷却 && 玩家活着)  就调用 （技能CALL（Q））；
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
@@ -102,10 +103,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::Q;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-				}
-				else
-				{
-					utils::GetInstance()->log("TIPS: 不满足技能Q使用条件！\n");
+					Sleep(20);
 				}
 			}
 
@@ -128,10 +126,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::W;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-				}
-				else
-				{
-					utils::GetInstance()->log("TIPS: 不满足技能w使用条件！\n");
+					Sleep(20);
 				}
 			}
 
@@ -154,6 +149,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::E;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
+					Sleep(20);
 				}
 				else
 				{
@@ -179,12 +175,13 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					(GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.0) / m_role.GetAttackSpeed()))
 				{
 					//如果攻击间隔成立，调用平A，否则就调用寻路
-					SKILL_TO_MONS temp;
-					temp.monsObj = mons.GetNodeBase();
-					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
-					//重新计算攻击间隔
-					timeSec = GameCall::GetInstance()->GetClientTickTime();
-					m_AttackDisTime = GetTickCount();
+ 					SKILL_TO_MONS temp;
+ 					temp.monsObj = mons.GetNodeBase();
+ 					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
+ 					//重新计算攻击间隔
+ 					timeSec = GameCall::GetInstance()->GetClientTickTime();
+ 					m_AttackDisTime = GetTickCount();
+ 					Sleep(20);
 				}
 				else
 				{
