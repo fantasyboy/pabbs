@@ -23,6 +23,8 @@ public:
 	bool FindWay(EM_POINT_3D pnt);
 	//获取鼠标位置
 	EM_POINT_3D GetMousePnt()const;
+	//设置鼠标位置
+	bool SetMousePnt(EM_POINT_3D pnt);
 private:
 	static GameCall* m_pInstance;
 	static std::mutex m_mutex;

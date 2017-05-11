@@ -103,6 +103,8 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 		g_MonsterObj = NULL;
 		if (monsObj) {
 			g_MonsterObj = monsObj;
+// 			person temp(monsObj);
+// 			GameCall::GetInstance()->SetMousePnt(temp.GetPoint());
 		}
 		g_mutex.unlock();
 
@@ -218,6 +220,35 @@ EM_POINT_3D GameCall::GetMousePnt() const
 	return temp;
 }
 
+bool GameCall::SetMousePnt(EM_POINT_3D pnt)
+{
+	__try
+	{
+		auto dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_MousePointAddr);
+		if (dwBase)
+		{
+			auto Offset1 = utils::GetInstance()->read<DWORD>(dwBase + 0x10);
+			if (Offset1)
+			{
+				utils::GetInstance()->write<float>(Offset1 + 0x10, pnt.x);
+				utils::GetInstance()->write<float>(Offset1 + 0x14, pnt.z);
+				utils::GetInstance()->write<float>(Offset1 + 0x18, pnt.y);
+				utils::GetInstance()->write<float>(Offset1 + 0x1c, pnt.x);
+				utils::GetInstance()->write<float>(Offset1 + 0x20, pnt.z);
+				utils::GetInstance()->write<float>(Offset1 + 0x24, pnt.y);
+
+				return true;
+			}
+		}
+	}
+	__except (1)
+	{
+		return false;
+	}
+
+	return false;
+}
+
 void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
 	try
@@ -233,21 +264,29 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 
 			if (!temp.BDead())
 			{
+				utils::GetInstance()->log("TIPS: 当前怪物对象为: %x", temp.GetNodeBase());
 				//如果玩家在移动，就预判
 				if (temp.GetBMoving())
 				{
+					utils::GetInstance()->log("TIPS: 调用预判逻辑！\n");
 					EM_POINT_3D pnt = { 0 };
-					pnt.x = temp.GetPoint().x/* + temp.GetMonsterOrientation().x * temp.GetMoveSpeed() *0.1*/;
-					pnt.z = temp.GetPoint().z /*+ temp.GetMonsterOrientation().z * temp.GetMoveSpeed() *0.1*/;
-					pnt.y = temp.GetPoint().y /*+ temp.GetMonsterOrientation().y * temp.GetMoveSpeed() *0.1*/;
+					pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * 100.0;
+					pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * 100.0;
+					pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * 100.0;
+
+					utils::GetInstance()->log("TIPS: 怪物坐标： %f %f %f", temp.GetPoint().x, temp.GetPoint().z, temp.GetPoint().y);
+					utils::GetInstance()->log("TIPS: 预判坐标： %f %f %f", pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * 100.0,
+						pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * 100.0,
+						pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * 100.0);
 
 					memcpy(xyz, &pnt, 0xc);
 					*monsObj = 0;
 				}
 				else
 				{
-					memset(xyz, 0, 0xc);
-					memcpy(xyz, &temp.GetPoint(), 0xc);
+					utils::GetInstance()->log("TIPS: 调用正常逻辑！\n");
+					//memset(xyz, 0, 0xc);
+					//memcpy(xyz, &temp.GetPoint(), 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
 				return;

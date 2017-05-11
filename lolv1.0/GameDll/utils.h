@@ -42,7 +42,7 @@ T utils::read(const DWORD& _dwNodeBase)
 }
 
 template<class T>
-bool utils::write(DWORD _deNodeBase, const T& value)
+bool utils::write(DWORD _dwNodeBase, const T& value)
 {
 	__try
 	{
@@ -52,7 +52,7 @@ bool utils::write(DWORD _deNodeBase, const T& value)
 			memcpy((LPVOID)_dwNodeBase, &value, sizeof(T));
 			if (VirtualProtect((LPVOID)_dwNodeBase, sizeof(T), oldProtected, &oldProtected))
 			{
-				return value;
+				return true;
 			}
 		}
 	}

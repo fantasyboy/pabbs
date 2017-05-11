@@ -41,5 +41,6 @@ typedef struct _SHARED_MOMORY
 	bool bLockE;
 	bool bLockR;
 	bool bOpenAA;
+	DWORD dwZouAMs; //×ßAÆµÂÊ
 }SHARED_MEMORY, *PSHARED_MOMERY;
 #pragma pack()

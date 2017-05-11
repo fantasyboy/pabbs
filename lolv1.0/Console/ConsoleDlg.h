@@ -6,6 +6,7 @@
 #include "ShareMemory.h"
 #include "afxwin.h"
 #include<windows.h>
+#include "afxcmn.h"
 DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter);
 // CConsoleDlg ¶Ô»°¿ò
 class CConsoleDlg : public CDialogEx
@@ -51,5 +52,9 @@ public:
 	afx_msg void OnClose();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void PreInitDialog();
+//	afx_msg void OnTRBNThumbPosChangingSlider1(NMHDR *pNMHDR, LRESULT *pResult);
+	DWORD m_showZouAMs;
+	CSliderCtrl m_ZouAliderCtl;
+	afx_msg void OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult);
 };
 

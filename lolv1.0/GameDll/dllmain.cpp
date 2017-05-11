@@ -72,6 +72,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		return 0;
 	}
 
+
 	//定义玩家对象
 	CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 
@@ -187,17 +188,9 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				}
 				else
 				{
-					static	DWORD timeSec = 0;
-					if (m_role.GetAttackSpeed() > 1.0)
-					{
-						timeSec = 200;
-					}
-					else
-					{
-						timeSec = 400;
-					}
 					//攻击延时
-					if ((GetTickCount() - m_AttackDisTime) > timeSec)
+					utils::GetInstance()->log("TIPS: 走A延时 = %d ", m_pSharedMemory->GetPointerOfFile()->dwZouAMs);
+					if ((GetTickCount() - m_AttackDisTime) > m_pSharedMemory->GetPointerOfFile()->dwZouAMs)
 					{					
 						//寻路到鼠标位置
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);

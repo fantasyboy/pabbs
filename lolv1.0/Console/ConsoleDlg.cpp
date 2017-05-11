@@ -79,6 +79,7 @@ END_MESSAGE_MAP()
 
 CConsoleDlg::CConsoleDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_CONSOLE_DIALOG, pParent)
+	, m_showZouAMs(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -96,6 +97,8 @@ void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK3, m_bLockE);
 	DDX_Control(pDX, IDC_CHECK4, m_bLockR);
 	DDX_Control(pDX, IDC_CHECK5, m_bLockQAA);
+	DDX_Text(pDX, IDC_STATIC_ZOUA, m_showZouAMs);
+	DDX_Control(pDX, IDC_SLIDER1, m_ZouAliderCtl);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
@@ -108,6 +111,10 @@ BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK4, &CConsoleDlg::OnBnClickedCheck4)
 	ON_BN_CLICKED(IDC_CHECK5, &CConsoleDlg::OnBnClickedCheck5)
 	ON_WM_CLOSE()
+//	ON_NOTIFY(TRBN_THUMBPOSCHANGING, IDC_SLIDER1, &CConsoleDlg::OnTRBNThumbPosChangingSlider1)
+//	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &CConsoleDlg::OnNMCustomdrawSlider1)
+//ON_NOTIFY(NM_RELEASEDCAPTURE, IDC_SLIDER1, &CConsoleDlg::OnNMReleasedcaptureSlider1)
+ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &CConsoleDlg::OnNMCustomdrawSlider1)
 END_MESSAGE_MAP()
 
 
@@ -178,6 +185,11 @@ BOOL CConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	m_ZouAliderCtl.SetRange(1, 1000);
+	m_ZouAliderCtl.SetPos(350);
+
+
+	m_showZouAMs = m_ZouAliderCtl.GetPos();
 
 	//创建共享内存
 	if (!m_sharedMemory.CreateSharedMemory())
@@ -304,4 +316,17 @@ void CConsoleDlg::PreInitDialog()
 	// TODO: 在此添加专用代码和/或调用基类
 	//
 	CDialogEx::PreInitDialog();
+}
+
+
+void CConsoleDlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	
+	UpdateData(TRUE);
+	m_showZouAMs = m_ZouAliderCtl.GetPos();
+	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = m_ZouAliderCtl.GetPos();
+	UpdateData(FALSE);
+	*pResult = 0;
 }
