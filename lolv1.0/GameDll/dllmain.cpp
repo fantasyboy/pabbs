@@ -86,7 +86,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			if (pSharedMemoryPointer->bLockQ)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
-				utils::GetInstance()->log("TIPS: 当前技能范围：%f", skillQ.GetSkillRange());
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				//如果 (最近玩家的距离 < 技能Q的距离 && 玩家当前的蓝 > 技能消耗的蓝 && 技能已经学习 && 技能已经冷却 && 玩家活着)  就调用 （技能CALL（Q））；
 				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
@@ -151,17 +150,11 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 					Sleep(20);
 				}
-				else
-				{
-					utils::GetInstance()->log("TIPS: 不满足技能E使用条件！\n");
-				}
 		 }
 
 			
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
-				utils::GetInstance()->log("TIPS: 走A");
-
 				static DWORD m_AttackDisTime = 0;
 				//获取在玩家攻击范围内的血量最低的怪物
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
@@ -186,7 +179,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				else
 				{
 					//攻击延时
-					utils::GetInstance()->log("TIPS: 走A延时 = %d ", m_pSharedMemory->GetPointerOfFile()->dwZouAMs);
 					if ((GetTickCount() - m_AttackDisTime) > m_pSharedMemory->GetPointerOfFile()->dwZouAMs)
 					{					
 						//寻路到鼠标位置

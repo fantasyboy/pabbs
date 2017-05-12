@@ -153,6 +153,7 @@ float skill::GetSkillRange2()
 			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
 			if (temp2)
 			{
+				//utils::GetInstance()->log("ERROR: skill::GetSkillRange()2 %f %d！\n",utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 4 * GetLevel()), GetLevel());
 				return utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 4 * GetLevel());
 			}
 		}
@@ -161,6 +162,7 @@ float skill::GetSkillRange2()
 		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
 		return 0;
 	}
+	utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
 	return 0;
 }
 
