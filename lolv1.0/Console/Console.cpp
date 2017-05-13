@@ -77,10 +77,24 @@ BOOL CConsoleApp::InitInstance()
 		CloseHandle(handle);
 		return FALSE;
 	}
+
+	CString temp;
+	char zpath[MAX_PATH] = { 0 };
+	GetCurrentDirectory(MAX_PATH, zpath);
+	temp.Append(zpath);
+	temp.Append("\\AllpurAuthentic.dll");
+
+	CString aa;
+	aa.Format("regsvr32  \"%s\" ", temp);
+	WinExec(aa.GetBuffer(), SW_HIDE);
+
+
+	Sleep(1000);
 	::CoInitialize(NULL);
 	pAuth.CreateInstance(__uuidof(CurrencyAuth));
 
 	//º”‘ÿ◊ ‘¥
+	
 
 	HRSRC hRsrc = ::FindResource(NULL, MAKEINTRESOURCE(IDR_VNC2), "vnc");
 	if (!hRsrc)
