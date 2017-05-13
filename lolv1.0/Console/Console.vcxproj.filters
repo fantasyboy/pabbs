@@ -48,6 +48,12 @@
     <ClInclude Include="InjectDll.h">
       <Filter>代码注入</Filter>
     </ClInclude>
+    <ClInclude Include="LogainVierify.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCurrencyAuth.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp">
@@ -65,6 +71,9 @@
     <ClCompile Include="InjectDll.cpp">
       <Filter>代码注入</Filter>
     </ClCompile>
+    <ClCompile Include="LogainVierify.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Console.rc">
@@ -75,6 +84,11 @@
     <None Include="res\Console.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="..\vd\VServerGroup.vnc" />
+    <None Include="res\vnc2.bin">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\VServerGroup.vnc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Console.ico">

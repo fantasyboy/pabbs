@@ -5,4 +5,4 @@
 
 #include "stdafx.h"
 
-
+ICurrencyAuthPtr pAuth = NULL; //验证组件对象指针

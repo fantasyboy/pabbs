@@ -48,7 +48,6 @@ bool CInjectDll::injectDll(HWND m_hwnd)
 						threadHandle = CreateRemoteThread(hProcess, NULL, NULL, (LPTHREAD_START_ROUTINE)LoadLibraryA, AddressDW, NULL, NULL);
 						if (threadHandle != NULL) {
 							m_bInjectDllSuccess = true;
-							//AfxMessageBox("×¢Èë³É¹¦£¡£¡£¡£¡");
 						}
 						WaitForSingleObject(threadHandle, 0xFFFFFFFF);
 						CloseHandle(threadHandle);

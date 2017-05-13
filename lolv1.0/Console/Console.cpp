@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "Console.h"
 #include "ConsoleDlg.h"
-
+#include "LogainVierify.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -77,26 +77,53 @@ BOOL CConsoleApp::InitInstance()
 		CloseHandle(handle);
 		return FALSE;
 	}
+	::CoInitialize(NULL);
+	pAuth.CreateInstance(__uuidof(CurrencyAuth));
+
+	//加载资源
+
+	HRSRC hRsrc = ::FindResource(NULL, MAKEINTRESOURCE(IDR_VNC2), "vnc");
+	if (!hRsrc)
+	{
+		return FALSE;
+	}
+	DWORD dwSize = SizeofResource(NULL, hRsrc);
+	if (!dwSize)
+	{
+		return FALSE;
+	}
+	HGLOBAL hGlobal = LoadResource(NULL, hRsrc);
+	if (!hGlobal)
+	{
+		return FALSE;
+	}
+	LPVOID pBuffer = LockResource(hGlobal);
+	if (NULL == pBuffer)
+		return FALSE;
+	pAuth->InputVNC((int)pBuffer, dwSize);
+
+	Sleep(100);
+	VMProtectBegin("mad");
+	auto result  = pAuth->Initialize("{C1E14188-7629-4B10-B2B5-E03B523C90E6}");//验证组件初始化
+	VMProtectEnd();
+	if (result == -1)
+	{
+		//销毁验证组件
+		pAuth.Release();
+		::CoUninitialize();
+		return FALSE;
+	}
 
 
-	CConsoleDlg dlg;
+
+	//CConsoleDlg dlg;
+	CLogainVierify dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
-		// TODO: 在此放置处理何时用
-		//  “确定”来关闭对话框的代码
-	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO: 在此放置处理何时用
-		//  “取消”来关闭对话框的代码
-	}
-	else if (nResponse == -1)
-	{
-		TRACE(traceAppMsg, 0, "警告: 对话框创建失败，应用程序将意外终止。\n");
-		TRACE(traceAppMsg, 0, "警告: 如果您在对话框上使用 MFC 控件，则无法 #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS。\n");
-	}
+
+	//销毁验证组件
+	pAuth.Release();
+	::CoUninitialize();
 
 	// 删除上面创建的 shell 管理器。
 	if (pShellManager != NULL)

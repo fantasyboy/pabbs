@@ -33,12 +33,11 @@
 
 #include <afxcontrolbars.h>     // 功能区和控件条的 MFC 支持
 
+#include "CCurrencyAuth.h"
 
+extern ICurrencyAuthPtr pAuth;	//验证组件对象指针
 
-
-
-
-
+#include "VMProtectSDK.h"
 
 
 #ifdef _UNICODE

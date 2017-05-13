@@ -100,11 +100,13 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
-
-		g_mutex.lock();
-		if (monsObj) {
-			g_MonsterObj = monsObj;
+		if (!monsObj)
+		{
+			return false;
 		}
+		g_mutex.lock();
+		g_MonsterObj = NULL;
+		g_MonsterObj = monsObj;
 		g_mutex.unlock();
 
 		DWORD Base_SkillCallEcxAddr = pSharedMemoryPointer->Base_SkillCallEcxAddr;
@@ -133,6 +135,7 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 
 bool GameCall::HookSkillUse()
 {
+	VMProtectBegin("cccc");
 	DWORD HookAddr = pSharedMemoryPointer->Base_SkillCallHookAddr;
 	//保存CALL地址
 	g_HookCallAddr =  utils::GetInstance()->read<DWORD>(HookAddr + 0x1) + HookAddr + 5;
@@ -143,6 +146,7 @@ bool GameCall::HookSkillUse()
 	memcpy((void*)HookAddr, (void*)hookData, 5);
 	VirtualProtect((LPVOID)HookAddr, 5, oldProtected, &oldProtected);
 	return true;
+	VMProtectEnd();
 }
 
 bool GameCall::StopAction()
@@ -290,12 +294,16 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				else
 				{
 					utils::GetInstance()->log("TIPS: 调用正常逻辑！\n");
-					
 					memcpy(xyz, &temp.GetPoint(), 0xc);
 					*monsObj = temp.GetNodeBase();
 				}
-				return;
 			}
+			else {
+				//如何对象死亡，忽悠清空对象
+				//memset(xyz, 0, 0xc);
+				*monsObj = 0;
+			}
+			return;
 		}
 		//调用原始的
 

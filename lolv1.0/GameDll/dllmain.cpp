@@ -38,6 +38,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 {
+	VMProtectBegin("ssss");
 	utils::GetInstance()->log("TIPS: Base_GameStartTime");
 	//创建共享内存
 	std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory(new ShareMemory<SHARED_MEMORY>(MAP_NAME));
@@ -72,7 +73,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		return 0;
 	}
 
-
+	VMProtectEnd();
 	//定义玩家对象
 	CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 
@@ -102,7 +103,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::Q;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(20);
+					Sleep(30);
 				}
 			}
 
@@ -125,7 +126,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::W;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(20);
+					Sleep(30);
 				}
 			}
 
@@ -148,7 +149,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::E;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(20);
+					Sleep(30);
 				}
 		 }
 
@@ -174,7 +175,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  					//重新计算攻击间隔
  					timeSec = GameCall::GetInstance()->GetClientTickTime();
  					m_AttackDisTime = GetTickCount();
- 					Sleep(20);
+					Sleep(30);
 				}
 				else
 				{
