@@ -268,13 +268,14 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			{
 				utils::GetInstance()->log("TIPS: 当前怪物对象为: %x 技能对象为: %x", temp.GetNodeBase() ,skillObj);
 
-				auto tempSkill = utils::GetInstance()->read<DWORD>(skillObj);
-				skill sk(EM_SKILL_INDEX::Q,tempSkill);
+				skill sk(EM_SKILL_INDEX::Q, skillObj);
 
 				//玩家移动  并且不是锁定技能
 				if (temp.GetBMoving()&& (DWORD)sk.GetSkillType() == 0 /*&& (DWORD)sk.GetSkillRange2() != 0*/)
 				{
-					if (sk.GetSkillRange2() < 1) {
+					auto rang = sk.GetSkillRange2();
+					utils::GetInstance()->log("TIPS: 技能范围！%f\n", rang);
+					if (rang >= 0.1) {
 						utils::GetInstance()->log("TIPS: 调用预判逻辑！%f\n", sk.GetSkillRange2());
 						EM_POINT_3D pnt = { 0 };
 						pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(250.0);
@@ -285,9 +286,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 					}//预判逻辑
 					else
 					{
-
 						utils::GetInstance()->log("TIPS: 调用锁定技能逻辑！ %f \n", sk.GetSkillRange2());
-						memcpy(xyz, &temp.GetPoint(), 0xc);
 						*monsObj = temp.GetNodeBase();
 					}
 				}

@@ -57,18 +57,20 @@ person CMonsterServices::GetNearleastPerson(person* role)
 	return person(minDistanceObj);
 }
 
-person CMonsterServices::GetHealthLeastPerson(person* role,float SkillRange)
+person CMonsterServices::GetHealthLeastPerson(person* role, float Distance)
 {
+	utils::GetInstance()->log("TIPS: CMonsterServices::GetHealthLeastPerson begin!\n");
 	travse();
 	float MaxHealth = FLT_MAX;
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
 	{
-		if (temp.GetCurHp() < MaxHealth &&role->GetCamp() != temp.GetCamp()&& !temp.BDead() && temp.GetDistance(&role->GetPoint()) < SkillRange)
+		if (temp.GetCurHp() < MaxHealth &&role->GetCamp() != temp.GetCamp()&& !temp.BDead() && temp.GetDistance(&role->GetPoint()) < Distance)
 		{
 			MaxHealth = temp.GetCurHp();
 			minDistanceObj = temp.GetNodeBase();
 		}
 	}
+	utils::GetInstance()->log("TIPS: CMonsterServices::GetHealthLeastPerson end!\n");
 	return person(minDistanceObj);
 }

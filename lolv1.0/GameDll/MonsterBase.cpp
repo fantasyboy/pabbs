@@ -131,6 +131,7 @@ bool MonsterBase::BInShowInFag() const
 		utils::GetInstance()->log("ERROR: MonsterBase::BInShowInFag()³öÏÖÒì³££¡\n");
 		return true;
 	}
+	return true;
 }
 
 bool MonsterBase::BDead() const

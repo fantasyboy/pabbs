@@ -54,11 +54,6 @@ DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter)
 			injectClass.SetInject(false);
 
 		}
-		//判断当前时间 是否 > 结束时间，如果是，退出进城
-		if (strcmp(pAuth->GetCurrTime() , pAuth->GetValidity()))
-		{
-			exit(1);
-		}
 		((CConsoleDlg*)lpParameter)->SetDlgItemText(IDC_STATIC_LOG, pAuth->GetValidity());
 		Sleep(100);
 	}
@@ -127,7 +122,6 @@ END_MESSAGE_MAP()
 
 void CConsoleDlg::InitGameStruct()
 {
-	VMProtectBegin("code");
 	m_sharedMemory.GetPointerOfMapView()->Base_GameStartTime = 0x01A8C570;    //游戏开局时间     偏移:1    //OD地址:0x0056BB6E
 	m_sharedMemory.GetPointerOfMapView()->Base_RoleSelfAddr = 0x01A90F40;    //玩家基地址     偏移:2    //OD地址:0x009CB632
 	m_sharedMemory.GetPointerOfMapView()->Base_BufferAddr = 0x01A8BFE4;    //buff数组基地址     偏移:2    //OD地址:0x00A0F40A
@@ -159,7 +153,6 @@ void CConsoleDlg::InitGameStruct()
 	m_sharedMemory.GetPointerOfMapView()->Base_MonsterOrientationXOffset = 0x3124;  //玩家X朝向
 	m_sharedMemory.GetPointerOfMapView()->Base_MonsterBMovingOffset = 0x4C1C; //玩家是否移动
 
-	VMProtectEnd();
 }
 
 BOOL CConsoleDlg::OnInitDialog()
@@ -206,12 +199,11 @@ BOOL CConsoleDlg::OnInitDialog()
 		return FALSE;
 	}
 
+	VMProtectBegin("aaa1");
 	InitGameStruct();
-
-	VMProtectBegin("aaa");
+	VMProtectEnd();
 	//创建注入线程
 	m_ThreadHanle = ::CreateThread(NULL, NULL,LPTHREAD_START_ROUTINE(ThreadProcA) , this, NULL, NULL);
-	VMProtectEnd();
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 

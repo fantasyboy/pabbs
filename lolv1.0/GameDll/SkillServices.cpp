@@ -53,3 +53,15 @@ skill CSkillServices::GetSkillObjectByIndex(DWORD dwIndex)
 	return m_skillList.at(dwIndex);
 }
 
+float CSkillServices::GetMaxDistance() 
+{
+	travse();
+	float flt = FLT_MIN;
+	for (auto temp : m_skillList)
+	{
+		if (temp.GetSkillRange() > flt)
+			flt = temp.GetSkillRange();
+	}
+	return flt;
+}
+

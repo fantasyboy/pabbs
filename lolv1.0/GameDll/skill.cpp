@@ -106,16 +106,19 @@ float skill::GetSkillRange()
 {
 	if (GetSkillType() > 0)
 	{
+		utils::GetInstance()->log("TIPS: GetSkillType() = %f", GetSkillType());
 		return GetSkillType();
 	}
 
 	if (GetSkillRange2() > 0)
 	{
+		utils::GetInstance()->log("TIPS: GetSkillRange2() = %f", GetSkillRange2());
 		return GetSkillRange2();
 	}
 
 	if (GetSkillRange1() > 0)
 	{
+		utils::GetInstance()->log("TIPS: GetSkillRange1() = %f", GetSkillRange1());
 		return GetSkillRange1();
 	}
 
@@ -137,7 +140,7 @@ float skill::GetSkillRange1()
 		}
 	}
 	__except (1) {
-		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
+		utils::GetInstance()->log("ERROR: skill::GetSkillRange1()出现异常！\n");
 		return 0;
 	}
 	return 0;
@@ -153,16 +156,14 @@ float skill::GetSkillRange2()
 			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
 			if (temp2)
 			{
-				//utils::GetInstance()->log("ERROR: skill::GetSkillRange()2 %f %d！\n",utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 4 * GetLevel()), GetLevel());
-				return utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range2 + 4 * GetLevel());
+				return utils::GetInstance()->read<float>(temp2 + pSharedMemoryPointer->Base_SkillOffset_Range1 + 0x20);
 			}
 		}
 	}
 	__except (1) {
-		utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
+		utils::GetInstance()->log("ERROR: skill::GetSkillRange2()出现异常！\n");
 		return 0;
 	}
-	utils::GetInstance()->log("ERROR: skill::GetSkillRange()出现异常！\n");
 	return 0;
 }
 
