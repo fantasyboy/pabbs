@@ -54,7 +54,8 @@ DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter)
 			injectClass.SetInject(false);
 
 		}
-		((CConsoleDlg*)lpParameter)->SetDlgItemText(IDC_STATIC_LOG, pAuth->GetValidity());
+
+		((CConsoleDlg*)lpParameter)->m_ZouAliderCtl.SetPos(((CConsoleDlg*)lpParameter)->m_sharedMemory.GetPointerOfMapView()->dwZouAMs);
 		Sleep(100);
 	}
 }
@@ -185,10 +186,9 @@ BOOL CConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_ZouAliderCtl.SetRange(50, 1000);
-	m_ZouAliderCtl.SetPos(250);
+	m_ZouAliderCtl.SetRange(130, 350);
 
-
+	SetDlgItemText(IDC_STATIC_LOG, pAuth->GetValidity());
 	m_showZouAMs = m_ZouAliderCtl.GetPos();
 
 	//创建共享内存
@@ -198,6 +198,8 @@ BOOL CConsoleDlg::OnInitDialog()
 		exit(1);
 		return FALSE;
 	}
+
+	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 250;
 
 	VMProtectBegin("aaa1");
 	InitGameStruct();

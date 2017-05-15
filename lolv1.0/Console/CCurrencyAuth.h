@@ -1,6 +1,6 @@
 // 从类型库向导中用“添加类”创建的计算机生成的 IDispatch 包装器类
 
-#import "E:\\workspace\\pabbs\\lolv1.0\\vd\\AllpurAuthentic.dll" no_namespace
+#import "..\\vd\\AllpurAuthentic.dll" no_namespace
 // CCurrencyAuth 包装器类
 
 class CCurrencyAuth : public COleDispatchDriver

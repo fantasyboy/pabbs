@@ -58,13 +58,7 @@ float GameCall::GetClientTickTime() const
 bool GameCall::HeroAttack(DWORD dwNodeBase)
 {
 	__try {
-		//StopAction();
-
 		//如果在使用技能，就不调用普攻
-		if (g_MonsterObj)
-		{
-			return true;
-		}
 		static float fTargetPointArray[3] = { 0 };
 		memcpy(fTargetPointArray, (void*)(dwNodeBase + 0x50), sizeof(float) * 3);
 		DWORD  Base_RoleSelfAddr = pSharedMemoryPointer->Base_RoleSelfAddr;

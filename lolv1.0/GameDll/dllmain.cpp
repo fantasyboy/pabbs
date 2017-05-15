@@ -105,7 +105,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::Q;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(3);
 				}
 			}
 
@@ -129,7 +128,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::W;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(3);
 				}
 			}
 
@@ -153,22 +151,23 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::E;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(3);
 				}
 		 }
 
 			
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
+				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*280.0);
+				m_pSharedMemory->GetPointerOfFile()->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
 				static DWORD m_AttackDisTime = 0;
-				static float timeSec = 0;
+				static DWORD timeSec = 0;
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f 攻击距离： %f ", m_role.GetDistance(&mons.GetPoint()), m_role.GetAttackRange());
 				if (mons.GetNodeBase() && 
 					!m_role.BDead()&&
 					!mons.BDead()&&
 					m_role.GetDistance(&mons.GetPoint()) <= m_role.GetAttackRange()&&
-					(GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.0) / m_role.GetAttackSpeed()))
+					(float)(GetTickCount() - timeSec) >= ((float)(1.0) / m_role.GetAttackSpeed())*1000.0)
 				{
 					//如果攻击间隔成立，调用平A，否则就调用寻路
 					utils::GetInstance()->log("TIPS: 开始普攻逻辑！\n");
@@ -176,20 +175,18 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  					temp.monsObj = mons.GetNodeBase();
  					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
  					//重新计算攻击间隔
- 					timeSec = GameCall::GetInstance()->GetClientTickTime();
+ 					timeSec = GetTickCount();
  					m_AttackDisTime = GetTickCount();
-					Sleep(3);
 				}
 				else
 				{
 					utils::GetInstance()->log("TIPS: 调用寻路逻辑！\n");
 					//攻击延时
-					if ((GetTickCount() - m_AttackDisTime) > m_pSharedMemory->GetPointerOfFile()->dwZouAMs)
+					if ((GetTickCount() - m_AttackDisTime) >= m_pSharedMemory->GetPointerOfFile()->dwZouAMs)
 					{					
 						//寻路到鼠标位置
 						utils::GetInstance()->log("TIPS: 开始寻路逻辑！\n");
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
-						Sleep(3);
 					}
 				}
 

@@ -23,7 +23,7 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
 
-private:
+public:
 	CShareMemory m_sharedMemory;
 	HANDLE m_ThreadHanle;
 
