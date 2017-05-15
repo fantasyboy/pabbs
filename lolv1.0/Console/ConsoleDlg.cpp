@@ -185,8 +185,8 @@ BOOL CConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_ZouAliderCtl.SetRange(1, 1000);
-	m_ZouAliderCtl.SetPos(350);
+	m_ZouAliderCtl.SetRange(50, 1000);
+	m_ZouAliderCtl.SetPos(250);
 
 
 	m_showZouAMs = m_ZouAliderCtl.GetPos();

@@ -15,7 +15,6 @@ person::~person()
 float person::GetAttackRange() const
 {
 	__try {
-		//return utils::GetInstance()->read<float>(GetNodeBase() + Base_AttackDistanceOffset);
 		auto dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_BufferAddr);
 		if (dwBase)
 		{

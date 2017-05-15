@@ -93,7 +93,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
 				//如果 (最近玩家的距离 < 技能Q的距离 && 玩家当前的蓝 > 技能消耗的蓝 && 技能已经学习 && 技能已经冷却 && 玩家活着)  就调用 （技能CALL（Q））；
-				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
+				if (m_role.GetDistance(&mons.GetPoint()) <= skillQ.GetSkillRange() &&
 					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					skillQ.GetLevel() > 0 && skillQ.bCoolDown()&&
 					m_role.GetCurMp() > skillQ.GetExpendMP()&&
@@ -105,7 +105,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::Q;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(30);
+					Sleep(3);
 				}
 			}
 
@@ -115,7 +115,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
-				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
+				if (m_role.GetDistance(&mons.GetPoint()) <= skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
 					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
@@ -129,7 +129,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::W;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(30);
+					Sleep(3);
 				}
 			}
 
@@ -139,7 +139,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
-				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
+				if (m_role.GetDistance(&mons.GetPoint()) <= skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
 					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
@@ -153,7 +153,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					temp.index = EM_SKILL_INDEX::E;
 					temp.monsObj = mons.GetNodeBase();
 					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-					Sleep(30);
+					Sleep(3);
 				}
 		 }
 
@@ -163,11 +163,11 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				static DWORD m_AttackDisTime = 0;
 				static float timeSec = 0;
 				auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
-				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
+				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f 攻击距离： %f ", m_role.GetDistance(&mons.GetPoint()), m_role.GetAttackRange());
 				if (mons.GetNodeBase() && 
 					!m_role.BDead()&&
 					!mons.BDead()&&
-					m_role.GetDistance(&mons.GetPoint()) < m_role.GetAttackRange()&&
+					m_role.GetDistance(&mons.GetPoint()) <= m_role.GetAttackRange()&&
 					(GameCall::GetInstance()->GetClientTickTime() - timeSec) > ((float)(1.0) / m_role.GetAttackSpeed()))
 				{
 					//如果攻击间隔成立，调用平A，否则就调用寻路
@@ -178,7 +178,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  					//重新计算攻击间隔
  					timeSec = GameCall::GetInstance()->GetClientTickTime();
  					m_AttackDisTime = GetTickCount();
-					Sleep(30);
+					Sleep(3);
 				}
 				else
 				{
@@ -189,6 +189,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 						//寻路到鼠标位置
 						utils::GetInstance()->log("TIPS: 开始寻路逻辑！\n");
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
+						Sleep(3);
 					}
 				}
 
@@ -223,7 +224,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			}
 		}
 
-		Sleep(1);
+		Sleep(3);
 	}
 
 	return 0;
