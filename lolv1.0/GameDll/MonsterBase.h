@@ -50,7 +50,7 @@ public:
 	DWORD GetType()const;
 
 	//是否在战争迷雾中 (true 表示在)
-	virtual bool BInShowInFag()const;
+	virtual bool BVisableSee()const;
 
 	//是否死亡
 	bool BDead()const;

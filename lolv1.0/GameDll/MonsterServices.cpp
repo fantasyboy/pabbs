@@ -65,7 +65,11 @@ person CMonsterServices::GetHealthLeastPerson(person* role, float Distance)
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
 	{
-		if (temp.GetCurHp() < MaxHealth &&role->GetCamp() != temp.GetCamp()&& !temp.BDead() && temp.GetDistance(&role->GetPoint()) < Distance)
+		if (temp.GetCurHp() < MaxHealth 
+			&&role->GetCamp() != temp.GetCamp()
+			&&!temp.BDead() 
+			&& temp.GetDistance(&role->GetPoint()) < Distance
+			&& temp.BVisableSee())
 		{
 			MaxHealth = temp.GetCurHp();
 			minDistanceObj = temp.GetNodeBase();

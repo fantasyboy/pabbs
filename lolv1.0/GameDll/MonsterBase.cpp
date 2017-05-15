@@ -120,18 +120,24 @@ DWORD MonsterBase::GetType() const
 	}
 }
 
-bool MonsterBase::BInShowInFag() const
+
+
+bool MonsterBase::BVisableSee() const
 {
-	__try {
-		auto dwBase = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterBVisableOffset);
-		return utils::GetInstance()->read<bool>(dwBase + 0x18);
+	__try
+	{
+
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_MonsterBVisableOffset);
+		if (temp)
+		{
+			return utils::GetInstance()->read<bool>(temp + 0x18);
+		}
 	}
 	__except (1)
 	{
-		utils::GetInstance()->log("ERROR: MonsterBase::BInShowInFag()出现异常！\n");
-		return true;
+		utils::GetInstance()->log("ERROR: MonsterBase::BVisableSee() 出现异常！\n");
 	}
-	return true;
+	return false;
 }
 
 bool MonsterBase::BDead() const

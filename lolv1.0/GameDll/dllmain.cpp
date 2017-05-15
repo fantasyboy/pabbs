@@ -85,20 +85,16 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		{
 			person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 			
-			
-			//如果锁定了技能Q
 			if (pSharedMemoryPointer->bLockQ)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
 				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
-				//如果 (最近玩家的距离 < 技能Q的距离 && 玩家当前的蓝 > 技能消耗的蓝 && 技能已经学习 && 技能已经冷却 && 玩家活着)  就调用 （技能CALL（Q））；
 				if (m_role.GetDistance(&mons.GetPoint()) <= skillQ.GetSkillRange() &&
-					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					skillQ.GetLevel() > 0 && skillQ.bCoolDown()&&
 					m_role.GetCurMp() > skillQ.GetExpendMP()&&
 					!m_role.BDead() && !mons.BDead() &&
-					mons.GetNodeBase())
+					mons.GetNodeBase()&& mons.BVisableSee())
 				{
 					utils::GetInstance()->log("TIPS: 开始技能Q！\n");
 					SKILL_TO_MONS temp;
@@ -108,7 +104,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				}
 			}
 
-			//如果锁定了技能W
 		    if (pSharedMemoryPointer->bLockW)
 			{
 				auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
@@ -116,12 +111,11 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
 				if (m_role.GetDistance(&mons.GetPoint()) <= skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
-					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
 					skillQ.bCoolDown()&&
 					mons.GetNodeBase()&&
-					!mons.BDead())
+					!mons.BDead() && mons.BVisableSee())
 				{
 					utils::GetInstance()->log("TIPS: 开始技能W！\n");
 					SKILL_TO_MONS temp;
@@ -139,12 +133,11 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
 				if (m_role.GetDistance(&mons.GetPoint()) <= skillQ.GetSkillRange() &&
 					skillQ.GetLevel() > 0 &&
-					m_role.GetDistance(&mons.GetPoint()) >0 &&
 					m_role.GetCurMp() > skillQ.GetExpendMP() &&
 					!m_role.BDead() &&
 					skillQ.bCoolDown()&&
 					mons.GetNodeBase()&&
-					!mons.BDead())
+					!mons.BDead()&& mons.BVisableSee())
 				{
 					utils::GetInstance()->log("TIPS: 开始技能E！\n");
 					SKILL_TO_MONS temp;
@@ -154,10 +147,30 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 				}
 		 }
 
+		 if (pSharedMemoryPointer->bLockR)
+		 {
+			 auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
+			 auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+			 utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
+			 if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
+				 skillQ.GetLevel() > 0 &&
+				 m_role.GetCurMp() > skillQ.GetExpendMP() &&
+				 !m_role.BDead() &&
+				 skillQ.bCoolDown() &&
+				 mons.GetNodeBase() &&
+				 !mons.BDead()&& mons.BVisableSee())
+			 {
+				 SKILL_TO_MONS temp;
+				 temp.index = EM_SKILL_INDEX::R;
+				 temp.monsObj = mons.GetNodeBase();
+				 hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
+			 }
+		 }
 			
+
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
-				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*280.0);
+				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*250.0);
 				m_pSharedMemory->GetPointerOfFile()->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
 				static DWORD m_AttackDisTime = 0;
 				static DWORD timeSec = 0;
@@ -167,24 +180,21 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!m_role.BDead()&&
 					!mons.BDead()&&
 					m_role.GetDistance(&mons.GetPoint()) <= m_role.GetAttackRange()&&
-					(float)(GetTickCount() - timeSec) >= ((float)(1.0) / m_role.GetAttackSpeed())*1000.0)
+					(float)(GetTickCount() - timeSec) >= ((float)(1.0) / m_role.GetAttackSpeed())*1000.0
+					&& mons.BVisableSee())
 				{
-					//如果攻击间隔成立，调用平A，否则就调用寻路
 					utils::GetInstance()->log("TIPS: 开始普攻逻辑！\n");
  					SKILL_TO_MONS temp;
  					temp.monsObj = mons.GetNodeBase();
  					hk.SendMessageToGame(MESSAGE::MSG_ATTACKCALL, (LPARAM)(&temp));
- 					//重新计算攻击间隔
  					timeSec = GetTickCount();
  					m_AttackDisTime = GetTickCount();
 				}
 				else
 				{
 					utils::GetInstance()->log("TIPS: 调用寻路逻辑！\n");
-					//攻击延时
 					if ((GetTickCount() - m_AttackDisTime) >= m_pSharedMemory->GetPointerOfFile()->dwZouAMs)
 					{					
-						//寻路到鼠标位置
 						utils::GetInstance()->log("TIPS: 开始寻路逻辑！\n");
 						hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
 					}
@@ -192,33 +202,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 			}
 
-		}
-
-		//如果按下了T & 就自动释放R
-		if (GetAsyncKeyState(0x54)&0x8000)
-		{
-			person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-			
-			if (pSharedMemoryPointer->bLockR)
-			{
-				auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
-				auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-				utils::GetInstance()->log("TIPS: 当前玩家和怪物的距离： %f ", m_role.GetDistance(&mons.GetPoint()));
-				if (m_role.GetDistance(&mons.GetPoint()) < skillQ.GetSkillRange() &&
-					m_role.GetDistance(&mons.GetPoint()) >0 &&
-					skillQ.GetLevel() > 0 &&
-					m_role.GetCurMp() > skillQ.GetExpendMP() &&
-					!m_role.BDead() &&
-					skillQ.bCoolDown()&&
-					mons.GetNodeBase()&&
-					!mons.BDead())
-				{
-					SKILL_TO_MONS temp;
-					temp.index = EM_SKILL_INDEX::R;
-					temp.monsObj = mons.GetNodeBase();
-					hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-				}
-			}
 		}
 
 		Sleep(3);
