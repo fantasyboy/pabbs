@@ -170,7 +170,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
-				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*200.0);
+				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*220.0);
 				m_pSharedMemory->GetPointerOfFile()->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
 				static DWORD m_AttackDisTime = 0;
 				static DWORD timeSec = 0;
@@ -180,7 +180,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					!m_role.BDead()&&
 					!mons.BDead()&&
 					m_role.GetDistance(&mons.GetPoint()) <= m_role.GetAttackRange()&&
-					(float)(GetTickCount() - timeSec) >= ((float)(1.0) / m_role.GetAttackSpeed())*1000.0
+					(float)(GetTickCount() - timeSec) >= ((float)(1.05) / m_role.GetAttackSpeed())*1000.0
 					&& mons.BVisableSee())
 				{
 					utils::GetInstance()->log("TIPS: ¿ªÊ¼ÆÕ¹¥Âß¼­£¡\n");
