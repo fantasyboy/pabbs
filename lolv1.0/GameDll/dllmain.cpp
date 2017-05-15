@@ -170,7 +170,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 			if (pSharedMemoryPointer->bOpenAA) 
 			{
-				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*250.0);
+				auto dwZouAms = (DWORD)(((float)(1.0) / m_role.GetAttackSpeed())*200.0);
 				m_pSharedMemory->GetPointerOfFile()->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
 				static DWORD m_AttackDisTime = 0;
 				static DWORD timeSec = 0;
