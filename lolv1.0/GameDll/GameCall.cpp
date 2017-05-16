@@ -3,7 +3,7 @@
 #include "person.h"
 #include "skill.h"
 #include "SkillServices.h"
-
+#include "MonsterServices.h"
 //
 //全局变量声明
 //
@@ -12,6 +12,7 @@ std::mutex GameCall::m_mutex;
 std::mutex g_mutex;
 DWORD g_MonsterObj = NULL;
 DWORD g_HookCallAddr = 0;
+CMonsterServices g_cm1;
 GameCall::GameCall(): m_bUsedSkill(false), m_bUsedAttack(false)
 {
 }
@@ -244,6 +245,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 {
 	try
 	{
+		skill sk(EM_SKILL_INDEX::Q, skillObj);
 		if (g_MonsterObj)
 		{
 			//拷贝对象
@@ -256,7 +258,7 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			{
 				utils::GetInstance()->log("TIPS: 当前怪物对象为: %x 技能对象为: %x", temp.GetNodeBase() ,skillObj);
 
-				skill sk(EM_SKILL_INDEX::Q, skillObj);
+				
 
 				//玩家移动  并且不是锁定技能
 				if (temp.GetBMoving()&& (DWORD)sk.GetSkillType() == 0 /*&& (DWORD)sk.GetSkillRange2() != 0*/)
@@ -297,14 +299,40 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 		if (pSharedMemoryPointer)
 		{
 			CSkillServices g_sk(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+			person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+			
 			if (pSharedMemoryPointer->VirtualKeyQ == 'Q' && g_sk.GetSkillObjectByIndex(0).GetNodeBase() == skillObj)
-				return;
+			{
+				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(0).GetSkillRange());
+				if (mons.GetNodeBase())
+				{
+					return;
+				}
+			}
 			if (pSharedMemoryPointer->VirtualKeyW == 'W' && g_sk.GetSkillObjectByIndex(1).GetNodeBase() == skillObj)
-				return;
+			{
+				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(1).GetSkillRange());
+				if (mons.GetNodeBase())
+				{
+					return;
+				}
+			}
 			if (pSharedMemoryPointer->VirtualKeyE == 'E' && g_sk.GetSkillObjectByIndex(2).GetNodeBase() == skillObj)
-				return;
+			{
+				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(2).GetSkillRange());
+				if (mons.GetNodeBase())
+				{
+					return;
+				}
+			}
 			if (pSharedMemoryPointer->VirtualKeyR == 'R' && g_sk.GetSkillObjectByIndex(3).GetNodeBase() == skillObj)
-				return;
+			{
+				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(3).GetSkillRange());
+				if (mons.GetNodeBase())
+				{
+					return;
+				}
+			}
 		}
 		//调用原始的
 		__asm {
