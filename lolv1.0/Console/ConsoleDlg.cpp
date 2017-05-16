@@ -280,23 +280,27 @@ HCURSOR CConsoleDlg::OnQueryDragIcon()
 void CConsoleDlg::OnBnClickedCheck1()
 {
 	m_sharedMemory.GetPointerOfMapView()->bLockQ = m_bLockQ.GetCheck() == BST_CHECKED ? true : false;
+	m_LockQCtl.EnableWindow( !(m_bLockQ.GetCheck() == BST_CHECKED) );
 }
 
 void CConsoleDlg::OnBnClickedCheck2()
 {
 	m_sharedMemory.GetPointerOfMapView()->bLockW = m_bLockW.GetCheck() == BST_CHECKED ? true : false;
+	m_lockWCtl.EnableWindow(!(m_bLockW.GetCheck() == BST_CHECKED));
 }
 
 
 void CConsoleDlg::OnBnClickedCheck3()
 {
 	m_sharedMemory.GetPointerOfMapView()->bLockE = m_bLockE.GetCheck() == BST_CHECKED ? true : false;
+	m_lockECtl.EnableWindow(!(m_bLockE.GetCheck() == BST_CHECKED));
 }
 
 
 void CConsoleDlg::OnBnClickedCheck4()
 {
 	m_sharedMemory.GetPointerOfMapView()->bLockR = m_bLockR.GetCheck() == BST_CHECKED ? true : false;
+	m_lockRCtl.EnableWindow(!(m_bLockR.GetCheck() == BST_CHECKED));
 }
 
 
@@ -304,6 +308,7 @@ void CConsoleDlg::OnBnClickedCheck5()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	m_sharedMemory.GetPointerOfMapView()->bOpenAA = m_bLockQAA.GetCheck() == BST_CHECKED ? true : false;
+	m_LockAACtl.EnableWindow(!(m_bLockQAA.GetCheck() == BST_CHECKED));
 }
 
 

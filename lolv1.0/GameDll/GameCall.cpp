@@ -2,6 +2,8 @@
 #include "GameCall.h"
 #include "person.h"
 #include "skill.h"
+#include "SkillServices.h"
+
 //
 //全局变量声明
 //
@@ -289,6 +291,20 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 				*monsObj = 0;
 			}
 			return;
+		}
+
+		//屏蔽掉原始的QWER
+		if (pSharedMemoryPointer)
+		{
+			CSkillServices g_sk(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+			if (pSharedMemoryPointer->VirtualKeyQ == 'Q' && g_sk.GetSkillObjectByIndex(0).GetNodeBase() == skillObj)
+				return;
+			if (pSharedMemoryPointer->VirtualKeyW == 'W' && g_sk.GetSkillObjectByIndex(1).GetNodeBase() == skillObj)
+				return;
+			if (pSharedMemoryPointer->VirtualKeyE == 'E' && g_sk.GetSkillObjectByIndex(2).GetNodeBase() == skillObj)
+				return;
+			if (pSharedMemoryPointer->VirtualKeyR == 'R' && g_sk.GetSkillObjectByIndex(3).GetNodeBase() == skillObj)
+				return;
 		}
 		//调用原始的
 		__asm {
