@@ -295,45 +295,45 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			return;
 		}
 
-		//屏蔽掉原始的QWER
-		if (pSharedMemoryPointer)
-		{
-			CSkillServices g_sk(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-			person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-			
-			if (pSharedMemoryPointer->VirtualKeyQ == 'Q' && g_sk.GetSkillObjectByIndex(0).GetNodeBase() == skillObj)
-			{
-				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(0).GetSkillRange());
-				if (mons.GetNodeBase())
-				{
-					return;
-				}
-			}
-			if (pSharedMemoryPointer->VirtualKeyW == 'W' && g_sk.GetSkillObjectByIndex(1).GetNodeBase() == skillObj)
-			{
-				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(1).GetSkillRange());
-				if (mons.GetNodeBase())
-				{
-					return;
-				}
-			}
-			if (pSharedMemoryPointer->VirtualKeyE == 'E' && g_sk.GetSkillObjectByIndex(2).GetNodeBase() == skillObj)
-			{
-				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(2).GetSkillRange());
-				if (mons.GetNodeBase())
-				{
-					return;
-				}
-			}
-			if (pSharedMemoryPointer->VirtualKeyR == 'R' && g_sk.GetSkillObjectByIndex(3).GetNodeBase() == skillObj)
-			{
-				auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(3).GetSkillRange());
-				if (mons.GetNodeBase())
-				{
-					return;
-				}
-			}
-		}
+		////屏蔽掉原始的QWER
+		//if (pSharedMemoryPointer)
+		//{
+		//	CSkillServices g_sk(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+		//	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+		//	
+		//	if (pSharedMemoryPointer->VirtualKeyQ == 'Q' && g_sk.GetSkillObjectByIndex(0).GetNodeBase() == skillObj)
+		//	{
+		//		auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(0).GetSkillRange());
+		//		if (mons.GetNodeBase())
+		//		{
+		//			return;
+		//		}
+		//	}
+		//	if (pSharedMemoryPointer->VirtualKeyW == 'W' && g_sk.GetSkillObjectByIndex(1).GetNodeBase() == skillObj)
+		//	{
+		//		auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(1).GetSkillRange());
+		//		if (mons.GetNodeBase())
+		//		{
+		//			return;
+		//		}
+		//	}
+		//	if (pSharedMemoryPointer->VirtualKeyE == 'E' && g_sk.GetSkillObjectByIndex(2).GetNodeBase() == skillObj)
+		//	{
+		//		auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(2).GetSkillRange());
+		//		if (mons.GetNodeBase())
+		//		{
+		//			return;
+		//		}
+		//	}
+		//	if (pSharedMemoryPointer->VirtualKeyR == 'R' && g_sk.GetSkillObjectByIndex(3).GetNodeBase() == skillObj)
+		//	{
+		//		auto mons = g_cm1.GetHealthLeastPerson(&m_role, g_sk.GetSkillObjectByIndex(3).GetSkillRange());
+		//		if (mons.GetNodeBase())
+		//		{
+		//			return;
+		//		}
+		//	}
+		//}
 		//调用原始的
 		__asm {
 			push monsObj;

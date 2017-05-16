@@ -12,3 +12,5 @@ extern SHARED_MEMORY* pSharedMemoryPointer;
 //使用技能
 void UseSkillByindex(skill& sk,person& mons ,person& ps);
 void UseAttackAA2Mons(person & mons, person& ps);
+
+void UseSkill(DWORD code);

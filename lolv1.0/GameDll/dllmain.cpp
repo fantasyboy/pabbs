@@ -19,8 +19,7 @@ std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory;
 
 void UseSkillByindex(skill& sk, person& mons, person& ps)
 {
-	if (mons.GetNodeBase()
-		&&sk.GetSkillRange() > mons.GetDistance(&ps.GetPoint()) //技能范围 > 玩家距离
+	if (sk.GetSkillRange() > mons.GetDistance(&ps.GetPoint()) //技能范围 > 玩家距离
 		&& sk.GetLevel() //技能等级 > 0
 		&& sk.bCoolDown() //技能已经冷却
 		&& ps.GetCurMp() > sk.GetExpendMP() //玩家当前MP > 技能消耗的MP
@@ -69,7 +68,40 @@ void UseAttackAA2Mons(person & mons, person& ps)
 	}
 }
 
-BOOL APIENTRY DllMain( HMODULE hModule,
+void UseSkill(DWORD code)
+{
+	static CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	static person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	if (code == pSharedMemoryPointer->VirtualKeyQ && pSharedMemoryPointer->bLockQ)
+	{
+		auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
+		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+		UseSkillByindex(skillQ, mons, m_role);
+	}
+
+	if (code == pSharedMemoryPointer->VirtualKeyW && pSharedMemoryPointer->bLockW)
+	{
+		auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
+		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+		UseSkillByindex(skillQ, mons, m_role);
+	}
+
+	if (code == pSharedMemoryPointer->VirtualKeyE && pSharedMemoryPointer->bLockE)
+	{
+		auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
+		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+		UseSkillByindex(skillQ, mons, m_role);
+	}
+
+	if (code == pSharedMemoryPointer->VirtualKeyR && pSharedMemoryPointer->bLockR)
+	{
+		auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
+		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+		UseSkillByindex(skillQ, mons, m_role);
+	}
+}
+
+BOOL APIENTRY DllMain(HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
 					 )
@@ -136,37 +168,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 	utils::GetInstance()->log("TIPS: 开启成功！\n");
 	while (true)
 	{
-		
-
-		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyQ) & 0x8000 && pSharedMemoryPointer->bLockQ)
-		{
-			auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
-			auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-			UseSkillByindex(skillQ, mons, m_role);
-		}
-
-		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyW) & 0x8000 && pSharedMemoryPointer->bLockW)
-		{
-			auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
-			auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-			UseSkillByindex(skillQ, mons, m_role);
-		}
-
-		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyE) & 0x8000 && pSharedMemoryPointer->bLockE)
-		{
-
-			auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
-			auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-			UseSkillByindex(skillQ, mons, m_role);
-		}
-
-		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyR) & 0x8000 && pSharedMemoryPointer->bLockR)
-		{
-			auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
-			auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-			UseSkillByindex(skillQ, mons, m_role);
-		}
-
 		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA) & 0x8000 && pSharedMemoryPointer->bOpenAA)
 		{
 			auto mons = g_cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());

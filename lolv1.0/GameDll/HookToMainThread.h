@@ -32,6 +32,7 @@ public:
 	static DWORD m_msgCode;
 public:
 	static HHOOK m_hHook;
+	static LONG m_hWndHook;
 private:
 	HWND GetGameHwnd()const;
 };
@@ -42,3 +43,10 @@ LRESULT CALLBACK CallWndProc(
 	_In_ LPARAM lParam
 );
 
+
+LRESULT CALLBACK WindowProc(
+	_In_ HWND   hwnd,
+	_In_ UINT   uMsg,
+	_In_ WPARAM wParam,
+	_In_ LPARAM lParam
+);

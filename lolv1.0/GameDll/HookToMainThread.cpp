@@ -3,9 +3,11 @@
 #include "utils.h"
 #include "BaseAddr.h"
 #include "GameCall.h"
+#include "dllmain.h"
 //自定义消息类型
 DWORD CHookToMainThread::m_msgCode = RegisterWindowMessage("MyMsgCodeEx");
 HHOOK CHookToMainThread::m_hHook = { 0 };
+LONG CHookToMainThread::m_hWndHook = { 0 };
 HWND CHookToMainThread::GetGameHwnd() const
 {
 	__try
@@ -48,6 +50,7 @@ bool CHookToMainThread::Hook()
 
 	//挂载到主线程
 	m_hHook = SetWindowsHookEx(WH_CALLWNDPROC, CallWndProc, NULL, threadID);
+	m_hWndHook = SetWindowLong(hwnd, GWL_WNDPROC, (long)WindowProc);
 	if (!m_hHook)
 	{
 		utils::GetInstance()->log("ERROR: CHookToMainThread::Hook() ERROR , CODE = %x", GetLastError());
@@ -106,4 +109,14 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 
 	//传递给系统默认消息
 	return CallNextHookEx(CHookToMainThread::m_hHook, nCode, wParam, lParam);
+}
+
+LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
+{
+	if (uMsg == WM_KEYDOWN)
+	{
+		utils::GetInstance()->log("TIPS: 按键按下了！%x %x\n", wParam , lParam);
+		UseSkill(wParam);
+	}
+	return CallWindowProc((WNDPROC)CHookToMainThread::m_hWndHook, hwnd, uMsg, wParam, lParam);
 }
