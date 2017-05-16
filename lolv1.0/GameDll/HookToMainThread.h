@@ -32,7 +32,6 @@ public:
 	static DWORD m_msgCode;
 public:
 	static HHOOK m_hHook;
-
 private:
 	HWND GetGameHwnd()const;
 };

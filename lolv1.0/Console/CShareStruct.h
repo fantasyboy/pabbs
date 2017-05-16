@@ -5,6 +5,7 @@
 
 typedef struct _SHARED_MOMORY
 {
+	//游戏数据结构
 	DWORD Base_GameStartTime;    //游戏开局时间     偏移:1    //OD地址:0x0056BB6E
 	DWORD Base_RoleSelfAddr;    //玩家基地址     偏移:2    //OD地址:0x009CB632
 	DWORD Base_BufferAddr;    //buff数组基地址     偏移:2    //OD地址:0x00A0F40A
@@ -25,16 +26,21 @@ typedef struct _SHARED_MOMORY
 	DWORD Base_equipmentTravseOffset2;    //装备数组遍历偏移2     偏移:3    //OD地址:0x006A0729
 	DWORD Base_SkillOffset_MP;    //技能蓝耗偏移     偏移:5    //OD地址:0x0077FBDB（已更新）
 	DWORD Base_MousePointAddr;            //鼠标位置基地址（已更新）
-	//下面的代码暂时没有做更新
 	DWORD Base_SkillOffset_Range1;		 //技能范围偏移（已更新）
 	DWORD Base_SkillOffset_Range2;		 //技能范围偏移（已更新）
 	DWORD Base_MonsterOrientationXOffset;  //玩家X朝向
 	DWORD Base_MonsterBMovingOffset; //玩家是否移动
+	//预判相关
 	bool bLockQ;  //预判Q
+	DWORD VirtualKeyQ;
 	bool bLockW;  //预判W
+	DWORD VirtualKeyW;
 	bool bLockE;  //预判E
+	DWORD VirtualKeyE;
 	bool bLockR;  //预判R
+	DWORD VirtualKeyR;
 	bool bOpenAA; //开启走A
+	DWORD VirtualKeyAA;
 	DWORD dwZouAMs; //走A频率
 	DWORD dwTargetSelecter; //目标选择器
 }SHARED_MEMORY, *PSHARED_MOMERY;

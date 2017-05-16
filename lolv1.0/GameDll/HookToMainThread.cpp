@@ -6,7 +6,6 @@
 //自定义消息类型
 DWORD CHookToMainThread::m_msgCode = RegisterWindowMessage("MyMsgCodeEx");
 HHOOK CHookToMainThread::m_hHook = { 0 };
-
 HWND CHookToMainThread::GetGameHwnd() const
 {
 	__try
@@ -83,15 +82,12 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 			case MESSAGE::MSG_SKILLCALL: {
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
 				GameCall::GetInstance()->UseSkill(p.index, p.monsObj);
-
 				break;
 			}
 			case MESSAGE::MSG_ATTACKCALL:
 			{
-				utils::GetInstance()->log("TIPS: 开始攻击！\n");
 				SKILL_TO_MONS p = *(SKILL_TO_MONS*)pArg->lParam;
 				person temp(p.monsObj);
-				utils::GetInstance()->log("TIPS: 攻击中！\n");
 				GameCall::GetInstance()->HeroAttack(p.monsObj);
 				break;
 			}
@@ -101,12 +97,11 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 				GameCall::GetInstance()->FindWay(pnt);
 				break;
 			}
-
-
 			}//switch 结束
 
 			return 1;
 		}//自定义消息结束，不传递消息
+
 	}
 
 	//传递给系统默认消息

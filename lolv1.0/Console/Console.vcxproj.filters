@@ -54,6 +54,9 @@
     <ClInclude Include="CCurrencyAuth.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="virtualKey.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp">

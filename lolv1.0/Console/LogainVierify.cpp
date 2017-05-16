@@ -53,7 +53,7 @@ void CLogainVierify::OnBnClickedButton1()
 	switch (ret)
 	{
 	case 0:
-		((CLogainVierify*)(theApp.m_pMainWnd))->OnOK();
+		((CLogainVierify*)(theApp.m_pMainWnd))->Onshow();
 		break;
 	case -1:
 		GetDlgItem(IDC_STATIC_LOG)->SetWindowText("注册码不存在");
@@ -91,10 +91,25 @@ BOOL CLogainVierify::OnInitDialog()
 
 void CLogainVierify::OnOK()
 {
-	// TODO: 在此添加专用代码和/或调用基类
+
+}
+
+void CLogainVierify::Onshow()
+{
 	CDialog::OnOK();
 
 	CConsoleDlg dlg;
 	theApp.m_pMainWnd = &dlg;
 	dlg.DoModal();
+}
+
+BOOL CLogainVierify::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	if (pMsg->message == VK_RETURN)
+	{
+		return false;
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
 }

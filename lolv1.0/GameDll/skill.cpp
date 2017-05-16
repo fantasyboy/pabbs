@@ -106,19 +106,19 @@ float skill::GetSkillRange()
 {
 	if (GetSkillType() > 0)
 	{
-		utils::GetInstance()->log("TIPS: GetSkillType() = %f", GetSkillType());
+/*		utils::GetInstance()->log("TIPS: GetSkillType() = %f", GetSkillType());*/
 		return GetSkillType();
 	}
 
 	if (GetSkillRange2() > 0)
 	{
-		utils::GetInstance()->log("TIPS: GetSkillRange2() = %f", GetSkillRange2());
+/*		utils::GetInstance()->log("TIPS: GetSkillRange2() = %f", GetSkillRange2());*/
 		return GetSkillRange2();
 	}
 
 	if (GetSkillRange1() > 0)
 	{
-		utils::GetInstance()->log("TIPS: GetSkillRange1() = %f", GetSkillRange1());
+/*		utils::GetInstance()->log("TIPS: GetSkillRange1() = %f", GetSkillRange1());*/
 		return GetSkillRange1();
 	}
 

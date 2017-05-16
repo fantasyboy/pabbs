@@ -53,10 +53,17 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void PreInitDialog();
 //	afx_msg void OnTRBNThumbPosChangingSlider1(NMHDR *pNMHDR, LRESULT *pResult);
-	DWORD m_showZouAMs;
+//	DWORD m_showZouAMs;
 	CSliderCtrl m_ZouAliderCtl;
 	afx_msg void OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult);
 	int m_radiobtngroup1;
 	afx_msg void OnBnClickedRadio1();
+//	afx_msg void OnEnSetfocusEdit1();
+//	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	CEdit m_LockQCtl;
+	CEdit m_lockWCtl;
+	CEdit m_lockECtl;
+	CEdit m_lockRCtl;
+	CEdit m_LockAACtl;
 };
 

@@ -94,10 +94,6 @@ bool GameCall::UseSkill(DWORD dwIndex, DWORD monsObj)
 {
 	__try
 	{
-		if (!monsObj)
-		{
-			return false;
-		}
 		g_mutex.lock();
 		g_MonsterObj = NULL;
 		g_MonsterObj = monsObj;
@@ -189,7 +185,6 @@ bool GameCall::FindWay(EM_POINT_3D pnt)
 
 EM_POINT_3D GameCall::GetMousePnt() const
 {
-	//dd [[1E46A3C]+10]+1c
 	EM_POINT_3D temp = { 0 };
 	__try
 	{
@@ -199,9 +194,6 @@ EM_POINT_3D GameCall::GetMousePnt() const
 			auto Offset1 = utils::GetInstance()->read<DWORD>(dwBase+0x10);
 			if (Offset1)
 			{
-// 				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x1c);
-// 				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x20);
-// 				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x24);
 				temp.x = utils::GetInstance()->read<float>(Offset1 + 0x10);
 				temp.z = utils::GetInstance()->read<float>(Offset1 + 0x14);
 				temp.y = utils::GetInstance()->read<float>(Offset1 + 0x18);
@@ -299,7 +291,6 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 			return;
 		}
 		//调用原始的
-
 		__asm {
 			push monsObj;
 			push xyz;

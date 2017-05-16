@@ -11,7 +11,7 @@
 #define new DEBUG_NEW
 #endif
 #include "InjectDll.h"
-
+#include "virtualKey.h"
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
 
@@ -79,7 +79,6 @@ END_MESSAGE_MAP()
 
 CConsoleDlg::CConsoleDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_CONSOLE_DIALOG, pParent)
-	, m_showZouAMs(0)
 	, m_radiobtngroup1(1)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -98,9 +97,14 @@ void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK3, m_bLockE);
 	DDX_Control(pDX, IDC_CHECK4, m_bLockR);
 	DDX_Control(pDX, IDC_CHECK5, m_bLockQAA);
-	DDX_Text(pDX, IDC_STATIC_ZOUA, m_showZouAMs);
+	//  DDX_Text(pDX, IDC_STATIC_ZOUA, m_showZouAMs);
 	DDX_Control(pDX, IDC_SLIDER1, m_ZouAliderCtl);
 	DDX_Radio(pDX, IDC_RADIO1, m_radiobtngroup1);
+	DDX_Control(pDX, IDC_EDIT1, m_LockQCtl);
+	DDX_Control(pDX, IDC_EDIT2, m_lockWCtl);
+	DDX_Control(pDX, IDC_EDIT3, m_lockECtl);
+	DDX_Control(pDX, IDC_EDIT4, m_lockRCtl);
+	DDX_Control(pDX, IDC_EDIT5, m_LockAACtl);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
@@ -116,6 +120,8 @@ BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
 ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &CConsoleDlg::OnNMCustomdrawSlider1)
 ON_BN_CLICKED(IDC_RADIO1, &CConsoleDlg::OnBnClickedRadio1)
 ON_BN_CLICKED(IDC_RADIO2, &CConsoleDlg::OnBnClickedRadio1)
+//ON_EN_SETFOCUS(IDC_EDIT1, &CConsoleDlg::OnEnSetfocusEdit1)
+//ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -187,9 +193,7 @@ BOOL CConsoleDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 	m_ZouAliderCtl.SetRange(150, 300);
-
 	SetDlgItemText(IDC_STATIC_LOG, pAuth->GetValidity());
-	m_showZouAMs = m_ZouAliderCtl.GetPos();
 
 	//创建共享内存
 	if (!m_sharedMemory.CreateSharedMemory())
@@ -198,10 +202,23 @@ BOOL CConsoleDlg::OnInitDialog()
 		exit(1);
 		return FALSE;
 	}
-
 	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 250;
 
-	VMProtectBegin("aaa1");
+
+	//设置默认的编辑框
+	m_LockQCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
+	m_lockWCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
+	m_lockECtl.SetWindowTextA(KeyNames[VK_SPACE].text);
+	m_lockRCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
+	m_LockAACtl.SetWindowTextA(KeyNames[VK_SPACE].text);
+
+	m_sharedMemory.GetPointerOfMapView()->VirtualKeyQ = VK_SPACE;
+	m_sharedMemory.GetPointerOfMapView()->VirtualKeyW = VK_SPACE;
+	m_sharedMemory.GetPointerOfMapView()->VirtualKeyE = VK_SPACE;
+	m_sharedMemory.GetPointerOfMapView()->VirtualKeyR = VK_SPACE;
+	m_sharedMemory.GetPointerOfMapView()->VirtualKeyAA = VK_SPACE;
+
+	VMProtectBegin("InitGameStruct");
 	InitGameStruct();
 	VMProtectEnd();
 	//创建注入线程
@@ -309,6 +326,38 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 		return TRUE;
 	}
 
+	//设置Q
+	if (::GetFocus() == m_LockQCtl.GetSafeHwnd()&& pMsg->message == WM_KEYDOWN)
+	{
+		m_LockQCtl.SetWindowTextA(KeyNames[pMsg->wParam].text);
+		m_sharedMemory.GetPointerOfMapView()->VirtualKeyQ = pMsg->wParam;
+	}
+	//设置W
+	if (::GetFocus() == m_lockWCtl.GetSafeHwnd() && pMsg->message == WM_KEYDOWN)
+	{
+		m_lockWCtl.SetWindowTextA(KeyNames[pMsg->wParam].text);
+		m_sharedMemory.GetPointerOfMapView()->VirtualKeyW = pMsg->wParam;
+	}
+	//设置E
+	if (::GetFocus() == m_lockECtl.GetSafeHwnd() && pMsg->message == WM_KEYDOWN)
+	{
+		m_lockECtl.SetWindowTextA(KeyNames[pMsg->wParam].text);
+		m_sharedMemory.GetPointerOfMapView()->VirtualKeyE = pMsg->wParam;
+	}
+	//设置R
+	if (::GetFocus() == m_lockRCtl.GetSafeHwnd() && pMsg->message == WM_KEYDOWN)
+	{
+		m_lockRCtl.SetWindowTextA(KeyNames[pMsg->wParam].text);
+		m_sharedMemory.GetPointerOfMapView()->VirtualKeyR = pMsg->wParam;
+	}
+
+	//设置走A
+	if (::GetFocus() == m_LockAACtl.GetSafeHwnd() && pMsg->message == WM_KEYDOWN)
+	{
+		m_LockAACtl.SetWindowTextA(KeyNames[pMsg->wParam].text);
+		m_sharedMemory.GetPointerOfMapView()->VirtualKeyAA = pMsg->wParam;
+	}
+
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
@@ -327,7 +376,6 @@ void CConsoleDlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 在此添加控件通知处理程序代码
 	
 	UpdateData(TRUE);
-	m_showZouAMs = m_ZouAliderCtl.GetPos();
 	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = m_ZouAliderCtl.GetPos();
 	UpdateData(FALSE);
 	*pResult = 0;
@@ -357,3 +405,21 @@ void CConsoleDlg::OnBnClickedRadio1()
 		break;
 	}
 }
+
+
+
+
+
+//void CConsoleDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+//{
+//	// TODO: 在此添加消息处理程序代码和/或调用默认值
+//	UpdateData(TRUE);
+//
+//	if (GetDlgItem(IDC_EDIT1)->GetFocus())
+//	{
+//		GetDlgItem(IDC_EDIT1)->SetWindowTextA("aaa");
+//	}
+//
+//	UpdateData(FALSE);
+//	CDialogEx::OnKeyDown(nChar, nRepCnt, nFlags);
+//}

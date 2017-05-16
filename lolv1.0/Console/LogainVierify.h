@@ -24,6 +24,8 @@ public:
 	afx_msg void OnBnClickedButton1();
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
+	void Onshow();
 	CString m_szAcc;
 	CString m_szPass;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
