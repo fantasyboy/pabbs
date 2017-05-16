@@ -16,6 +16,12 @@ SHARED_MEMORY* pSharedMemoryPointer = nullptr;
 CMonsterServices g_cm;
 CHookToMainThread g_hk;
 std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory;
+CSkillServices* g_roleSkill = nullptr;
+person* g_role;
+
+//Q
+skill g_skillQ;
+person g_monsQ;
 
 void UseSkillByindex(skill& sk, person& mons, person& ps)
 {
@@ -70,34 +76,26 @@ void UseAttackAA2Mons(person & mons, person& ps)
 
 void UseSkill(DWORD code)
 {
-	static CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-	static person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+
 	if (code == pSharedMemoryPointer->VirtualKeyQ && pSharedMemoryPointer->bLockQ)
 	{
-		auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
-		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-		UseSkillByindex(skillQ, mons, m_role);
+
+		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
 	}
 
 	if (code == pSharedMemoryPointer->VirtualKeyW && pSharedMemoryPointer->bLockW)
 	{
-		auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
-		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-		UseSkillByindex(skillQ, mons, m_role);
+		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
 	}
 
 	if (code == pSharedMemoryPointer->VirtualKeyE && pSharedMemoryPointer->bLockE)
 	{
-		auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
-		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-		UseSkillByindex(skillQ, mons, m_role);
+		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
 	}
 
 	if (code == pSharedMemoryPointer->VirtualKeyR && pSharedMemoryPointer->bLockR)
 	{
-		auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
-		auto mons = g_cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
-		UseSkillByindex(skillQ, mons, m_role);
+		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
 	}
 }
 
@@ -163,9 +161,15 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 	VMProtectEnd();
 	//定义玩家对象
 	CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	g_roleSkill = &m_roleSkill;
 	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-
+	g_role = &m_role;
 	utils::GetInstance()->log("TIPS: 开启成功！\n");
+
+	static CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	static person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+
+
 	while (true)
 	{
 		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA) & 0x8000 && pSharedMemoryPointer->bOpenAA)
@@ -173,6 +177,11 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			auto mons = g_cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
 			UseAttackAA2Mons(mons, m_role);
 		}
+
+		g_skillQ = m_roleSkill.GetSkillObjectByIndex(0);
+		g_monsQ = g_cm.GetHealthLeastPerson(&m_role, g_skillQ.GetSkillRange());
+
+
 
 		Sleep(3);
 	}
