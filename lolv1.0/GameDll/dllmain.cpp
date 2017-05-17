@@ -38,8 +38,7 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 
 void UseAttackAA2Mons(person & mons, person& ps)
 {
-	auto dwZouAms = (DWORD)(((float)(1.0) / ps.GetAttackSpeed())*210.0);
-	pSharedMemoryPointer->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
+	auto dwZouAms = (DWORD)(((float)(1.0) / ps.GetAttackSpeed())*pSharedMemoryPointer->dwZouAMs);
 	static DWORD m_AttackDisTime = 0;
 	static DWORD timeSec = 0;
 	if (mons.GetNodeBase()
@@ -58,8 +57,7 @@ void UseAttackAA2Mons(person & mons, person& ps)
 	}
 	else
 	{
-		utils::GetInstance()->log("TIPS: 调用寻路逻辑！\n");
-		if ((GetTickCount() - m_AttackDisTime) >= pSharedMemoryPointer->dwZouAMs)
+		if ((GetTickCount() - m_AttackDisTime) >= dwZouAms)
 		{
 			utils::GetInstance()->log("TIPS: 开始寻路逻辑！\n");
 			g_hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);

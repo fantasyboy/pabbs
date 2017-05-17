@@ -54,8 +54,6 @@ DWORD WINAPI ThreadProcA(_In_ LPVOID lpParameter)
 			injectClass.SetInject(false);
 
 		}
-
-		((CConsoleDlg*)lpParameter)->m_ZouAliderCtl.SetPos(((CConsoleDlg*)lpParameter)->m_sharedMemory.GetPointerOfMapView()->dwZouAMs);
 		Sleep(100);
 	}
 }
@@ -80,6 +78,7 @@ END_MESSAGE_MAP()
 CConsoleDlg::CConsoleDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_CONSOLE_DIALOG, pParent)
 	, m_radiobtngroup1(1)
+	, m_ShowZouAMs(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -105,6 +104,7 @@ void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT3, m_lockECtl);
 	DDX_Control(pDX, IDC_EDIT4, m_lockRCtl);
 	DDX_Control(pDX, IDC_EDIT5, m_LockAACtl);
+	DDX_Text(pDX, IDC_STATIC_TIPS, m_ShowZouAMs);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
@@ -193,6 +193,7 @@ BOOL CConsoleDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 	m_ZouAliderCtl.SetRange(150, 300);
+
 	SetDlgItemText(IDC_STATIC_LOG, pAuth->GetValidity());
 
 	//创建共享内存
@@ -202,8 +203,8 @@ BOOL CConsoleDlg::OnInitDialog()
 		exit(1);
 		return FALSE;
 	}
-	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 250;
-
+	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 200;
+	m_ZouAliderCtl.SetPos(200);
 
 	//设置默认的编辑框
 	m_LockQCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
@@ -382,6 +383,7 @@ void CConsoleDlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	
 	UpdateData(TRUE);
 	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = m_ZouAliderCtl.GetPos();
+	m_ShowZouAMs = m_ZouAliderCtl.GetPos();
 	UpdateData(FALSE);
 	*pResult = 0;
 }
@@ -413,18 +415,3 @@ void CConsoleDlg::OnBnClickedRadio1()
 
 
 
-
-
-//void CConsoleDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
-//{
-//	// TODO: 在此添加消息处理程序代码和/或调用默认值
-//	UpdateData(TRUE);
-//
-//	if (GetDlgItem(IDC_EDIT1)->GetFocus())
-//	{
-//		GetDlgItem(IDC_EDIT1)->SetWindowTextA("aaa");
-//	}
-//
-//	UpdateData(FALSE);
-//	CDialogEx::OnKeyDown(nChar, nRepCnt, nFlags);
-//}

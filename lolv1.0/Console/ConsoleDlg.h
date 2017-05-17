@@ -65,5 +65,6 @@ public:
 	CEdit m_lockECtl;
 	CEdit m_lockRCtl;
 	CEdit m_LockAACtl;
+	DWORD m_ShowZouAMs;
 };
 
