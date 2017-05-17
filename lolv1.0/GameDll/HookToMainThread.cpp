@@ -117,7 +117,6 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wParam, 
 	{
 		utils::GetInstance()->log("TIPS: 按键按下了！%x %x\n", wParam , lParam);
 		UseSkill(wParam);
-		return 1;
 	}
 	return CallWindowProc((WNDPROC)CHookToMainThread::m_hWndHook, hwnd, uMsg, wParam, lParam);
 }
