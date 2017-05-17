@@ -159,7 +159,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			g_monsArry[0].roleObj = m_role.GetNodeBase();
 		}
 
-		if (pSharedMemoryPointer->VirtualKeyQ == 'W' && pSharedMemoryPointer->bLockW)
+		if (pSharedMemoryPointer->VirtualKeyW == 'W' && pSharedMemoryPointer->bLockW)
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
 			g_monsArry[1].skillObj = skillQ.GetNodeBase();
@@ -168,7 +168,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		}
 
 
-		if (pSharedMemoryPointer->VirtualKeyQ == 'E' && pSharedMemoryPointer->bLockE)
+		if (pSharedMemoryPointer->VirtualKeyE == 'E' && pSharedMemoryPointer->bLockE)
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
 			g_monsArry[2].skillObj = skillQ.GetNodeBase();
@@ -177,7 +177,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		}
 
 
-		if (pSharedMemoryPointer->VirtualKeyQ == 'R' && pSharedMemoryPointer->bLockR)
+		if (pSharedMemoryPointer->VirtualKeyR == 'R' && pSharedMemoryPointer->bLockR)
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
 			g_monsArry[3].skillObj = skillQ.GetNodeBase();
