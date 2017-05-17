@@ -223,7 +223,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		}
 
 
-		Sleep(2);
+		Sleep(10);
 	}
 
 	return 0;
