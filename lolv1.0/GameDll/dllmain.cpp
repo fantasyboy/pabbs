@@ -32,7 +32,7 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 		temp.index = (EM_SKILL_INDEX)sk.GetIndex();
 		temp.monsObj = mons.GetNodeBase();
 		g_hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
-		Sleep(3);
+		Sleep(1);
 	}
 }
 
@@ -63,6 +63,7 @@ void UseAttackAA2Mons(person & mons, person& ps)
 			g_hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
 		}
 	}
+	Sleep(1);
 }
 
 void UseSkill(DWORD code)
@@ -222,8 +223,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			UseAttackAA2Mons(mons, m_role);
 		}
 
-
-		Sleep(10);
+		Sleep(15);
 	}
 
 	return 0;

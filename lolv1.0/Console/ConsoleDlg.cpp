@@ -203,8 +203,8 @@ BOOL CConsoleDlg::OnInitDialog()
 		exit(1);
 		return FALSE;
 	}
-	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 200;
-	m_ZouAliderCtl.SetPos(200);
+	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 250;
+	m_ZouAliderCtl.SetPos(250);
 
 	//ÉèÖÃÄ¬ÈÏµÄ±à¼­¿ò
 	m_LockQCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
