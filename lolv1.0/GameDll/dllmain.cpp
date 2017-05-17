@@ -13,16 +13,8 @@
 #include <ctime>
 SHARED_MEMORY* pSharedMemoryPointer = nullptr;
 //对象声明
-CMonsterServices g_cm;
+EM_SKILL_TO_MONS g_monsArry[5] = { 0 };
 CHookToMainThread g_hk;
-std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory;
-CSkillServices* g_roleSkill = nullptr;
-person* g_role;
-
-//Q
-skill g_skillQ;
-person g_monsQ;
-
 void UseSkillByindex(skill& sk, person& mons, person& ps)
 {
 	if (sk.GetSkillRange() > mons.GetDistance(&ps.GetPoint()) //技能范围 > 玩家距离
@@ -45,8 +37,8 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 
 void UseAttackAA2Mons(person & mons, person& ps)
 {
-	auto dwZouAms = (DWORD)(((float)(1.0) / ps.GetAttackSpeed())*220.0);
-	m_pSharedMemory->GetPointerOfFile()->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
+	auto dwZouAms = (DWORD)(((float)(1.0) / ps.GetAttackSpeed())*210.0);
+	pSharedMemoryPointer->dwZouAMs = dwZouAms/* > 360 ? 360 : dwZouAms*/;
 	static DWORD m_AttackDisTime = 0;
 	static DWORD timeSec = 0;
 	if (mons.GetNodeBase()
@@ -66,7 +58,7 @@ void UseAttackAA2Mons(person & mons, person& ps)
 	else
 	{
 		utils::GetInstance()->log("TIPS: 调用寻路逻辑！\n");
-		if ((GetTickCount() - m_AttackDisTime) >= m_pSharedMemory->GetPointerOfFile()->dwZouAMs)
+		if ((GetTickCount() - m_AttackDisTime) >= pSharedMemoryPointer->dwZouAMs)
 		{
 			utils::GetInstance()->log("TIPS: 开始寻路逻辑！\n");
 			g_hk.SendMessageToGame(MESSAGE::MSG_FINDWAY, NULL);
@@ -79,24 +71,45 @@ void UseSkill(DWORD code)
 
 	if (code == pSharedMemoryPointer->VirtualKeyQ && pSharedMemoryPointer->bLockQ)
 	{
-
-		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
+		//UseSkillByindex(skill(EM_SKILL_INDEX::Q ,g_monsArry[0].skillObj), person(g_monsArry[0].monsObj), person(g_monsArry[0].roleObj));
+		SKILL_TO_MONS temp;
+		temp.index = EM_SKILL_INDEX::Q;
+		temp.monsObj = person(g_monsArry[0].monsObj).GetNodeBase();
+		g_hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 	}
 
 	if (code == pSharedMemoryPointer->VirtualKeyW && pSharedMemoryPointer->bLockW)
 	{
-		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
+		//UseSkillByindex(skill(EM_SKILL_INDEX::W, g_monsArry[1].skillObj), person(g_monsArry[1].monsObj), person(g_monsArry[1].roleObj));
+		SKILL_TO_MONS temp;
+		temp.index = EM_SKILL_INDEX::W;
+		temp.monsObj = person(g_monsArry[1].monsObj).GetNodeBase();
+		g_hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 	}
 
 	if (code == pSharedMemoryPointer->VirtualKeyE && pSharedMemoryPointer->bLockE)
 	{
-		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
+		//UseSkillByindex(skill(EM_SKILL_INDEX::E, g_monsArry[2].skillObj), person(g_monsArry[2].monsObj), person(g_monsArry[2].roleObj));
+		SKILL_TO_MONS temp;
+		temp.index = EM_SKILL_INDEX::E;
+		temp.monsObj = person(g_monsArry[2].monsObj).GetNodeBase();
+		g_hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 	}
 
 	if (code == pSharedMemoryPointer->VirtualKeyR && pSharedMemoryPointer->bLockR)
 	{
-		UseSkillByindex(g_skillQ, g_monsQ, *g_role);
+		//UseSkillByindex(skill(EM_SKILL_INDEX::R, g_monsArry[3].skillObj), person(g_monsArry[3].monsObj), person(g_monsArry[3].roleObj));
+		SKILL_TO_MONS temp;
+		temp.index = EM_SKILL_INDEX::R;
+		temp.monsObj = person(g_monsArry[3].monsObj).GetNodeBase();
+		g_hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
 	}
+
+// 	if (code == pSharedMemoryPointer->VirtualKeyAA && pSharedMemoryPointer->bOpenAA)
+// 	{
+// 		UseAttackAA2Mons(person(g_monsArry[4].monsObj), person(g_monsArry[3].roleObj));
+// 	}
+	Sleep(3);
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
@@ -126,61 +139,69 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 {
 	VMProtectBegin("ThreadProc");
-	//创建共享内存
-	m_pSharedMemory =  std::shared_ptr<ShareMemory<SHARED_MEMORY>>(new ShareMemory<SHARED_MEMORY>(MAP_NAME));
+	std::shared_ptr<ShareMemory<SHARED_MEMORY>> m_pSharedMemory(new ShareMemory<SHARED_MEMORY>(MAP_NAME));
 	if (!m_pSharedMemory->openShareMemory())
 	{
-		utils::GetInstance()->log("ERROR: m_pSharedMemory->openShareMemory()出现错误！\n");
 		return 0;
 	}
 	pSharedMemoryPointer = m_pSharedMemory->GetPointerOfFile();
-	utils::GetInstance()->log("TIPS: Base_GameStartTime = %x", pSharedMemoryPointer->Base_GameStartTime);
-
-
 	//判断是否进入游戏
 	while ((DWORD)GameCall::GetInstance()->GetClientTickTime() < 1 || utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr) < 1)
 	{
-		utils::GetInstance()->log("TIPS: 等待中， %f %x", GameCall::GetInstance()->GetClientTickTime(), pSharedMemoryPointer->Base_RoleSelfAddr);
 		Sleep(3000);
 	}
-
-	//挂在到主线程
+	
 	if (!g_hk.Hook())
 	{
-		utils::GetInstance()->log("ERROR: 挂载到游戏主线程失败哦！\n");
 		return false;
 	}
 
-	//HOOK技能CALL
 	if (!GameCall::GetInstance()->HookSkillUse())
 	{
-		utils::GetInstance()->log("ERROR: ameCall::GetInstance()->HookSkillUse()失败！");
 		return 0;
 	}
-
 	VMProtectEnd();
 	//定义玩家对象
-	CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-	g_roleSkill = &m_roleSkill;
-	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-	g_role = &m_role;
+
 	utils::GetInstance()->log("TIPS: 开启成功！\n");
 
-	static CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-	static person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	 CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	 person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 
+
+	CMonsterServices cm;
 
 	while (true)
 	{
-		if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA) & 0x8000 && pSharedMemoryPointer->bOpenAA)
+		auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
+		g_monsArry[0].skillObj = skillQ.GetNodeBase();
+		g_monsArry[0].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+		g_monsArry[0].roleObj = m_role.GetNodeBase();
+
+		auto skillW = m_roleSkill.GetSkillObjectByIndex(1);
+		g_monsArry[1].skillObj = skillW.GetNodeBase();
+		g_monsArry[1].monsObj = cm.GetHealthLeastPerson(&m_role, skillW.GetSkillRange()).GetNodeBase();
+		g_monsArry[1].roleObj = m_role.GetNodeBase();
+
+		auto skillE= m_roleSkill.GetSkillObjectByIndex(2);
+		g_monsArry[2].skillObj = skillE.GetNodeBase();
+		g_monsArry[2].monsObj = cm.GetHealthLeastPerson(&m_role, skillE.GetSkillRange()).GetNodeBase();
+		g_monsArry[2].roleObj = m_role.GetNodeBase();
+
+		auto skillR = m_roleSkill.GetSkillObjectByIndex(3);
+		g_monsArry[3].skillObj = skillR.GetNodeBase();
+		g_monsArry[3].monsObj = cm.GetHealthLeastPerson(&m_role, skillR.GetSkillRange()).GetNodeBase();
+		g_monsArry[3].roleObj = m_role.GetNodeBase();
+
+		//g_monsArry[4].skillObj = 0;
+		//g_monsArry[4].monsObj = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange()).GetNodeBase();
+		//g_monsArry[4].roleObj = m_role.GetNodeBase();
+
+		if (pSharedMemoryPointer->bOpenAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA)& 0x8000)
 		{
-			auto mons = g_cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
+			auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
 			UseAttackAA2Mons(mons, m_role);
 		}
-
-		g_skillQ = m_roleSkill.GetSkillObjectByIndex(0);
-		g_monsQ = g_cm.GetHealthLeastPerson(&m_role, g_skillQ.GetSkillRange());
-
 
 
 		Sleep(3);

@@ -8,6 +8,13 @@ DWORD WINAPI ThreadProc(
 
 extern SHARED_MEMORY* pSharedMemoryPointer;
 
+struct EM_SKILL_TO_MONS
+{
+	DWORD skillObj;
+	DWORD monsObj;
+	DWORD roleObj;
+};
+
 
 //使用技能
 void UseSkillByindex(skill& sk,person& mons ,person& ps);
