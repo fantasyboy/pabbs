@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MonsterServices.h"
 #include "BaseAddr.h"
+#include "BufferServices.h"
 
 CMonsterServices::CMonsterServices()
 {
@@ -33,11 +34,13 @@ void CMonsterServices::travse()
 		}
 
 	}
-	//utils::GetInstance()->log("TIPS: 当前怪物个数为：%d\n", m_PersonList.size());
-	//for (auto temp : m_PersonList)
-	//{
-	//	utils::GetInstance()->log("TIPS: %x %s %x %x ", temp.GetNodeBase(), temp.GetName(),temp.GetCamp());
-	//}
+	utils::GetInstance()->log("TIPS: 当前怪物个数为：%d\n", m_PersonList.size());
+	for (auto temp : m_PersonList)
+	{
+		utils::GetInstance()->log("TIPS: %x %s %x %x ", temp.GetNodeBase(), temp.GetName(),temp.GetCamp());
+		CBufferServices buf(temp.GetNodeBase());
+		buf.travse();
+	}
 }
 
 person CMonsterServices::GetNearleastPerson(person* role)

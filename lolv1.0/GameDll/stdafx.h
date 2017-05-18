@@ -12,7 +12,7 @@
 #include <windows.h>
 #pragma comment(lib,"User32.lib")
 //调试信息
-//#define US_DEBUG
+#define US_DEBUG
 // TODO:  在此处引用程序需要的其他头文件
 #include <string>
 
