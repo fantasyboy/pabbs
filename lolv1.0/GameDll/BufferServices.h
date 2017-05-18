@@ -5,12 +5,13 @@
 class CBufferServices
 {
 public:
-	CBufferServices();
+	CBufferServices(DWORD dwObjBase);
 	~CBufferServices();
 
 	void travse();
 
 private:
 	std::vector<buffer> m_bufferList;
+	DWORD m_dwObjectBase;
 };
 

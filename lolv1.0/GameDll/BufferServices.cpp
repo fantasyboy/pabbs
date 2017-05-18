@@ -2,7 +2,7 @@
 #include "BufferServices.h"
 #include "BaseAddr.h"
 
-CBufferServices::CBufferServices()
+CBufferServices::CBufferServices(DWORD dwObjBase) : m_dwObjectBase(dwObjBase)
 {
 }
 
@@ -15,7 +15,7 @@ void CBufferServices::travse()
 {
 	m_bufferList.clear();
 
-	DWORD dwBase = utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr);
+	DWORD dwBase = utils::GetInstance()->read<DWORD>(m_dwObjectBase);
 	if (dwBase == 0)
 	{
 		utils::GetInstance()->log("ERROR: CBufferServices::travse() dwBase ³öÏÖÒì³££¡\n");
