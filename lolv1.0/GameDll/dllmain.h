@@ -20,4 +20,4 @@ struct EM_SKILL_TO_MONS
 void UseSkillByindex(skill& sk,person& mons ,person& ps);
 void UseAttackAA2Mons(person & mons, person& ps);
 
-void UseSkill(DWORD code);
+bool UseSkill(DWORD code);
