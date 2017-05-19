@@ -265,9 +265,9 @@ void __stdcall SkillHookStub(DWORD skillObj, PFLOAT xyz, PDWORD monsObj)
 					if (rang >= 0.1) {
 						utils::GetInstance()->log("TIPS: µ÷ÓÃÔ¤ÅÐÂß¼­£¡%f\n", sk.GetSkillRange2());
 						EM_POINT_3D pnt = { 0 };
-						pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(250.0);
-						pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(250.0);
-						pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(250.0);
+						pnt.x = temp.GetPoint().x + temp.GetMonsterOrientation().x * (float)(150.0);
+						pnt.z = temp.GetPoint().z + temp.GetMonsterOrientation().z * (float)(150.0);
+						pnt.y = temp.GetPoint().y + temp.GetMonsterOrientation().y * (float)(150.0);
 
 						memcpy(xyz, &pnt, 0xc);
 					}//Ô¤ÅÐÂß¼­

@@ -192,7 +192,7 @@ BOOL CConsoleDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_ZouAliderCtl.SetRange(150, 300);
+	m_ZouAliderCtl.SetRange(0, 50);
 
 	SetDlgItemText(IDC_STATIC_LOG, pAuth->GetValidity());
 
@@ -203,8 +203,8 @@ BOOL CConsoleDlg::OnInitDialog()
 		exit(1);
 		return FALSE;
 	}
-	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 250;
-	m_ZouAliderCtl.SetPos(250);
+	m_sharedMemory.GetPointerOfMapView()->dwZouAMs = 30;
+	m_ZouAliderCtl.SetPos(30);
 
 	//设置默认的编辑框
 	m_LockQCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
