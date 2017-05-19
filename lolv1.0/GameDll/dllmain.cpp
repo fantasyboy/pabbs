@@ -156,11 +156,12 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 
 	CMonsterServices cm;
+	auto Distance = (m_role.GetAttackRange() + m_roleSkill.GetSkillObjectByIndex(0).GetSkillRange()) / 2.0;
 
 	while (true)
 	{
  		//Ëø¶¨Q
-		auto mons = cm.GetHealthLeastPerson(&m_role, 2000);
+		auto mons = cm.GetHealthLeastPerson(&m_role, Distance+100.0);
  		if (pSharedMemoryPointer->bLockQ)
  		{
  			if (pSharedMemoryPointer->VirtualKeyQ == 'Q') {
@@ -223,7 +224,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			{
  				auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
  				g_monsArry[3].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[3].monsObj = mons.GetNodeBase();
+ 				g_monsArry[3].monsObj = cm.GetHealthLeastPerson(&m_role , skillQ.GetSkillRange()).GetNodeBase();
  				g_monsArry[3].roleObj = m_role.GetNodeBase();
  			}
  			else
@@ -231,6 +232,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyR) & 0x8000)
  				{
+					auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
  					auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
  					UseSkillByindex(skillQ, mons, m_role);
  				}
@@ -242,7 +244,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			UseAttackAA2Mons(mons, m_role);
 		}
 
-		Sleep(15);
+		Sleep(5);
 	}
 
 	return 0;
