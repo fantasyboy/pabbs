@@ -243,7 +243,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			UseAttackAA2Mons(mons, m_role);
 		}
 
-		Sleep(5);
+		Sleep(15);
 	}
 
 	return 0;
