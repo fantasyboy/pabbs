@@ -160,12 +160,13 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 	while (true)
 	{
  		//Ëø¶¨Q
+		auto mons = cm.GetHealthLeastPerson(&m_role, 2000);
  		if (pSharedMemoryPointer->bLockQ)
  		{
  			if (pSharedMemoryPointer->VirtualKeyQ == 'Q') {
  				auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
  				g_monsArry[0].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[0].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[0].monsObj = mons.GetNodeBase();
  				g_monsArry[0].roleObj = m_role.GetNodeBase();
  			}
  			else
@@ -173,7 +174,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyQ) & 0x8000)
  				{
  					auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
- 					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -185,7 +185,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			{
  				auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
  				g_monsArry[1].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[1].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[1].monsObj = mons.GetNodeBase();
  				g_monsArry[1].roleObj = m_role.GetNodeBase();
  			}
  			else
@@ -193,7 +193,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyW) & 0x8000)
  				{
  					auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
- 					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -204,7 +203,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			if (pSharedMemoryPointer->VirtualKeyE == 'E') {
  				auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
  				g_monsArry[2].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[2].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[2].monsObj = mons.GetNodeBase();
  				g_monsArry[2].roleObj = m_role.GetNodeBase();
  			}
  			else
@@ -212,7 +211,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyE) & 0x8000)
  				{
  					auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
- 					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -225,7 +223,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			{
  				auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
  				g_monsArry[3].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[3].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[3].monsObj = mons.GetNodeBase();
  				g_monsArry[3].roleObj = m_role.GetNodeBase();
  			}
  			else
@@ -234,7 +232,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyR) & 0x8000)
  				{
  					auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
- 					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -242,7 +239,6 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		//×ßA
 		if (pSharedMemoryPointer->bOpenAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA)& 0x8000)
 		{
-			auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
 			UseAttackAA2Mons(mons, m_role);
 		}
 
