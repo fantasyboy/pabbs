@@ -62,7 +62,6 @@ person CMonsterServices::GetNearleastPerson(person* role)
 
 person CMonsterServices::GetHealthLeastPerson(person* role, float Distance)
 {
-	travse();
 	float MaxHealth = FLT_MAX;
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
@@ -77,13 +76,13 @@ person CMonsterServices::GetHealthLeastPerson(person* role, float Distance)
 			minDistanceObj = temp.GetNodeBase();
 		}
 	}
-	if (minDistanceObj || Distance >= 1500)
+	if (minDistanceObj || Distance >= 2000)
 	{
 		return person(minDistanceObj);
 	}
 	else
 	{
-		return GetHealthLeastPerson(role, Distance + role->GetAttackRange());
+		return GetHealthLeastPerson(role, Distance + 200);
 	}
 
 }

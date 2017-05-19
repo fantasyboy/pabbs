@@ -156,12 +156,13 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 
 	CMonsterServices cm;
-	auto Distance = (m_role.GetAttackRange() + m_roleSkill.GetSkillObjectByIndex(0).GetSkillRange()) / 2.0;
+	auto Distance = m_role.GetAttackRange() > m_roleSkill.GetSkillObjectByIndex(0).GetSkillRange() ? m_role.GetAttackRange() : m_roleSkill.GetSkillObjectByIndex(0).GetSkillRange();
 
 	while (true)
 	{
  		//Ëø¶¨Q
-		auto mons = cm.GetHealthLeastPerson(&m_role, Distance+100.0);
+		cm.travse();
+		auto mons = cm.GetHealthLeastPerson(&m_role, Distance);
  		if (pSharedMemoryPointer->bLockQ)
  		{
  			if (pSharedMemoryPointer->VirtualKeyQ == 'Q') {
