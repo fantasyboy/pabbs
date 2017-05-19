@@ -44,7 +44,7 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 
 void UseAttackAA2Mons(person & mons, person& ps)
 {
-	auto dwZouAms = (DWORD)(((float)(2.0) / ps.GetAttackSpeed() )* ((float)(1.5) / ps.GetAttackSpeed()) * (float)1.5 *pSharedMemoryPointer->dwZouAMs);
+	auto dwZouAms = (DWORD)(((float)(1.5) / ps.GetAttackSpeed() )* ((float)(1.5) / ps.GetAttackSpeed()) * (float)1.5 *pSharedMemoryPointer->dwZouAMs);
 	static DWORD timeSec = 0;
 	static bool bAA = false;
 	if (mons.GetNodeBase()

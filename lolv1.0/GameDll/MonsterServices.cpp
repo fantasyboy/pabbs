@@ -76,13 +76,6 @@ person CMonsterServices::GetHealthLeastPerson(person* role, float Distance)
 			minDistanceObj = temp.GetNodeBase();
 		}
 	}
-	if (minDistanceObj || Distance >= 2000)
-	{
-		return person(minDistanceObj);
-	}
-	else
-	{
-		return GetHealthLeastPerson(role, Distance + 200);
-	}
-
+		
+	return person(minDistanceObj);
 }
