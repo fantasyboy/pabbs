@@ -18,6 +18,7 @@ CHookToMainThread g_hk;
 DWORD g_code = 0;
 void UseSkillByindex(skill& sk, person& mons, person& ps)
 {
+	static bool BUseSkill = false;
 	if (sk.GetSkillRange() > mons.GetDistance(&ps.GetPoint()) //技能范围 > 玩家距离
 		&& sk.GetLevel() //技能等级 > 0
 		&& sk.bCoolDown() //技能已经冷却
@@ -25,6 +26,7 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 		&& !mons.BDead()  //怪物活着
 		&& !ps.BDead()    //玩家活着
 		&& mons.BVisableSee() //怪物可见
+		&& !BUseSkill
 		)
 	{
 		utils::GetInstance()->log("TIPS: 开始使用技能 %x 攻击 %x", sk.GetIndex(), mons.GetNodeBase());
@@ -32,12 +34,17 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 		temp.index = (EM_SKILL_INDEX)sk.GetIndex();
 		temp.monsObj = mons.GetNodeBase();
 		g_hk.SendMessageToGame(MESSAGE::MSG_SKILLCALL, (LPARAM)(&temp));
+		BUseSkill = true;
+	}
+	else
+	{
+		BUseSkill = false;
 	}
 }
 
 void UseAttackAA2Mons(person & mons, person& ps)
 {
-	auto dwZouAms = (DWORD)(((float)(2.0) / ps.GetAttackSpeed() )* ((float)(2.0) / ps.GetAttackSpeed()) *pSharedMemoryPointer->dwZouAMs);
+	auto dwZouAms = (DWORD)(((float)(2.0) / ps.GetAttackSpeed() )* ((float)(1.5) / ps.GetAttackSpeed()) * (float)1.5 *pSharedMemoryPointer->dwZouAMs);
 	static DWORD timeSec = 0;
 	static bool bAA = false;
 	if (mons.GetNodeBase()
