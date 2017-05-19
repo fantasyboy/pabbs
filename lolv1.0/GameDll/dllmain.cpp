@@ -51,7 +51,7 @@ void UseAttackAA2Mons(person & mons, person& ps)
 		&&!ps.BDead() 
 		&&!mons.BDead() 
 		&& ps.GetAttackRange() > ps.GetDistance(&mons.GetPoint()) 
-		&&(float)(GetTickCount() - timeSec) >= ((float)(1.02) / ps.GetAttackSpeed())*1000.0
+		&&(float)(GetTickCount() - timeSec) >= ((float)(1.0) / ps.GetAttackSpeed())*1000.0
 		&& mons.BVisableSee()
 		&& !bAA)
 	{
@@ -243,7 +243,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 			UseAttackAA2Mons(mons, m_role);
 		}
 
-		Sleep(15);
+		Sleep(1);
 	}
 
 	return 0;
