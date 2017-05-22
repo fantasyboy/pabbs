@@ -69,5 +69,11 @@ public:
 	CEdit m_clearAACtl;
 	afx_msg void OnBnClickedCheck11();
 	CButton m_bOpenClear;
+	CButton m_bHuabanAutoE;
+	CButton m_autoEToHero;
+	CButton m_autoEToMons;
+	afx_msg void OnBnClickedCheck6();
+	afx_msg void OnBnClickedCheck9();
+	afx_msg void OnBnClickedCheck10();
 };
 

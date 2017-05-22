@@ -191,10 +191,12 @@ float skill::GetSkillGetAggressivity() const
 		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
 		if (temp)
 		{
+			utils::GetInstance()->log("TIPS:auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);");
 			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
 			if (temp2)
 			{
-				return utils::GetInstance()->read<float>(temp2 + 0XBC + GetLevel());
+				utils::GetInstance()->log("TIPS: utils::GetInstance()->read<DWORD>(temp + 0x34);");
+				return utils::GetInstance()->read<float>(temp2 + 0x0b8 + 4 * GetLevel());
 			}
 		}
 	}

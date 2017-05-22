@@ -17,7 +17,7 @@ struct EM_SKILL_TO_MONS
 
 
 //使用技能
-void UseSkillByindex(skill& sk,person& mons ,person& ps);
+void UseSkillByindex(skill& sk,MonsterBase& mons ,person& ps);
 void UseAttackAA2Mons(MonsterBase & mons, person& ps);
 
 bool UseSkill(DWORD code);

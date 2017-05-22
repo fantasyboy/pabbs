@@ -118,7 +118,7 @@ float person::GetAggressivity() const
 					auto dwOffset3 = utils::GetInstance()->read<DWORD>(dwOffset2 + 0x10);
 					if (dwOffset3)
 					{
-						return utils::GetInstance()->read<float>(dwOffset3 + 0x14);
+						return utils::GetInstance()->read<float>(dwOffset3 + 0x10);
 					}
 				}
 			}

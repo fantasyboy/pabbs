@@ -16,7 +16,7 @@ SHARED_MEMORY* pSharedMemoryPointer = nullptr;
 EM_SKILL_TO_MONS g_monsArry[5] = { 0 };
 CHookToMainThread g_hk;
 DWORD g_code = 0;
-void UseSkillByindex(skill& sk, person& mons, person& ps)
+void UseSkillByindex(skill& sk, MonsterBase& mons, person& ps)
 {
 	static bool BUseSkill = false;
 	if (sk.GetSkillRange() > mons.GetDistance(&ps.GetPoint()) //技能范围 > 玩家距离
@@ -253,21 +253,60 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		}
 
  		//如何开启自动 技能 补刀
- 		if (true)
+ 		if (pSharedMemoryPointer->bAutoHuabanE)
  		{
  			//遍历周围玩家和怪物
- 			auto perList = cm.GetPersonList();
- 			for (auto temp : perList)
- 			{
- 				utils::GetInstance()->log("TIPS: MONS OBJ = %x", temp.GetNodeBase());
- 				//遍历玩家身上的buff
- 				CBufferServices cbf(temp.GetNodeBase());
- 				cbf.travse();
- 
- 				//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
- 			}
- 
- 			//如果周围玩家 或者怪物身上 矛的数量 * 技能伤害 >  怪物当前血量  使用 技能E 收兵 
+			if (pSharedMemoryPointer->bAutoEToHero) {
+				auto perList = cm.GetPersonList();
+				for (auto temp : perList)
+				{
+					utils::GetInstance()->log("TIPS: PLAYER OBJ = %x", temp.GetNodeBase());
+					//遍历玩家身上的buff
+					CBufferServices cbf(temp.GetNodeBase());
+					cbf.travse();
+					//[4596] TIPS: BUFF NAME = listaexpungemarker count = 0
+
+					for (auto buf : cbf.GetBuffList())
+					{
+						if (/*strcmp(buf.GetName() ,"listaexpungemarker") == 0 && */buf.GetBufferCount() > 0)
+						{
+							if ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity()) > temp.GetCurHp())
+							{
+								UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+							}
+						}
+					}
+
+					//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
+				}
+
+			}
+
+			if (pSharedMemoryPointer->bAutoEToMons) {
+				auto monsList = cm.GetMonsList();
+				for (auto temp : monsList)
+				{
+					utils::GetInstance()->log("TIPS: MONS OBJ = %x", temp.GetNodeBase());
+					//遍历玩家身上的buff
+					CBufferServices cbf(temp.GetNodeBase());
+					cbf.travse();
+					//[4596] TIPS: BUFF NAME = listaexpungemarker count = 0
+
+					for (auto buf : cbf.GetBuffList())
+					{
+						if (/*strcmp(buf.GetName(), "listaexpungemarker") == 0 &&*/ buf.GetBufferCount() > 0)
+						{
+							utils::GetInstance()->log("TIPS: 技能攻击力 %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
+							if ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity()) > temp.GetCurHp())
+							{
+								UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+							}
+						}
+					}
+
+					//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
+				}
+			}
  		}
 
 

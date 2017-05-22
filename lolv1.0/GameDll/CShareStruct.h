@@ -45,5 +45,8 @@ typedef struct _SHARED_MOMORY
 	DWORD dwTargetSelecter; //目标选择器
 	bool bOpenClearAA; //开启清线
 	DWORD VirtualKeyOpenClear; //清线热键
+	bool bAutoHuabanE; //开启滑板鞋自动E
+	bool bAutoEToHero; //对英雄自动E
+	bool bAutoEToMons; //对小兵自动E
 }SHARED_MEMORY, *PSHARED_MOMERY;
 #pragma pack()

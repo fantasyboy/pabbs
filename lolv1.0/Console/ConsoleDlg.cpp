@@ -107,6 +107,9 @@ void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STATIC_TIPS, m_ShowZouAMs);
 	DDX_Control(pDX, IDC_EDIT6, m_clearAACtl);
 	DDX_Control(pDX, IDC_CHECK11, m_bOpenClear);
+	DDX_Control(pDX, IDC_CHECK6, m_bHuabanAutoE);
+	DDX_Control(pDX, IDC_CHECK9, m_autoEToHero);
+	DDX_Control(pDX, IDC_CHECK10, m_autoEToMons);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
@@ -125,6 +128,9 @@ ON_BN_CLICKED(IDC_RADIO2, &CConsoleDlg::OnBnClickedRadio1)
 //ON_EN_SETFOCUS(IDC_EDIT1, &CConsoleDlg::OnEnSetfocusEdit1)
 //ON_WM_KEYDOWN()
 ON_BN_CLICKED(IDC_CHECK11, &CConsoleDlg::OnBnClickedCheck11)
+ON_BN_CLICKED(IDC_CHECK6, &CConsoleDlg::OnBnClickedCheck6)
+ON_BN_CLICKED(IDC_CHECK9, &CConsoleDlg::OnBnClickedCheck9)
+ON_BN_CLICKED(IDC_CHECK10, &CConsoleDlg::OnBnClickedCheck10)
 END_MESSAGE_MAP()
 
 
@@ -435,4 +441,25 @@ void CConsoleDlg::OnBnClickedCheck11()
 	// TODO: 在此添加控件通知处理程序代码
 	m_sharedMemory.GetPointerOfMapView()->bOpenClearAA = m_bOpenClear.GetCheck() == BST_CHECKED ? true : false;
 	m_clearAACtl.EnableWindow(!(m_bOpenClear.GetCheck() == BST_CHECKED));
+}
+
+
+void CConsoleDlg::OnBnClickedCheck6()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_sharedMemory.GetPointerOfMapView()->bAutoHuabanE = m_bHuabanAutoE.GetCheck() == BST_CHECKED ? true : false;
+}
+
+
+void CConsoleDlg::OnBnClickedCheck9()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_sharedMemory.GetPointerOfMapView()->bAutoEToHero = m_autoEToHero.GetCheck() == BST_CHECKED ? true : false;
+}
+
+
+void CConsoleDlg::OnBnClickedCheck10()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_sharedMemory.GetPointerOfMapView()->bAutoEToMons = m_autoEToMons.GetCheck() == BST_CHECKED ? true : false;
 }
