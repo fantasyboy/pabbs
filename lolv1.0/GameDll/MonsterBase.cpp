@@ -143,7 +143,7 @@ bool MonsterBase::BVisableSee() const
 bool MonsterBase::BDead() const
 {
 	__try {
-		return utils::GetInstance()->read<bool>(GetNodeBase() + 0x10c) || GetCurHp() < 1 ;
+		return utils::GetInstance()->read<bool>(GetNodeBase() + 0x10c) || GetCurHp() < 2 ;
 	}
 	__except (1)
 	{

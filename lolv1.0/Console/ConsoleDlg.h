@@ -66,5 +66,8 @@ public:
 	CEdit m_lockRCtl;
 	CEdit m_LockAACtl;
 	DWORD m_ShowZouAMs;
+	CEdit m_clearAACtl;
+	afx_msg void OnBnClickedCheck11();
+	CButton m_bOpenClear;
 };
 

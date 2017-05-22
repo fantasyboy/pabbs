@@ -15,5 +15,7 @@ public:
 	float GetGold()const;
 	//获取移动速度
 	float GetMoveSpeed()const;
+	//获取玩家攻击力
+	float GetAggressivity()const;
 };
 

@@ -42,7 +42,7 @@ void UseSkillByindex(skill& sk, person& mons, person& ps)
 	}
 }
 
-void UseAttackAA2Mons(person & mons, person& ps)
+void UseAttackAA2Mons(MonsterBase & mons, person& ps)
 {
 	auto dwZouAms = (DWORD)(((float)(1.5) / ps.GetAttackSpeed() )* ((float)(1.5) / ps.GetAttackSpeed()) * (float)1.5 *pSharedMemoryPointer->dwZouAMs);
 	static DWORD timeSec = 0;
@@ -151,30 +151,29 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 	utils::GetInstance()->log("TIPS: 开启成功！\n");
 
-	 CSkillServices m_roleSkill(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+
 	 person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-
-
+	 CSkillServices m_roleSkill(m_role.GetNodeBase());
+	 CBufferServices m_roleBuff(m_role.GetNodeBase());
 	CMonsterServices cm;
 	while (true)
 	{
  		//锁定Q
-		cm.travse();
-		
+		cm.travse(m_role);
  		if (pSharedMemoryPointer->bLockQ)
  		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
  			if (pSharedMemoryPointer->VirtualKeyQ == 'Q')
 			{
  				g_monsArry[0].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[0].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[0].monsObj = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange()).GetNodeBase();
  				g_monsArry[0].roleObj = m_role.GetNodeBase();
  			}
  			else
  			{
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyQ) & 0x8000)
  				{
-					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+					auto mons = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -186,14 +185,14 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			if (pSharedMemoryPointer->VirtualKeyW == 'W')
  			{
  				g_monsArry[1].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[1].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[1].monsObj = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange()).GetNodeBase();
  				g_monsArry[1].roleObj = m_role.GetNodeBase();
  			}
  			else
  			{
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyW) & 0x8000)
  				{
-					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+					auto mons = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -205,14 +204,14 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			if (pSharedMemoryPointer->VirtualKeyE == 'E')
 			{
  				g_monsArry[2].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[2].monsObj = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[2].monsObj = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange()).GetNodeBase();
  				g_monsArry[2].roleObj = m_role.GetNodeBase();
  			}
  			else
  			{
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyE) & 0x8000)
  				{
-					auto mons = cm.GetHealthLeastPerson(&m_role, skillQ.GetSkillRange());
+					auto mons = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -224,14 +223,14 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  			if (pSharedMemoryPointer->VirtualKeyR == 'R')
  			{
  				g_monsArry[3].skillObj = skillQ.GetNodeBase();
- 				g_monsArry[3].monsObj = cm.GetHealthLeastPerson(&m_role , skillQ.GetSkillRange()).GetNodeBase();
+ 				g_monsArry[3].monsObj = cm.GetHealthLeastPerson(m_role , skillQ.GetSkillRange()).GetNodeBase();
  				g_monsArry[3].roleObj = m_role.GetNodeBase();
  			}
  			else
  			{
  				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyR) & 0x8000)
  				{
-					auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
+					auto mons = cm.GetHealthLeastPerson(m_role, m_role.GetAttackRange());
  					UseSkillByindex(skillQ, mons, m_role);
  				}
  			}
@@ -239,11 +238,40 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 		//走A
 		if (pSharedMemoryPointer->bOpenAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA)& 0x8000)
 		{
-			auto mons = cm.GetHealthLeastPerson(&m_role, m_role.GetAttackRange());
+			auto mons = cm.GetHealthLeastPerson(m_role, m_role.GetAttackRange());
 			UseAttackAA2Mons(mons, m_role);
 		}
 
-		Sleep(1);
+
+		//清线
+		if (pSharedMemoryPointer->bOpenClearAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyOpenClear) & 0x8000)
+		{
+			//获取范围内最近的小兵
+			auto mons = cm.GetHealthLeastMons(m_role, m_role.GetAttackRange());
+			UseAttackAA2Mons(mons, m_role);
+
+		}
+
+// 		//如何开启自动 技能 补刀
+// 		if (true)
+// 		{
+// 			//遍历周围玩家和怪物
+// 			auto perList = cm.GetPersonList();
+// 			for (auto temp : perList)
+// 			{
+// 				utils::GetInstance()->log("TIPS: MONS OBJ = %x", temp.GetNodeBase());
+// 				//遍历玩家身上的buff
+// 				CBufferServices cbf(temp.GetNodeBase());
+// 				cbf.travse();
+// 
+// 				//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
+// 			}
+// 
+// 			//如果周围玩家 或者怪物身上 矛的数量 * 技能伤害 >  怪物当前血量  使用 技能E 收兵 
+// 		}
+
+
+		Sleep(20);
 	}
 
 	return 0;

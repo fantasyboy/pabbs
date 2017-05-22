@@ -105,6 +105,8 @@ void CConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT4, m_lockRCtl);
 	DDX_Control(pDX, IDC_EDIT5, m_LockAACtl);
 	DDX_Text(pDX, IDC_STATIC_TIPS, m_ShowZouAMs);
+	DDX_Control(pDX, IDC_EDIT6, m_clearAACtl);
+	DDX_Control(pDX, IDC_CHECK11, m_bOpenClear);
 }
 
 BEGIN_MESSAGE_MAP(CConsoleDlg, CDialogEx)
@@ -122,6 +124,7 @@ ON_BN_CLICKED(IDC_RADIO1, &CConsoleDlg::OnBnClickedRadio1)
 ON_BN_CLICKED(IDC_RADIO2, &CConsoleDlg::OnBnClickedRadio1)
 //ON_EN_SETFOCUS(IDC_EDIT1, &CConsoleDlg::OnEnSetfocusEdit1)
 //ON_WM_KEYDOWN()
+ON_BN_CLICKED(IDC_CHECK11, &CConsoleDlg::OnBnClickedCheck11)
 END_MESSAGE_MAP()
 
 
@@ -159,7 +162,8 @@ void CConsoleDlg::InitGameStruct()
 
 	m_sharedMemory.GetPointerOfMapView()->Base_MonsterOrientationXOffset = 0x3124;  //玩家X朝向
 	m_sharedMemory.GetPointerOfMapView()->Base_MonsterBMovingOffset = 0x4C1C; //玩家是否移动
-
+	m_sharedMemory.GetPointerOfMapView()->Base_BufferOffset = 0x2FC8;
+	m_sharedMemory.GetPointerOfMapView()->Base_BufferCountOffset = 0x7C;
 }
 
 BOOL CConsoleDlg::OnInitDialog()
@@ -212,12 +216,14 @@ BOOL CConsoleDlg::OnInitDialog()
 	m_lockECtl.SetWindowTextA(KeyNames[VK_SPACE].text);
 	m_lockRCtl.SetWindowTextA(KeyNames[VK_SPACE].text);
 	m_LockAACtl.SetWindowTextA(KeyNames[VK_SPACE].text);
-
+	m_clearAACtl.SetWindowTextA(KeyNames['C'].text);
 	m_sharedMemory.GetPointerOfMapView()->VirtualKeyQ = VK_SPACE;
 	m_sharedMemory.GetPointerOfMapView()->VirtualKeyW = VK_SPACE;
 	m_sharedMemory.GetPointerOfMapView()->VirtualKeyE = VK_SPACE;
 	m_sharedMemory.GetPointerOfMapView()->VirtualKeyR = VK_SPACE;
 	m_sharedMemory.GetPointerOfMapView()->VirtualKeyAA = VK_SPACE;
+	m_sharedMemory.GetPointerOfMapView()->VirtualKeyOpenClear = 'C';
+
 
 	VMProtectBegin("InitGameStruct");
 	InitGameStruct();
@@ -364,6 +370,13 @@ BOOL CConsoleDlg::PreTranslateMessage(MSG* pMsg)
 		m_sharedMemory.GetPointerOfMapView()->VirtualKeyAA = pMsg->wParam;
 	}
 
+	//设置走A清线热键
+	if (::GetFocus() == m_clearAACtl.GetSafeHwnd() && pMsg->message == WM_KEYDOWN)
+	{
+		m_clearAACtl.SetWindowTextA(KeyNames[pMsg->wParam].text);
+		m_sharedMemory.GetPointerOfMapView()->VirtualKeyOpenClear = pMsg->wParam;
+	}
+
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
@@ -415,3 +428,11 @@ void CConsoleDlg::OnBnClickedRadio1()
 
 
 
+
+
+void CConsoleDlg::OnBnClickedCheck11()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_sharedMemory.GetPointerOfMapView()->bOpenClearAA = m_bOpenClear.GetCheck() == BST_CHECKED ? true : false;
+	m_clearAACtl.EnableWindow(!(m_bOpenClear.GetCheck() == BST_CHECKED));
+}

@@ -183,3 +183,45 @@ float skill::GetSkillType() const
 	}
 	return 0;
 }
+
+float skill::GetSkillGetAggressivity() const
+{
+	__try {
+		//非锁定技能距离判断
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
+		if (temp)
+		{
+			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
+			if (temp2)
+			{
+				return utils::GetInstance()->read<float>(temp2 + 0XBC + GetLevel());
+			}
+		}
+	}
+	__except (1) {
+		utils::GetInstance()->log("ERROR: skill::GetSkillGetAggressivity() 出现异常！\n");
+		return 0;
+	}
+	return 0;
+}
+
+float skill::GetSkillPlusProportion() const
+{
+	__try {
+		//非锁定技能距离判断
+		auto temp = utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_SkillOffset_Object);
+		if (temp)
+		{
+			auto temp2 = utils::GetInstance()->read<DWORD>(temp + 0x34);
+			if (temp2)
+			{
+				return utils::GetInstance()->read<float>(temp2 + 0x1d0);
+			}
+		}
+	}
+	__except (1) {
+		utils::GetInstance()->log("ERROR: skill::GetSkillPlusProportion() 出现异常！\n");
+		return 0;
+	}
+	return 0;
+}

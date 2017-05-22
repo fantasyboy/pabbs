@@ -1,1 +1,0 @@
-auth error, auth=0 connect=1 error=-6 2017-05-14 21:13:51

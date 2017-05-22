@@ -30,6 +30,8 @@ typedef struct _SHARED_MOMORY
 	DWORD Base_SkillOffset_Range2;		 //技能范围偏移（已更新）
 	DWORD Base_MonsterOrientationXOffset;  //玩家X朝向
 	DWORD Base_MonsterBMovingOffset; //玩家是否移动
+	DWORD Base_BufferCountOffset;    //buff 层数偏移
+	DWORD Base_BufferOffset; //Buff 在怪物对象下的偏移
 	//预判相关
 	bool bLockQ;  //预判Q
 	DWORD VirtualKeyQ;
@@ -43,5 +45,7 @@ typedef struct _SHARED_MOMORY
 	DWORD VirtualKeyAA;
 	DWORD dwZouAMs; //走A频率
 	DWORD dwTargetSelecter; //目标选择器
+	bool bOpenClearAA; //开启清线
+	DWORD VirtualKeyOpenClear; //清线热键
 }SHARED_MEMORY, *PSHARED_MOMERY;
 #pragma pack()

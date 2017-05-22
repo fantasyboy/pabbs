@@ -15,27 +15,25 @@ void CBufferServices::travse()
 {
 	m_bufferList.clear();
 
-	DWORD dwBase = m_dwObjectBase;
-	if (!dwBase)
+	auto startAddr = utils::GetInstance()->read<DWORD>(m_dwObjectBase + pSharedMemoryPointer->Base_BufferOffset + 0x10);
+	auto endAddr = utils::GetInstance()->read<DWORD>(m_dwObjectBase + pSharedMemoryPointer->Base_BufferOffset + 0x14);
+	auto size = (endAddr - startAddr) >> 3;
+	for (auto i = 0; i != size ; i++)
 	{
-		utils::GetInstance()->log("ERROR: CBufferServices::travse() dwBase 出现异常！\n");
-		return;
-	}
-
-	auto nodeBase = utils::GetInstance()->read<DWORD>(dwBase + 0x14);
-	for (auto i = 0 ; i != 0x40; i++)
-	{
-		//读取buff对象
-		auto temp = nodeBase + i * 0x34;
-		if (utils::GetInstance()->read<DWORD>(temp+0x30) == 0xffffffff)
+		auto tempObj = utils::GetInstance()->read<DWORD>( startAddr + 8 * i);
+		//utils::GetInstance()->log("tempObj %x ", tempObj);
+		if (utils::GetInstance()->read<DWORD>(tempObj) == 0xFFFFFFFF)
 		{
+			//不是图标对象 继续
 			continue;
 		}
-		m_bufferList.push_back(buffer(temp));
+
+		m_bufferList.push_back(buffer(tempObj));
 	}
-	utils::GetInstance()->log("TIPS: buff数量为：%d\n", m_bufferList.size());
-	for (auto temp: m_bufferList)
-	{
-		utils::GetInstance()->log("TIPS: %x %s %d", temp.GetNodeBase(), temp.GetName(),temp.GetBufferCount());
-	}
+
+ 	for (auto temp : m_bufferList)
+ 	{
+ 		utils::GetInstance()->log("TIPS: BUFF NAME = %s count = %d", temp.GetName(), temp.GetBufferCount());
+ 	}
+
 }

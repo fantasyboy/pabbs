@@ -43,6 +43,10 @@ public:
 	DWORD GetIndex()const;
 	//获取玩家是否是锁定技能 如果是锁定技能，这里就是范围
 	float GetSkillType()const;
+	//获取技能基础攻击
+	float GetSkillGetAggressivity()const;
+	//获取技能攻击力加成比例
+	float GetSkillPlusProportion()const;
 private:
 	EM_SKILL_INDEX m_index;
 };
