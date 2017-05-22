@@ -35,7 +35,7 @@ void CMonsterServices::travse(person& role)
 		}
 
 		//是小兵或者野怪 并且不是自己方的
-		if (role.GetCamp() != per.GetCamp() && per.GetType() == 0xc01 && role.GetDistance(&per.GetPoint()) < 1500)
+		if (role.GetCamp() != per.GetCamp() && per.GetType() == 0xc01 && role.GetDistance(&per.GetPoint()) < 2000)
 		{
 			m_monsList.push_back(per);
 		}

@@ -37,7 +37,7 @@ DWORD buffer::GetBufferCount() const
 		auto temp2 = utils::GetInstance()->read<DWORD>(GetNodeBase() + 0x18);
 
 		auto result = (temp1 - temp2) & 0xFFFFFFF8;
-		if (result <= 10)
+		if (result <= 0x10)
 		{
 			return utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_BufferCountOffset);
 		}

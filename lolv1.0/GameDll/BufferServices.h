@@ -9,7 +9,7 @@ public:
 	~CBufferServices();
 
 	void travse();
-	std::vector<buffer> GetBuffList();
+	std::vector<buffer>& GetBuffList();
 private:
 	std::vector<buffer> m_bufferList;
 	DWORD m_dwObjectBase;

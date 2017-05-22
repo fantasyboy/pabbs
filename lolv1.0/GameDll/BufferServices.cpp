@@ -38,7 +38,7 @@ void CBufferServices::travse()
 
 }
 
-std::vector<buffer> CBufferServices::GetBuffList()
+std::vector<buffer>& CBufferServices::GetBuffList()
 {
 	return m_bufferList;
 }

@@ -268,16 +268,24 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 					for (auto buf : cbf.GetBuffList())
 					{
-						if (/*strcmp(buf.GetName() ,"listaexpungemarker") == 0 && */buf.GetBufferCount() > 0)
+						if (strstr(buf.GetName(), "marker") != NULL)
 						{
-							if ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity()) > temp.GetCurHp())
+							if (buf.GetBufferCount() > 1) {
+								utils::GetInstance()->log("TIPS: 技能攻击力 %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
+								if (((buf.GetBufferCount() - 1)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.3 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
+								{
+									UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+								}
+							}
+							else
 							{
-								UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+								if (((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
+								{
+									UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+								}
 							}
 						}
 					}
-
-					//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
 				}
 
 			}
@@ -294,12 +302,21 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 					for (auto buf : cbf.GetBuffList())
 					{
-						if (/*strcmp(buf.GetName(), "listaexpungemarker") == 0 &&*/ buf.GetBufferCount() > 0)
+						if (strstr(buf.GetName(), "marker") != NULL)
 						{
-							utils::GetInstance()->log("TIPS: 技能攻击力 %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
-							if ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity()) > temp.GetCurHp())
+							if (buf.GetBufferCount() > 1) {
+								utils::GetInstance()->log("TIPS: 技能攻击力 %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
+								if (((buf.GetBufferCount() - 1)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.3 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
+								{
+									UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+								}
+							}
+							else
 							{
-								UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+								if (((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
+								{
+									UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
+								}
 							}
 						}
 					}
@@ -310,7 +327,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
  		}
 
 
-		Sleep(20);
+		Sleep(5);
 	}
 
 	return 0;
