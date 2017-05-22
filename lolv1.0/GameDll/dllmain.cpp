@@ -270,7 +270,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					{
 						if (strstr(buf.GetName(), "marker") != NULL)
 						{
-							if (buf.GetBufferCount() > 1) {
+							if (buf.GetBufferCount() > 0) {
 								utils::GetInstance()->log("TIPS: 技能攻击力 %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
 								if (((buf.GetBufferCount() - 1)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.3 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
 								{
@@ -304,7 +304,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 					{
 						if (strstr(buf.GetName(), "marker") != NULL)
 						{
-							if (buf.GetBufferCount() > 1) {
+							if (buf.GetBufferCount() > 0) {
 								utils::GetInstance()->log("TIPS: 技能攻击力 %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
 								if (((buf.GetBufferCount() - 1)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.3 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
 								{
