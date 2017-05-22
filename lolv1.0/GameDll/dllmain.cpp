@@ -306,7 +306,7 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 						{
 							if (buf.GetBufferCount() > 0) {
 								utils::GetInstance()->log("TIPS: ¼¼ÄÜ¹¥»÷Á¦ %f %f %f  HP = %f", m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity(), m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion(), m_role.GetAggressivity(), temp.GetCurHp());
-								if (((buf.GetBufferCount() - 1)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.3 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
+								if (((buf.GetBufferCount() - 1)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.25 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
 								{
 									UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
 								}
