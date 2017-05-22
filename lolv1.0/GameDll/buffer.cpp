@@ -32,7 +32,20 @@ char* buffer::GetName() const
 DWORD buffer::GetBufferCount() const
 {
 	__try {
-		return utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_BufferCountOffset);
+		//return utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_BufferCountOffset);
+		auto temp1 = utils::GetInstance()->read<DWORD>(GetNodeBase() + 0x1c);
+		auto temp2 = utils::GetInstance()->read<DWORD>(GetNodeBase() + 0x18);
+
+		auto result = (temp1 - temp2) & 0xFFFFFFF8;
+		if (result <= 10)
+		{
+			return utils::GetInstance()->read<DWORD>(GetNodeBase() + pSharedMemoryPointer->Base_BufferCountOffset);
+		}
+		else
+		{
+			return (temp1 - temp2) >> 3;
+		}
+
 	}
 	__except (1) {
 		return 0;

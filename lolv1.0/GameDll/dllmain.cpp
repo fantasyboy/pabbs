@@ -252,23 +252,23 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 		}
 
-// 		//如何开启自动 技能 补刀
-// 		if (true)
-// 		{
-// 			//遍历周围玩家和怪物
-// 			auto perList = cm.GetPersonList();
-// 			for (auto temp : perList)
-// 			{
-// 				utils::GetInstance()->log("TIPS: MONS OBJ = %x", temp.GetNodeBase());
-// 				//遍历玩家身上的buff
-// 				CBufferServices cbf(temp.GetNodeBase());
-// 				cbf.travse();
-// 
-// 				//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
-// 			}
-// 
-// 			//如果周围玩家 或者怪物身上 矛的数量 * 技能伤害 >  怪物当前血量  使用 技能E 收兵 
-// 		}
+ 		//如何开启自动 技能 补刀
+ 		if (true)
+ 		{
+ 			//遍历周围玩家和怪物
+ 			auto perList = cm.GetPersonList();
+ 			for (auto temp : perList)
+ 			{
+ 				utils::GetInstance()->log("TIPS: MONS OBJ = %x", temp.GetNodeBase());
+ 				//遍历玩家身上的buff
+ 				CBufferServices cbf(temp.GetNodeBase());
+ 				cbf.travse();
+ 
+ 				//如果buff名字 == 滑板鞋的E  && （技能基础伤害 + 玩家攻击力* 技能加成比例） > 当前怪物的血量  使用 E
+ 			}
+ 
+ 			//如果周围玩家 或者怪物身上 矛的数量 * 技能伤害 >  怪物当前血量  使用 技能E 收兵 
+ 		}
 
 
 		Sleep(20);
