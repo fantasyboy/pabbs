@@ -6,6 +6,9 @@ DWORD WINAPI ThreadProc(
 	_In_ LPVOID lpParameter
 );
 
+DWORD WINAPI ThreadProcLockSkill(
+	_In_ LPVOID lpParameter
+);
 extern SHARED_MEMORY* pSharedMemoryPointer;
 
 struct EM_SKILL_TO_MONS

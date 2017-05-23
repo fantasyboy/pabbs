@@ -35,12 +35,12 @@ void CMonsterServices::travse(person& role)
 		}
 
 		//是小兵或者野怪 并且不是自己方的
-		if (role.GetCamp() != per.GetCamp() && per.GetType() == 0xc01 && role.GetDistance(&per.GetPoint()) < 2000)
+		if (role.GetCamp() != per.GetCamp() && per.GetType() == 0xc01 && role.GetDistance(&per.GetPoint()) < 1500)
 		{
 			m_monsList.push_back(per);
 		}
 	}
-
+	utils::GetInstance()->log("TIPS: 当前玩家个数 %d 当前小兵个数 %d", m_PersonList.size(), m_monsList.size());
 }
 
 person CMonsterServices::GetNearleastPerson(person& role)
@@ -50,7 +50,9 @@ person CMonsterServices::GetNearleastPerson(person& role)
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
 	{
-		if (temp.GetDistance(&role.GetPoint()) < MaxDistance &&role.GetCamp() != temp.GetCamp()&& !temp.BDead())
+		if (temp.GetDistance(&role.GetPoint()) < MaxDistance 
+			&&role.GetCamp() != temp.GetCamp()
+			&& !temp.BDead())
 		{
 			MaxDistance = temp.GetDistance(&role.GetPoint());
 			minDistanceObj = temp.GetNodeBase();
@@ -100,12 +102,29 @@ MonsterBase CMonsterServices::GetHealthLeastMons(person& role, float Dis)
 
 }
 
-std::vector<person>& CMonsterServices::GetPersonList()
+std::vector<person> CMonsterServices::GetPersonList(person& role,float Distance)
 {
-	return m_PersonList;
+	std::vector<person> perList;
+	for (auto temp : m_PersonList)
+	{
+		if (role.GetDistance(&temp.GetPoint()) < Distance)
+		{
+			perList.push_back(temp);
+		}
+	}
+	return perList;
 }
 
-std::vector<MonsterBase>& CMonsterServices::GetMonsList()
+std::vector<MonsterBase> CMonsterServices::GetMonsList(person& role, float Distance)
 {
-	return m_monsList;
+	std::vector<MonsterBase> monsList;
+	for (auto temp : m_monsList)
+	{
+		if (role.GetDistance(&temp.GetPoint()) < Distance)
+		{
+			monsList.push_back(temp);
+		}
+	}
+
+	return monsList;
 }

@@ -113,12 +113,14 @@ LRESULT CALLBACK CallWndProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPARAM lPa
 
 LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
 {
-	if (uMsg == WM_KEYDOWN)
+	if (uMsg == WM_KEYDOWN || uMsg == WM_KEYUP)
 	{
 		if (wParam == 'Q' || wParam == 'W' || wParam == 'E' || wParam == 'R')
 		{
-			if (UseSkill(wParam)) 
-				return 1;
+			if (UseSkill(wParam))
+			{
+				return 0;
+			}
 		}
 
 	}
