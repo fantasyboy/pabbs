@@ -138,37 +138,30 @@ END_MESSAGE_MAP()
 
 void CConsoleDlg::InitGameStruct()
 {
-	m_sharedMemory.GetPointerOfMapView()->Base_GameStartTime = 0x01A8C570;    //游戏开局时间     偏移:1    //OD地址:0x0056BB6E
-	m_sharedMemory.GetPointerOfMapView()->Base_RoleSelfAddr = 0x01A90F40;    //玩家基地址     偏移:2    //OD地址:0x009CB632
-	m_sharedMemory.GetPointerOfMapView()->Base_BufferAddr = 0x01A8BFE4;    //buff数组基地址     偏移:2    //OD地址:0x00A0F40A
-	m_sharedMemory.GetPointerOfMapView()->Base_MonsterArrayAddr = 0x02AB8FEC;    //怪物数组基地址     偏移:2    //OD地址:0x005D7552
-	m_sharedMemory.GetPointerOfMapView()->Base_GameWndHwndAddr = 0x01A8CDFC;    //游戏窗口基地址     偏移:2    //OD地址:0x00B439F4
-
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillTravseOffset1 = 0x00002940;    //技能数组第一层偏移     偏移:1    //OD地址:0x0099202D
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillTravseOffset2 = 0x00000560;    //技能数组第二层偏移     偏移:2    //OD地址:0x007D9C40
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillOffset_Object = 0x000000F4;    //技能对象偏移     偏移:2    //OD地址:0x00992044
-
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillCallEcxAddr = 0x01A90F60;    //技能CALL ECX     偏移:2    //OD地址:0x00E51068
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillCallAddr = 0x00AB8880;    //技能CALL     偏移:1    //OD地址:0x00E5108F
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillCallHookAddr = 0x00920DBD;    //技能CALL Hook     偏移:1    //OD地址:0x00920DBD
-	m_sharedMemory.GetPointerOfMapView()->Base_AttackHeroCallAddr = 0x00BFA700;    //普攻CALL     偏移:1    //OD地址:0x009B252E
-	m_sharedMemory.GetPointerOfMapView()->Base_FindWayCallAddr = 0x00BFA700;    //寻路call     偏移:1    //OD地址:0x0081E1E2
-
-	m_sharedMemory.GetPointerOfMapView()->Base_MonsterCurrentHpOffset = 0x00000568;    //当前血量偏移     偏移:4    //OD地址:0x007C43B7（已更新）
-	m_sharedMemory.GetPointerOfMapView()->Base_MonsterCurrentMpOffset = 0x000001F0;    //当前蓝量偏移     偏移:5    //OD地址:0x00745BAF
-	m_sharedMemory.GetPointerOfMapView()->Base_MonsterBVisableOffset = 0x00003A50;    //是否可见偏移     偏移:2    //OD地址:0x00A5BF03
-	m_sharedMemory.GetPointerOfMapView()->Base_equipmentTravseOffset1 = 0x000015D0;    //装备数组遍历偏移1     偏移:2    //OD地址:0x0061C94B
-	m_sharedMemory.GetPointerOfMapView()->Base_equipmentTravseOffset2 = 0x00000288;    //装备数组遍历偏移2     偏移:3    //OD地址:0x006A0729
-
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillOffset_MP = 0x000005AC;    //技能蓝耗偏移     偏移:5    //OD地址:0x0077FBDB（已更新）
-	m_sharedMemory.GetPointerOfMapView()->Base_MousePointAddr = 0x1A90F60;            //鼠标位置基地址（已更新）
-															//下面的代码暂时没有做更新
+	m_sharedMemory.GetPointerOfMapView()->Base_GameStartTime = 0x01AA2768;    //游戏开局时间     偏移:1    //OD地址:0x008DF27E
+	m_sharedMemory.GetPointerOfMapView()->Base_RoleSelfAddr = 0x01A9EA20;    //玩家基地址     偏移:2    //OD地址:0x005E0482
+	m_sharedMemory.GetPointerOfMapView()->Base_BufferAddr = 0x01A9C290;    //buff数组基地址     偏移:2    //OD地址:0x00BB4BEA
+	m_sharedMemory.GetPointerOfMapView()->Base_MonsterArrayAddr = 0x02AC8104;    //怪物数组基地址     偏移:2    //OD地址:0x00C688C2
+	m_sharedMemory.GetPointerOfMapView()->Base_GameWndHwndAddr = 0x01A9C508;    //游戏窗口基地址     偏移:2    //OD地址:0x008301D4
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillTravseOffset1 = 0x00002948;    //技能数组第一层偏移     偏移:1    //OD地址:0x0059478D
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillTravseOffset2 = 0x00000560;    //技能数组第二层偏移     偏移:2    //OD地址:0x007426C0
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillOffset_Object = 0x000000F4;    //技能对象偏移     偏移:2    //OD地址:0x005947A4
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillCallEcxAddr = 0x01A9D2FC;    //技能CALL ECX     偏移:2    //OD地址:0x00E55E48
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillCallAddr = 0x00BDB500;    //技能CALL     偏移:1    //OD地址:0x00E55E6F
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillCallHookAddr = 0x00B0236D;    //技能CALL Hook     偏移:1    //OD地址:0x00B0236D
+	m_sharedMemory.GetPointerOfMapView()->Base_AttackHeroCallAddr = 0x007E7560;    //普攻CALL     偏移:1    //OD地址:0x0076168E
+	m_sharedMemory.GetPointerOfMapView()->Base_FindWayCallAddr = 0x007E7560;    //寻路call     偏移:1    //OD地址:0x0062FC72
+	m_sharedMemory.GetPointerOfMapView()->Base_MonsterCurrentMpOffset = 0x000001F4;    //当前蓝量偏移     偏移:5    //OD地址:0x00C5F30F
+	m_sharedMemory.GetPointerOfMapView()->Base_MonsterCurrentHpOffset = 0x0000056C;    //当前血量偏移     偏移:4    //OD地址:0x007C43B7（已更新）
+	m_sharedMemory.GetPointerOfMapView()->Base_MonsterBVisableOffset = 0x00003A58;    //是否可见偏移     偏移:2    //OD地址:0x00A5BF03
+	m_sharedMemory.GetPointerOfMapView()->Base_equipmentTravseOffset1 = 0x000015D8;    //装备数组遍历偏移1     偏移:2    //OD地址:0x00C2227B
+	m_sharedMemory.GetPointerOfMapView()->Base_equipmentTravseOffset2 = 0x00000288;    //装备数组遍历偏移2     偏移:3    //OD地址:0x00C40349
+	m_sharedMemory.GetPointerOfMapView()->Base_MousePointAddr = 0x1A9D2FC;            //鼠标位置基地址（已更新）
 	m_sharedMemory.GetPointerOfMapView()->Base_SkillOffset_Range1 = 0x3b0;		 //技能范围偏移（已更新）
-	m_sharedMemory.GetPointerOfMapView()->Base_SkillOffset_Range2 = 0x3cc;		 //技能范围偏移（已更新）
-
-	m_sharedMemory.GetPointerOfMapView()->Base_MonsterOrientationXOffset = 0x3124;  //玩家X朝向
-	m_sharedMemory.GetPointerOfMapView()->Base_MonsterBMovingOffset = 0x4C1C; //玩家是否移动
-	m_sharedMemory.GetPointerOfMapView()->Base_BufferOffset = 0x2FC8;
+	m_sharedMemory.GetPointerOfMapView()->Base_SkillOffset_MP = 0x000005AC;    //技能蓝耗偏移     偏移:5    //OD地址:0x0077FBDB（已更新）
+	m_sharedMemory.GetPointerOfMapView()->Base_MonsterOrientationXOffset = 0x312C;  //玩家X朝向
+	m_sharedMemory.GetPointerOfMapView()->Base_MonsterBMovingOffset = 0x4C54; //玩家是否移动
+	m_sharedMemory.GetPointerOfMapView()->Base_BufferOffset = 0x2FD0;
 	m_sharedMemory.GetPointerOfMapView()->Base_BufferCountOffset = 0x7C;
 }
 

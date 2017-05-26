@@ -115,14 +115,11 @@ LRESULT CALLBACK WindowProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wParam, 
 {
 	if (uMsg == WM_KEYDOWN || uMsg == WM_KEYUP)
 	{
-		if (wParam == 'Q' || wParam == 'W' || wParam == 'E' || wParam == 'R')
+		if (wParam >= 'Q' && wParam <= 'R')
 		{
-			if (UseSkill(wParam))
-			{
-				return 0;
-			}
+			UseSkill(wParam);
+			return 0;
 		}
-
 	}
 	return CallWindowProc((WNDPROC)CHookToMainThread::m_hWndHook, hwnd, uMsg, wParam, lParam);
 }

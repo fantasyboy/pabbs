@@ -63,6 +63,7 @@ person CMonsterServices::GetNearleastPerson(person& role)
 
 person CMonsterServices::GetHealthLeastPerson(person& role, float Distance)
 {
+
 	float MaxHealth = FLT_MAX;
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_PersonList)
@@ -83,6 +84,7 @@ person CMonsterServices::GetHealthLeastPerson(person& role, float Distance)
 
 MonsterBase CMonsterServices::GetHealthLeastMons(person& role, float Dis)
 {
+
 	float MaxHealth = FLT_MAX;
 	DWORD minDistanceObj = 0;
 	for (auto temp : m_monsList)
@@ -104,6 +106,7 @@ MonsterBase CMonsterServices::GetHealthLeastMons(person& role, float Dis)
 
 std::vector<person> CMonsterServices::GetPersonList(person& role,float Distance)
 {
+
 	std::vector<person> perList;
 	for (auto temp : m_PersonList)
 	{
@@ -117,6 +120,7 @@ std::vector<person> CMonsterServices::GetPersonList(person& role,float Distance)
 
 std::vector<MonsterBase> CMonsterServices::GetMonsList(person& role, float Distance)
 {
+
 	std::vector<MonsterBase> monsList;
 	for (auto temp : m_monsList)
 	{

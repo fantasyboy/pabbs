@@ -16,6 +16,7 @@ SHARED_MEMORY* pSharedMemoryPointer = nullptr;
 EM_SKILL_TO_MONS g_monsArry[5] = { 0 };
 CHookToMainThread g_hk;
 DWORD g_code = 0;
+CMonsterServices cm;
 void UseSkillByindex(skill& sk, MonsterBase& mons, person& ps)
 {
 	static bool BUseSkill = false;
@@ -152,34 +153,14 @@ DWORD WINAPI ThreadProc(_In_ LPVOID lpParameter)
 
 	utils::GetInstance()->log("TIPS: 开启成功！\n");
 
-	auto handleLockSkill =  ::CreateThread(NULL, NULL, LPTHREAD_START_ROUTINE(ThreadProcLockSkill), NULL, NULL, NULL);
-
-	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
-	CSkillServices m_roleSkill(m_role.GetNodeBase());
-	CBufferServices m_roleBuff(m_role.GetNodeBase());
-	CMonsterServices cm;
-	while (true)
-	{
-		cm.travse(m_role);
-		//走A
-		if (pSharedMemoryPointer->bOpenAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA) & 0x8000)
-		{
-			auto mons = cm.GetHealthLeastPerson(m_role, m_role.GetAttackRange());
-			UseAttackAA2Mons(mons, m_role);
-		}
-		//清线
-		if (pSharedMemoryPointer->bOpenClearAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyOpenClear) & 0x8000)
-		{
-			//获取范围内最近的小兵
-			auto mons = cm.GetHealthLeastMons(m_role, m_role.GetAttackRange());
-			UseAttackAA2Mons(mons, m_role);
-
-		}
-
-		Sleep(15);
-	}
+	auto handleTravse =  ::CreateThread(NULL, NULL, LPTHREAD_START_ROUTINE(ThreadProcTravse), NULL, NULL, NULL);
+	auto handleLockSkill = ::CreateThread(NULL, NULL, LPTHREAD_START_ROUTINE(ThreadProcLockSkill), NULL, NULL, NULL);
+	auto handleLockAA = ::CreateThread(NULL, NULL, LPTHREAD_START_ROUTINE(ThreadProcAA), NULL, NULL, NULL);
+	auto handleEAA = ::CreateThread(NULL, NULL, LPTHREAD_START_ROUTINE(ThreadProcAutoEAA), NULL, NULL, NULL);
+	WaitForSingleObject(handleTravse, INFINITE);
 	WaitForSingleObject(handleLockSkill, INFINITE);
-
+	WaitForSingleObject(handleLockAA, INFINITE);
+	WaitForSingleObject(handleEAA, INFINITE);
 	return 0;
 }
 
@@ -187,13 +168,11 @@ DWORD WINAPI ThreadProcLockSkill(_In_ LPVOID lpParameter)
 {
 	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
 	CSkillServices m_roleSkill(m_role.GetNodeBase());
-	CBufferServices m_roleBuff(m_role.GetNodeBase());
-	CMonsterServices cm;
 	while (true)
 	{
 		//锁定Q
-		cm.travse(m_role);
-		if (pSharedMemoryPointer->bLockQ)
+
+		if (pSharedMemoryPointer->bLockQ )
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(0);
 			if (pSharedMemoryPointer->VirtualKeyQ == 'Q')
@@ -204,15 +183,14 @@ DWORD WINAPI ThreadProcLockSkill(_In_ LPVOID lpParameter)
 			}
 			else
 			{
-				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyQ) & 0x8000)
-				{
+				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyQ) & 0x8000) {
 					auto mons = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange());
 					UseSkillByindex(skillQ, mons, m_role);
 				}
 			}
 		}
 		//锁定W
-		if (pSharedMemoryPointer->bLockW)
+		if (pSharedMemoryPointer->bLockW )
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(1);
 			if (pSharedMemoryPointer->VirtualKeyW == 'W')
@@ -223,15 +201,14 @@ DWORD WINAPI ThreadProcLockSkill(_In_ LPVOID lpParameter)
 			}
 			else
 			{
-				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyW) & 0x8000)
-				{
+				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyW) & 0x8000) {
 					auto mons = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange());
 					UseSkillByindex(skillQ, mons, m_role);
 				}
 			}
 		}
 		//锁定E
-		if (pSharedMemoryPointer->bLockE)
+		if (pSharedMemoryPointer->bLockE )
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(2);
 			if (pSharedMemoryPointer->VirtualKeyE == 'E')
@@ -242,15 +219,14 @@ DWORD WINAPI ThreadProcLockSkill(_In_ LPVOID lpParameter)
 			}
 			else
 			{
-				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyE) & 0x8000)
-				{
+				if (GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyE) & 0x8000) {
 					auto mons = cm.GetHealthLeastPerson(m_role, skillQ.GetSkillRange());
 					UseSkillByindex(skillQ, mons, m_role);
 				}
 			}
 		}
 		//锁定R
-		if (pSharedMemoryPointer->bLockR)
+		if (pSharedMemoryPointer->bLockR  )
 		{
 			auto skillQ = m_roleSkill.GetSkillObjectByIndex(3);
 			if (pSharedMemoryPointer->VirtualKeyR == 'R')
@@ -268,11 +244,57 @@ DWORD WINAPI ThreadProcLockSkill(_In_ LPVOID lpParameter)
 				}
 			}
 		}
+
+		Sleep(15);
+	}
+}
+
+DWORD WINAPI ThreadProcAA(_In_ LPVOID lpParameter)
+{
+	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	while (true)
+	{
+		//走A
+		if (pSharedMemoryPointer->bOpenAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyAA) & 0x8000)
+		{
+			auto mons = cm.GetHealthLeastPerson(m_role, m_role.GetAttackRange());
+			UseAttackAA2Mons(mons, m_role);
+		}
+		//清线
+		if (pSharedMemoryPointer->bOpenClearAA && GetAsyncKeyState(pSharedMemoryPointer->VirtualKeyOpenClear) & 0x8000)
+		{
+			//获取范围内最近的小兵
+			auto mons = cm.GetHealthLeastMons(m_role, m_role.GetAttackRange());
+			UseAttackAA2Mons(mons, m_role);
+
+		}
+
+		Sleep(15);
+	}
+}
+
+DWORD WINAPI ThreadProcTravse(_In_ LPVOID lpParameter)
+{
+	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	while (true)
+	{
+		cm.travse(m_role);
+		Sleep(15);
+	}
+}
+
+DWORD WINAPI ThreadProcAutoEAA(_In_ LPVOID lpParameter)
+{
+	person m_role(utils::GetInstance()->read<DWORD>(pSharedMemoryPointer->Base_RoleSelfAddr));
+	CSkillServices m_roleSkill(m_role.GetNodeBase());
+	CBufferServices m_roleBuff(m_role.GetNodeBase());
+	while (true)
+	{
 		if (pSharedMemoryPointer->bAutoHuabanE)
 		{
 			//遍历周围玩家和怪物
 			if (pSharedMemoryPointer->bAutoEToHero) {
-				auto perList = cm.GetPersonList( m_role, m_roleSkill.GetSkillObjectByIndex(2).GetSkillRange());
+				auto perList = cm.GetPersonList(m_role, m_roleSkill.GetSkillObjectByIndex(2).GetSkillRange());
 				for (auto temp : perList)
 				{
 					utils::GetInstance()->log("TIPS: PLAYER OBJ = %x", temp.GetNodeBase());
@@ -292,7 +314,7 @@ DWORD WINAPI ThreadProcLockSkill(_In_ LPVOID lpParameter)
 						if (strstr(buf.GetName(), "marker") != NULL)
 						{
 							if (buf.GetBufferCount() > 0) {
-	
+
 								if (((buf.GetBufferCount() - 2)*(m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + 0.2 * m_role.GetAggressivity())) + ((m_roleSkill.GetSkillObjectByIndex(2).GetSkillGetAggressivity() + m_roleSkill.GetSkillObjectByIndex(2).GetSkillPlusProportion() * m_role.GetAggressivity())) > (temp.GetCurHp() + 10.0))
 								{
 									UseSkillByindex(m_roleSkill.GetSkillObjectByIndex(2), temp, m_role);
