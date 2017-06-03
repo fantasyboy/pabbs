@@ -1,0 +1,16 @@
+{
+    "access_addr": 4294967295,
+    "access_type": "Read",
+    "cpu_type": 586,
+    "exception_type": "ACCESS_VIOLATION",
+    "free_page_file_bytes": 10295283712,
+    "free_physical_mem_bytes": 2637697024,
+    "free_virtual_mem_bytes": 2646917120,
+    "game_version": "7.10.187.6239",
+    "mem_load_pct": 69,
+    "module_name": "League of Legends",
+    "num_cpus": 8,
+    "total_page_file_bytes": 17047674880,
+    "total_physical_mem_bytes": 8524791808,
+    "total_virtual_mem_bytes": 4294836224
+}
